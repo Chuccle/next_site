@@ -1,14 +1,14 @@
 
 import * as THREE from 'three'
 
-import { CameraHelper, MeshPhongMaterial } from 'three'
+import { CameraHelper, DirectionalLightShadow, Group, MeshPhongMaterial } from 'three'
 import styles from '/styles/Home.module.css'
 import React, { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { softShadows, OrbitControls, useHelper } from '@react-three/drei'
-import  Helvetica from '../public/Helvetica_ Neue.json'
+import Helvetica from '../public/Helvetica_ Neue.json'
 
- 
+
 
 
 //TODO
@@ -17,13 +17,18 @@ import  Helvetica from '../public/Helvetica_ Neue.json'
 
 
 
- // Soft shadows are expensive, uncomment and refresh when it's too slow
-softShadows()
+// Soft shadows are expensive, uncomment and refresh when it's too slow
+//softShadows()
 
 function Sky() {
-  const texture = new THREE.TextureLoader().load( '/galaxy_starfield.png' );
+
+  const texture = new THREE.TextureLoader().load('/galaxy_starfield.png');
+
+
+
   return (
-    <mesh position={[0.0, 0.0, 0.0]} >
+    <mesh position={[0.0, 0.0, 0.0]}  >
+
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
       <meshBasicMaterial side={2} map={texture} attach="material" />
     </mesh>
@@ -34,71 +39,51 @@ function Earth() {
 
   const mesh = useRef<THREE.Mesh>(null)
   //const shaderMat = useRef()
- const nav = useRef()
+  const nav = useRef()
 
- const texture:THREE.Texture =  new THREE.TextureLoader().load( '/basicTexture.jpg' );
-  
-const bumpmap = new THREE.TextureLoader().load( '/bumpmap.jpg' );
+  const texture: THREE.Texture = new THREE.TextureLoader().load('/basicTexture.jpg');
 
-  
-
-const specularmap = new THREE.TextureLoader().load( '/water_4k.png' );
-const specular = new THREE.Color('grey'); 
+  const bumpmap = new THREE.TextureLoader().load('/bumpmap.jpg');
 
 
 
-useFrame(state => {
+  const specularmap = new THREE.TextureLoader().load('/water_4k.png');
+  const specular = new THREE.Color('grey');
 
-if (mesh.current?.rotation) {
-    mesh.current.rotation.y += 0.0001
-}
- nav.current
+
+
+  useFrame(state => {
+
+
+    if (mesh.current?.rotation) {
+      mesh.current.rotation.y += 0.0001
+    }
+
+
+
+
+
+
+
   })
 
-  type Texture = THREE.Texture
+
   return (
-    <mesh position={[1.0, 0.0, 0.0]} ref={mesh} >
-     <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.03}/>
-       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
+    <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
+
+
+      <meshPhongMaterial specularMap={specularmap} specular={specular} transparent />
+      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.03} shadowSide={THREE.BackSide} />
+      <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
     </mesh>
   )
 }
 
-function Moon() {
-
-  const mesh = useRef<THREE.Mesh>()
-  //const shaderMat = useRef()
- const nav = useRef()
-
- const texture =  new THREE.TextureLoader().load( '/moon_4k_color_brim16.jpg' );
-  
-//const bumpmap = new THREE.TextureLoader().load( '/bumpmap.jpg' );
-
-const specularmap = new THREE.TextureLoader().load( '/moon_4k_normal.jpg' );
-
-
-
-useFrame(state => {
-  if (mesh.current?.rotation) {
-    mesh.current.rotation.y += 0.0001
-}
-  })
-
-  return (
-    <mesh position={[3.0, 0.0, 0.0]} ref={mesh} >
-    
-     <meshStandardMaterial map={texture} normalMap={specularmap}/>
-      <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
-
-    </mesh>
-  )
-
-}
 
 
 function Text() {
-  return(
+  return (
     <h1 className={styles.bruh3}>out of this world</h1>
   )
 }
@@ -109,49 +94,109 @@ function EarthClouds() {
   //const shaderMat = useRef()
 
 
- const texture =  new THREE.TextureLoader().load( '/fair_clouds_4k.png' );
-  
+  const texture = new THREE.TextureLoader().load('/fair_clouds_4k.png');
+
 
   useFrame(state => {
     if (mesh.current?.rotation) {
-      mesh.current.rotation.y += 0.0001
-  }
+      mesh.current.rotation.y += 0.00015
+    }
   })
 
- // useHelper(camera, CameraHelper, 'cyan')
   return (
-    <mesh position={[1.0, 0.0, 0.0]} ref={mesh} >
-     
-     <meshPhongMaterial map={texture} transparent={true}    />
-       <sphereBufferGeometry args={[1.01, 30.01, 30.01]} attach="geometry" />
+    <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true}  >
+
+      <meshPhongMaterial map={texture} transparent={true} />
+      <sphereBufferGeometry args={[1.01, 30.01, 30.01]} attach="geometry" />
     </mesh>
   )
 }
 
 
+function Moon() {
 
-export default function App() {
+
+  const mesh = useRef<THREE.Mesh>(null)
+  const lightpos = useRef<THREE.Mesh>(null)
+  const texture = new THREE.TextureLoader().load('/moon_4k_color_brim16.jpg');
+
+  //const bumpmap = new THREE.TextureLoader().load( '/bumpmap.jpg' );
+
+  const specularmap = new THREE.TextureLoader().load('/moon_4k_normal.jpg');
+
+  var orbitRadius = 2; // for example
+  var date;
+
+
+
+  useFrame(state => {
+    date = Date.now() * 0.0001;
+
+
+    if (mesh.current?.rotation && mesh.current?.position) {
+
+      mesh.current.rotation.y += 0.0025
+
+      mesh.current.position.set(
+        Math.cos(date) * orbitRadius,
+        0,
+        Math.sin(date) * orbitRadius
+      )
+
+    }
+
+    if (lightpos.current?.position) {
+      lightpos.current.position.set(
+        Math.sin(date) * orbitRadius,
+        0,
+        Math.cos(date) * orbitRadius
+
+      )
+
+
+      console.log("1", lightpos.current?.position)
+      console.log("2", mesh.current?.position)
+
+    }
+
+
+
+
+
+  })
+
   return (
 
-    
-   <div className={styles.bruh}>
-    <Text/>
-     
-     <h1 className={styles.bruh2}>Software solutions that are</h1>
-     
-     <Canvas   camera={{ position: [0, 0, -3], fov: 20 }}>      
- <OrbitControls/>
-  <Sky />
-  <directionalLight  position={[-7, 10, 0]} intensity={0.75} />
-  <Moon/>
-  <EarthClouds/>
-      <Earth />
-      
-    </Canvas>
-    <div />
-    <div className={styles.swag} >
-    <h1 font-color={'white'}  > EPIC</h1>
-    </div>
+    <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
+
+      <meshStandardMaterial map={texture} normalMap={specularmap} />
+      <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
+
+    </mesh>
+
+  )
+}
+
+
+export default function App() {
+
+  return (
+
+    <div className={styles.bruh}>
+      <Text />
+      <h1 className={styles.bruh2}>Software solutions that are</h1>
+      <Canvas shadows={true} camera={{ position: [0, 0, -3], fov: 40 }}>
+        <Sky />
+        <directionalLight position={[1, 1, -1]} intensity={1} />
+        <Moon />
+        <EarthClouds />
+        <Earth />
+      </Canvas>
+      <div />
+      <div className={styles.swag} >
+        <h1 font-color={'white'}  > EPIC</h1>
+        <p>br</p>
+      </div>
     </div>
   )
 }
