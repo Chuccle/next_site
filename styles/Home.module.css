@@ -12,6 +12,17 @@
   align-items: center;
 }
 
+.swag{
+  background-color: white;
+  padding: 0 0rem;
+  margin:0 0rem;
+  max-width: 100%;
+  max-height: 100%;
+  height:100vh;
+
+}
+
+
 .footer {
   display: flex;
   flex: 1;
@@ -43,6 +54,50 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
+}
+
+.bruh {
+  background-color: black;
+  padding: 0 0rem;
+  margin:0 0rem;
+  max-width: 100%;
+  max-height: 100%;
+  height:100vh;
+}
+
+.bruh2 {
+	position: absolute;
+	top: 15rem;
+  left:10rem;
+	
+	text-align: left;
+	z-index: 100;
+	display:block;
+  font-size: 5rem;
+  font-family: 'helvetica-neue', sans-serif;
+  color: white;
+  border-radius: 25px;
+  background-color: black;
+  padding:10px;
+
+}
+
+
+.bruh3 {
+	position: absolute;
+	top: 25rem;
+  right:10rem;
+padding:10px;
+	text-align: center;
+	z-index: 100;
+	display:block;
+  font-size: 5rem;
+  font-family: 'helvetica-neue', sans-serif;
+  border-radius: 25px;
+  background-color: white;
+  color: black;
+
+
 }
 
 .title,
