@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
-import {Canvas, useThree} from 'react-three-fiber';
+import {Canvas, useThree} from '@react-three/fiber'
 
 
 
@@ -100,7 +100,7 @@ export default function About()
       
 
     <pointLight position={[5, 5, 5]} />
-    <mesh  className={styles.bruh} scale={[3, 3, 3]} onWheel={(event) => console.log(event.deltaY)} >
+    <mesh scale={[3, 3, 3]} onWheel={(event) => console.log(event.delta)} >
       <sphereBufferGeometry />
       <meshStandardMaterial color="hotpink" />
     </mesh>
