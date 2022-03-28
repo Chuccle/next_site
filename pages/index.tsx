@@ -1,12 +1,9 @@
 
 import * as THREE from 'three'
-
-import { CameraHelper, DirectionalLightShadow, Group, MeshPhongMaterial } from 'three'
 import styles from '/styles/Home.module.css'
 import React, { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { softShadows, OrbitControls, useHelper } from '@react-three/drei'
-import Helvetica from '../public/Helvetica_ Neue.json'
+
 
 
 
