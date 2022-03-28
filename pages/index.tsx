@@ -2,13 +2,21 @@
 import * as THREE from 'three'
 
 import { CameraHelper, MeshPhongMaterial } from 'three'
-import styles from '../styles/Home.module.css'
+import styles from '/styles/Home.module.css'
 import React, { useRef } from 'react'
-import { Canvas, useFrame } from 'react-three-fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { softShadows, OrbitControls, useHelper } from '@react-three/drei'
 import  Helvetica from '../public/Helvetica_ Neue.json'
 
  
+
+
+//TODO
+//Moon needs to orbit around the earth
+//We need to make a pan out effect and transition to next div
+
+
+
  // Soft shadows are expensive, uncomment and refresh when it's too slow
 softShadows()
 
@@ -24,29 +32,34 @@ function Sky() {
 
 function Earth() {
 
-  const mesh = useRef()
+  const mesh = useRef<THREE.Mesh>(null)
   //const shaderMat = useRef()
  const nav = useRef()
 
- const texture =  new THREE.TextureLoader().load( '/basicTexture.jpg' );
+ const texture:THREE.Texture =  new THREE.TextureLoader().load( '/basicTexture.jpg' );
   
 const bumpmap = new THREE.TextureLoader().load( '/bumpmap.jpg' );
+
+  
 
 const specularmap = new THREE.TextureLoader().load( '/water_4k.png' );
 const specular = new THREE.Color('grey'); 
 
 
+
 useFrame(state => {
 
+if (mesh.current?.rotation) {
     mesh.current.rotation.y += 0.0001
+}
  nav.current
   })
 
-
+  type Texture = THREE.Texture
   return (
     <mesh position={[1.0, 0.0, 0.0]} ref={mesh} >
      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.03}/>
-       <sphereBufferGeometry args={[1, 30, 30]} attach="geometry" />
+       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
     </mesh>
   )
@@ -54,7 +67,7 @@ useFrame(state => {
 
 function Moon() {
 
-  const mesh = useRef()
+  const mesh = useRef<THREE.Mesh>()
   //const shaderMat = useRef()
  const nav = useRef()
 
@@ -67,16 +80,16 @@ const specularmap = new THREE.TextureLoader().load( '/moon_4k_normal.jpg' );
 
 
 useFrame(state => {
-
+  if (mesh.current?.rotation) {
     mesh.current.rotation.y += 0.0001
- 
+}
   })
 
   return (
     <mesh position={[3.0, 0.0, 0.0]} ref={mesh} >
     
      <meshStandardMaterial map={texture} normalMap={specularmap}/>
-       <sphereBufferGeometry args={[0.25, 30, 30]} attach="geometry" />
+      <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
 
     </mesh>
   )
@@ -92,7 +105,7 @@ function Text() {
 
 function EarthClouds() {
 
-  const mesh = useRef()
+  const mesh = useRef<THREE.Mesh>()
   //const shaderMat = useRef()
 
 
@@ -100,9 +113,9 @@ function EarthClouds() {
   
 
   useFrame(state => {
-
-    mesh.current.rotation.y += 0.00015
-
+    if (mesh.current?.rotation) {
+      mesh.current.rotation.y += 0.0001
+  }
   })
 
  // useHelper(camera, CameraHelper, 'cyan')
@@ -117,11 +130,6 @@ function EarthClouds() {
 
 
 
-
-
-
-
-
 export default function App() {
   return (
 
@@ -131,9 +139,10 @@ export default function App() {
      
      <h1 className={styles.bruh2}>Software solutions that are</h1>
      
-     <Canvas  shadowMap camera={{ position: [0, 0, -3], fov: 20 }}>      
+     <Canvas   camera={{ position: [0, 0, -3], fov: 20 }}>      
+ <OrbitControls/>
   <Sky />
-  <directionalLight  position={[-7, 10, 0]} intensity={0.75} useHelper={true}/>
+  <directionalLight  position={[-7, 10, 0]} intensity={0.75} />
   <Moon/>
   <EarthClouds/>
       <Earth />
