@@ -60,35 +60,40 @@
   background-color: black;
   padding: 0 0rem;
   margin:0 0rem;
-  max-width: 100%;
-  max-height: 100%;
-  height:100vh;
+  max-width: 100wh;
+  max-height: 100vh;
+width:100wh;
+height:100vh;
 }
 
 .bruh2 {
-	position: absolute;
-	top: 15rem;
-  left:10rem;
-	
+	 
+  position: absolute;
+  margin-top: 15rem;
+  margin-left: 10rem;
+  margin-right: 43rem;
+  margin-bottom: 10rem;
+  padding:10px;
 	text-align: left;
 	z-index: 100;
 	display:block;
   font-size: 5rem;
   font-family: 'helvetica-neue', sans-serif;
-  color: white;
   border-radius: 25px;
   background-color: black;
-  padding:10px;
-
+  color: white;
+min-width: 20rem;
 }
 
 
 .bruh3 {
-	position: absolute;
-	top: 25rem;
-  right:10rem;
+  position: absolute;
+	margin-top: 35rem;
+  margin-left: 50rem;
+  margin-right: 10rem;
+  margin-bottom: 10rem;
 padding:10px;
-	text-align: center;
+	text-align: left;
 	z-index: 100;
 	display:block;
   font-size: 5rem;
@@ -96,9 +101,59 @@ padding:10px;
   border-radius: 25px;
   background-color: white;
   color: black;
+  min-width: 25rem;
 
 
 }
+
+@media screen and (max-width:425px) {  
+
+
+/*implementation for smartphones*/
+
+.bruh {
+height:50vh;
+}
+
+.bruh2 {
+
+  margin-top: 5vh; 
+  font-size: 2rem;
+  margin-left:0;
+margin-right:0;
+left:1rem;
+width:10rem;
+
+min-width:0rem;
+  color: white;
+
+}
+
+
+.bruh3 {
+  font-size: 2rem;
+  margin-top: 25vh;
+margin-right:0;
+margin-left:0;
+margin-bottom:1rem;
+float:right;
+display:right;
+justify-content:right;
+  min-width:0rem;
+  width:11rem;
+  text-align:center;
+  right: 1rem;
+}
+
+
+
+
+
+}
+
+
+
+
 
 .title,
 .description {
@@ -163,7 +218,7 @@ padding:10px;
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 150px) {
   .grid {
     width: 100%;
     flex-direction: column;
