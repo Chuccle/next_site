@@ -6,22 +6,9 @@ import { Canvas, useFrame } from '@react-three/fiber'
 
 
 
-
-
-//TODO
-//Moon needs to orbit around the earth
-//We need to make a pan out effect and transition to next div
-
-
-
-// Soft shadows are expensive, uncomment and refresh when it's too slow
-//softShadows()
-
 function Sky() {
 
   const texture = new THREE.TextureLoader().load('/galaxy_starfield.png');
-
-
 
   return (
     <mesh position={[0.0, 0.0, 0.0]}  >
@@ -48,19 +35,12 @@ function Earth() {
   const specular = new THREE.Color('grey');
 
 
-
   useFrame(state => {
 
 
     if (mesh.current?.rotation) {
       mesh.current.rotation.y += 0.0001
     }
-
-
-
-
-
-
 
   })
 
@@ -70,7 +50,7 @@ function Earth() {
 
 
       <meshPhongMaterial specularMap={specularmap} specular={specular} transparent />
-      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.03} shadowSide={THREE.BackSide} />
+      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05}/>
       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
     </mesh>
@@ -81,9 +61,11 @@ function Earth() {
 
 function Text() {
   return (
-    <h1 className={styles.bruh3}>out of this world</h1>
+    <h1 className={styles.bruh3}>simply out of this world</h1>
   )
 }
+
+
 
 function EarthClouds() {
 
@@ -127,12 +109,12 @@ function Moon() {
 
 
   useFrame(state => {
-    date = Date.now() * 0.0001;
+    date = Date.now() * 0.00005;
 
 
     if (mesh.current?.rotation && mesh.current?.position) {
 
-      mesh.current.rotation.y += 0.0025
+      mesh.current.rotation.y += 0.001
 
       mesh.current.position.set(
         Math.cos(date) * orbitRadius,
@@ -156,10 +138,6 @@ function Moon() {
 
     }
 
-
-
-
-
   })
 
   return (
@@ -179,10 +157,11 @@ export default function App() {
 
   return (
 
-    <div className={styles.bruh}>
-      <Text />
+    <div  className={styles.bruh}>
       <h1 className={styles.bruh2}>Software solutions that are</h1>
+      <h1 className={styles.bruh3}>simply out of this world</h1>
       <Canvas shadows={true} camera={{ position: [0, 0, -3], fov: 40 }}>
+
         <Sky />
         <directionalLight position={[1, 1, -1]} intensity={1} />
         <Moon />
