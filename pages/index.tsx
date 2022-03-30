@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
 import React, { useRef, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import useWindowDimensions from '../hooks/useWindowDimensions'
+import useWindowDimensions from "../hooks/useWindowDimensions.1"
 
 function Sky(): JSX.Element {
 
