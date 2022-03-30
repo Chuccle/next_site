@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
 import React, { useRef, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import useWindowDimensions from "../hooks/useWindowDimensions"
+import useWindowDimensions from "../hooks/useWindowDimensions.1"
 
 function Sky(): JSX.Element {
 
@@ -27,23 +27,31 @@ function Earth() {
 
   var currentPosZ: number = cameraStartPosZ
 
- //fix this to not give warning 
   
 function ViewportAdjustment() {
-   if (useWindowDimensions().height >= useWindowDimensions().width) {
+
+  var windowWidth = useWindowDimensions().width || 0 //
+  var windowHeight = useWindowDimensions().height || 0
  
+
+
+  if (windowHeight > windowWidth) {
+
  console.log("height is greater or equal to width")
-  return -4
-   }
-   else {
+
+
+ return -4
+  
+}
+
+   else  {
 
 return -1.75
 
    }
 
+
 }
-
-
 
   
 
