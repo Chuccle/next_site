@@ -65,7 +65,7 @@ function ViewportAdjustment() {
 
 
     if (mesh.current?.rotation) {
-      mesh.current.rotation.y += 0.0001
+      mesh.current.rotation.y += 0.0003
     }
 
     
@@ -120,7 +120,7 @@ function EarthClouds() {
 
   useFrame(state => {
     if (mesh.current?.rotation) {
-      mesh.current.rotation.y += 0.00015
+      mesh.current.rotation.y += 0.00035
     }
     
   })
@@ -153,7 +153,7 @@ function Moon() {
 
 
   useFrame(state => {
-    date = Date.now() * 0.00005;
+    date = Date.now() * 0.0001;
 
 
     if (mesh.current?.rotation && mesh.current?.position) {
