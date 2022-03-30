@@ -30,28 +30,20 @@ function Earth() {
   
 function ViewportAdjustment() {
 
-  var windowWidth = useWindowDimensions().width || 0 //
-  var windowHeight = useWindowDimensions().height || 0
+ // var windowWidth = useWindowDimensions().width || 0 //
+ // var windowHeight = useWindowDimensions().height || 0
  
 
 
-  if (windowHeight > windowWidth) {
+  //if (windowHeight > windowWidth) {
 
- console.log("height is greater or equal to width")
+ //console.log("height is greater or equal to width")
 
 
- return -4
+ return -1.75
   
 }
 
-   else  {
-
-return -1.75
-
-   }
-
-
-}
 
   
 
@@ -82,7 +74,7 @@ return -1.75
     //every second we decrease the value by 0.001
     if (currentPosZ >= cameraEndPosZ) {
 
-      currentPosZ -= 0.001
+      currentPosZ -= 0.0015
       
       }
         
