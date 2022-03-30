@@ -1,18 +1,16 @@
 
 import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
-
-
-function Sky() {
+function Sky(): JSX.Element {
 
   const texture = new THREE.TextureLoader().load('/galaxy_starfield.png');
 
   return (
     <mesh position={[0.0, 0.0, 0.0]}  >
-
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
       <meshBasicMaterial side={2} map={texture} attach="material" />
     </mesh>
@@ -22,25 +20,69 @@ function Sky() {
 function Earth() {
 
   const mesh = useRef<THREE.Mesh>(null)
-  //const shaderMat = useRef()
-  const nav = useRef()
+
+  var cameraStartPosZ = ViewportAdjustment()
+
+  var cameraEndPosZ: number = cameraStartPosZ - 0.75
+
+  var currentPosZ: number = cameraStartPosZ
+
+ //fix this to not give warning 
+  
+function ViewportAdjustment() {
+   if (useWindowDimensions().height >= useWindowDimensions().width) {
+ 
+ console.log("height is greater or equal to width")
+  return -4
+   }
+   else {
+
+return -1.75
+
+   }
+
+}
+
+
+
+  
 
   const texture: THREE.Texture = new THREE.TextureLoader().load('/basicTexture.jpg');
 
   const bumpmap = new THREE.TextureLoader().load('/bumpmap.jpg');
 
 
-
   const specularmap = new THREE.TextureLoader().load('/water_4k.png');
+
   const specular = new THREE.Color('grey');
 
 
   useFrame(state => {
 
 
+    
+
+
+
     if (mesh.current?.rotation) {
       mesh.current.rotation.y += 0.0001
     }
+
+    
+
+
+    //every second we decrease the value by 0.001
+    if (currentPosZ >= cameraEndPosZ) {
+
+      currentPosZ -= 0.001
+      
+      }
+        
+
+
+//we set the position of the camera to the currentPosZ
+state.camera.position.z = currentPosZ     
+
 
   })
 
@@ -50,7 +92,7 @@ function Earth() {
 
 
       <meshPhongMaterial specularMap={specularmap} specular={specular} transparent />
-      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05}/>
+      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05} />
       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
     </mesh>
@@ -80,6 +122,7 @@ function EarthClouds() {
     if (mesh.current?.rotation) {
       mesh.current.rotation.y += 0.00015
     }
+    
   })
 
   return (
@@ -106,6 +149,7 @@ function Moon() {
   var orbitRadius = 2; // for example
   var date;
 
+  
 
 
   useFrame(state => {
@@ -153,27 +197,30 @@ function Moon() {
 }
 
 
+
 export default function App() {
 
+
+
+
+
   return (
-
-    <div  className={styles.bruh}>
-      <h1 className={styles.bruh2}>Software solutions that are</h1>
-      <h1 className={styles.bruh3}>simply out of this world</h1>
-      <Canvas shadows={true} camera={{ position: [0, 0, -3], fov: 40 }}>
-
-        <Sky />
-        <directionalLight position={[1, 1, -1]} intensity={1} />
-        <Moon />
-        <EarthClouds />
-        <Earth />
-      </Canvas>
-      <div />
-      <div className={styles.swag} >
-        <h1 font-color={'white'}  > EPIC</h1>
-        <p>br</p>
+      <div className={styles.bruh}>
+        <h1 className={styles.bruh2}>Software solutions that are</h1>
+        <h1 className={styles.bruh3}>simply out of this world</h1>
+        <Canvas shadows={true} camera={{position: [0, 0, -1]}}>
+          <Sky />
+          <directionalLight position={[1, 1, -1]} intensity={1} />
+          <Moon />
+          <EarthClouds />
+          <Earth />
+        </Canvas>
+        <div />
+        <div className={styles.swag} >
+          <h1 font-color={'white'}  > EPIC</h1>
+          <p>br</p>
+        </div>
       </div>
-    </div>
-  )
+    )
 }
 

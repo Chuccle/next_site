@@ -70,7 +70,7 @@ height:100vh;
 	 
   position: absolute;
   margin-top: 15rem;
-  margin-left: 10rem;
+  left:10vh;
   margin-right: 43rem;
   margin-bottom: 10rem;
   padding:10px;
@@ -90,7 +90,7 @@ min-width: 20rem;
   position: absolute;
 	margin-top: 35rem;
   margin-left: 50rem;
-  margin-right: 10rem;
+  right:10vh;
   margin-bottom: 10rem;
 padding:10px;
 	text-align: left;
