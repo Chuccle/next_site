@@ -71,8 +71,7 @@ height:100vh;
   position: absolute;
   top: 5vh;
   left:10vh;
-  margin-right: 43rem;
-  margin-bottom: 10rem;
+
   padding:10px;
 	text-align: left;
 	z-index: 100;
@@ -83,13 +82,16 @@ height:100vh;
   background-color: black;
   color: white;
 min-width: 20rem;
+animation-name: slideinToLeft;
+animation-duration: 5s;
 }
+
+
+
 
 
 .bruh3 {
   position: absolute;
-	
-  margin-left: 50rem;
   right:10vh;
   bottom:10vh;
 padding:10px;
@@ -102,9 +104,33 @@ padding:10px;
   background-color: white;
   color: black;
   min-width: 25rem;
-
+  animation-name: slideinToRight;
+  animation-duration: 5s;
 
 }
+
+@keyframes slideinToLeft {
+  from {
+    left: 100vh
+  }
+
+  to {
+    left:10vh;
+  }
+}
+
+@keyframes slideinToRight {
+  from {
+    right: 100vh
+  }
+
+  to {
+    right:10vh;
+  }
+}
+
+
+
 
 @media screen and (max-width:425px) {  
 
