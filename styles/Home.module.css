@@ -68,7 +68,7 @@ height:100vh;
 .bruh2 {
 	 
   position: absolute;
-  top: 5vh;
+  top: 4vh;
   left:10vw;
   padding:10px;
 	text-align: left;
@@ -79,7 +79,7 @@ height:100vh;
   border-radius: 25px;
   background-color: black;
   color: white;
-min-width: 20rem;
+min-width: 20vw;
 animation-name: slideinToLeft;
 animation-duration: 5s;
 white-space:nowrap;
@@ -103,7 +103,7 @@ padding:10px;
   border-radius: 25px;
   background-color: white;
   color: black;
-  min-width: 25rem;
+  min-width: 20vw;
   animation-name: slideinToRight;
   animation-duration: 5s;
   white-space:nowrap;
