@@ -60,9 +60,6 @@ function ViewportAdjustment() {
   useFrame(state => {
 
 
-    
-
-
 
     if (mesh.current?.rotation) {
       mesh.current.rotation.y += 0.0003
@@ -80,7 +77,7 @@ function ViewportAdjustment() {
         
 
 
-//we set the position of the camera to the currentPosZ
+//we set the position of the camera to the currentPosZ    
 state.camera.position.z = currentPosZ     
 
 
@@ -127,7 +124,6 @@ function EarthClouds() {
 
   return (
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true}  >
-
       <meshPhongMaterial map={texture} transparent={true} />
       <sphereBufferGeometry args={[1.01, 30.01, 30.01]} attach="geometry" />
     </mesh>
@@ -139,7 +135,7 @@ function Moon() {
 
 
   const mesh = useRef<THREE.Mesh>(null)
-  const lightpos = useRef<THREE.Mesh>(null)
+
   const texture = new THREE.TextureLoader().load('/moon_4k_color_brim16.jpg');
 
   //const bumpmap = new THREE.TextureLoader().load( '/bumpmap.jpg' );
@@ -168,19 +164,7 @@ function Moon() {
 
     }
 
-    if (lightpos.current?.position) {
-      lightpos.current.position.set(
-        Math.sin(date) * orbitRadius,
-        0,
-        Math.cos(date) * orbitRadius
 
-      )
-
-
-      console.log("1", lightpos.current?.position)
-      console.log("2", mesh.current?.position)
-
-    }
 
   })
 
@@ -198,17 +182,16 @@ function Moon() {
 
 
 
+
+
+
 export default function App() {
-
-
-
-
 
   return (
       <div className={styles.bruh}>
         <h1 className={styles.bruh2}>Software solutions that are</h1>
         <h1 className={styles.bruh3}>simply out of this world</h1>
-        <Canvas shadows={true} camera={{position: [0, 0, -1]}}>
+        <Canvas shadows={true} camera={{position: [-5, 0, 0]}}>
           <Sky />
           <directionalLight position={[1, 1, -1]} intensity={1} />
           <Moon />
