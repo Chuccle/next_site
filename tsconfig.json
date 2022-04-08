@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./built",
     "allowJs": true,
-    "strict": true,
+    "strict": false,
     "target": "es5",
     "lib": [
       "dom",
