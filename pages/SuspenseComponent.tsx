@@ -7,7 +7,7 @@ export default function SuspenseComponent() {
 let myData = {};
 let promise = {};
 // our React component which will be rendered inside Suspense boundaries
-const SuspenseComponent = ({ value }) => {
+const SuspenseComponent = ({ value:any }) => {
   //our method which will be fired when we call the component
   const waitForData = () => {
     //if data already there, we return it and render is done, if not the Spinner is spinning
