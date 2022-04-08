@@ -180,8 +180,6 @@ export default function App() {
 
   return (
     <div className={styles.bruh} >
-      <h1 className={styles.bruh2}>Software solutions that are</h1>
-      <h1 className={styles.bruh3}>simply out of this world.</h1>
       <Suspense fallback={'loading'}>
 <DynamicLazyComponent/>
       </Suspense>
