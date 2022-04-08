@@ -11,7 +11,7 @@ import { OrbitControls } from '@react-three/drei'
 
 function Sky(): JSX.Element {
 
-  const texture = new THREE.TextureLoader().load('/galaxy_starfield.png');
+  const texture = new THREE.TextureLoader().load('Model_Textures/galaxy_starfield.png');
 
   return (
     <mesh position={[0.0, 0.0, 0.0]}  >
