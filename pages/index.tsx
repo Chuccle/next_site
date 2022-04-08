@@ -5,6 +5,17 @@ import React, { useRef, useEffect } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import about from "./about";
+
+const SuspenseComponent = dynamic(
+  () => import("./SuspenseComponent"),
+  { suspense: true }
+);
+
+
+
 
 
 function Sky(): JSX.Element {
@@ -170,10 +181,16 @@ function Moon() {
 
 export default function App() {
 
+
+  const { query: queryParams } = useRouter();
+  const first = queryParams.first != undefined ? queryParams.first : 1;
+
+
   return (
     <div className={styles.bruh} >
       <h1 className={styles.bruh2}>Software solutions that are</h1>
       <h1 className={styles.bruh3}>simply out of this world.</h1>
+      <Suspense fallback={<about />}>
       <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
         <Sky />
         <directionalLight position={[1, 1, -1]} intensity={1} />
@@ -181,6 +198,7 @@ export default function App() {
         <EarthClouds />
         <Earth />
       </Canvas>
+      </Suspense>
       <div />
       <div className={styles.swag} >
         <h1> EPIC</h1>
