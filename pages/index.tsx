@@ -7,7 +7,9 @@ import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from "react";
 
-
+const DynamicLazyComponent = dynamic(() => import('../components/SuspenseComponent'), {
+  suspense: true,
+})
 
 
 function Sky(): JSX.Element {
@@ -180,13 +182,7 @@ export default function App() {
       <h1 className={styles.bruh2}>Software solutions that are</h1>
       <h1 className={styles.bruh3}>simply out of this world.</h1>
       <Suspense fallback={<span>loading...</span>}>
-      <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
-  <Sky />
-  <directionalLight position={[1, 1, -1]} intensity={1} />
-  <Moon />
-  <EarthClouds />
-  <Earth />
-</Canvas>
+<DynamicLazyComponent/>
       </Suspense>
       <div />
       <div className={styles.swag} >
