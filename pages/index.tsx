@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import dynamic from 'next/dynamic'
 
 const DynamicLazyComponent = dynamic(() => import('../components/SuspenseComponent'), {
-  suspense: true,
+  suspense: true, ssr: false
 })
 
 
