@@ -1,3 +1,7 @@
+
+export default function SuspenseComponent() {
+
+
 // we define two variables, one holding data, and one holding a value if the promise
 //was resolved
 let myData = {};
@@ -29,3 +33,4 @@ const SuspenseComponent = ({ value }) => {
     </div>
   );
 };
+}
