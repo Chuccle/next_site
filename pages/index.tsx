@@ -6,10 +6,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from "react";
-import dynamic from 'next/dynamic'
-import { lazy } from "react";
 
-const DynamicLazyComponent = lazy(() => import('../components/SuspenseComponent'))
 
 
 
@@ -182,8 +179,14 @@ export default function App() {
     <div className={styles.bruh} >
       <h1 className={styles.bruh2}>Software solutions that are</h1>
       <h1 className={styles.bruh3}>simply out of this world.</h1>
-      <Suspense fallback={'loading'}>
-<DynamicLazyComponent/>
+      <Suspense fallback={<span>loading...</span>}>
+      <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
+  <Sky />
+  <directionalLight position={[1, 1, -1]} intensity={1} />
+  <Moon />
+  <EarthClouds />
+  <Earth />
+</Canvas>
       </Suspense>
       <div />
       <div className={styles.swag} >
