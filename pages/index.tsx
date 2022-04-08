@@ -10,7 +10,7 @@ import { Suspense } from "react";
 import about from "./about";
 
 const SuspenseComponent = dynamic(
-  () => import("./SuspenseComponent"),
+  () => import("/pages/SuspenseComponent"),
   { suspense: true }
 );
 
