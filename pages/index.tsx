@@ -5,13 +5,9 @@ import React, { useRef, useEffect } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const SuspenseComponent = dynamic(
-  () => import("../components/SuspenseComponent"),
-  { suspense: true }
-);
+
 
 
 
@@ -179,9 +175,6 @@ function Moon() {
 
 export default function App() {
 
-
-  const { query: queryParams } = useRouter();
-  const first = queryParams.first != undefined ? queryParams.first : 1;
 
 
   return (
