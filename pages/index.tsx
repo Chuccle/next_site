@@ -6,6 +6,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from "react";
+import dynamic from 'next/dynamic'
 
 const DynamicLazyComponent = dynamic(() => import('../components/SuspenseComponent'), {
   suspense: true,
