@@ -7,11 +7,9 @@ import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from "react";
 import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const DynamicLazyComponent = dynamic(() => import('../components/SuspenseComponent'), {
-  suspense: true,
-
-})
+const DynamicLazyComponent = lazy(() => import('../components/SuspenseComponent'))
 
 
 
