@@ -184,9 +184,9 @@ export default function App() {
     <div className={styles.bruh} >
       <h1 className={styles.bruh2}>Software solutions that are</h1>
       <h1 className={styles.bruh3}>simply out of this world.</h1>
-      <Suspense fallback={<span>loading...</span>}>
+     
 <DynamicLazyComponent/>
-      </Suspense>
+
       <div />
       <div className={styles.swag} >
         <h1> EPIC</h1>
