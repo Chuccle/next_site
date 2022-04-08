@@ -182,12 +182,10 @@ export default function App() {
 
   return (
     <div className={styles.bruh} >
-      <h1 className={styles.bruh2}>Software solutions that are</h1>
-      <h1 className={styles.bruh3}>simply out of this world.</h1>
      
 <DynamicLazyComponent/>
 
-      <div />
+    
       <div className={styles.swag} >
         <h1> EPIC</h1>
         <p>br</p>
