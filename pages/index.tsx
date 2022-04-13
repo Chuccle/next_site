@@ -8,8 +8,12 @@ import { Suspense } from "react";
 import { TextureLoader } from 'three'
 
 
+import { Html, useProgress } from '@react-three/drei'
 
-import { Loader } from '@react-three/drei'
+function Loader() {
+  const { progress } = useProgress()
+  return <Html center>{progress} % loaded</Html>
+}
 
 
 
@@ -200,7 +204,7 @@ export default function App() : JSX.Element {
   
 
   <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
-    <Suspense fallback={<Loader />}>
+  <Suspense fallback={<Loader />}>
 
   <Sky url={'Model_Textures/galaxy_starfield.png'} />
 
@@ -218,10 +222,8 @@ export default function App() : JSX.Element {
 
   <Earth urlTexture={'Model_Textures/basicTexture.jpg'} urlBumpmap={'Model_Textures/bumpmap.jpg'}/>
 
-/</Suspense>
+</Suspense>
 </Canvas>
-
-
       <div />
       <div className={styles.swag} >
         <h1>About me</h1>
