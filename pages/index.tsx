@@ -164,18 +164,15 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
       <meshStandardMaterial map={texture} normalMap={normalmap} />
       <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
     </mesh>
-
   )
 }
 
 
 export default function App() : JSX.Element {
 
-
-
   return (
     <div className={styles.bruh} >
-   <Suspense fallback={<span>loading...</span>}>
+   <Suspense fallback={'loading'}>
       <h1 className={styles.bruh2}>Software solutions that are</h1>
     <h1 className={styles.bruh3}>simply out of this world.</h1>
   <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
