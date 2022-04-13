@@ -8,7 +8,7 @@ import { OrbitControls, Text } from '@react-three/drei'
 import { Suspense } from "react";
 import { TextureLoader } from 'three'
 import PropTypes from 'prop-types'
-
+import About from './about'
 
 function Sky({url} : {url:string}): JSX.Element {
 
@@ -63,7 +63,6 @@ function Earth({urlTexture, urlBumpmap} : {urlTexture:string, urlBumpmap:string}
   const [texture, bumpmap] = useLoader(TextureLoader,[urlTexture, urlBumpmap]);
 
   useFrame(state => {
-
 
 
     if (mesh.current?.rotation) {
@@ -170,10 +169,13 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
 
 export default function App() : JSX.Element {
 
+
+
+
   return (
     <div className={styles.bruh} >
   
-  <Suspense fallback={<h1>Loading...</h1>}>
+<Suspense fallback={<About/>}>
       <h1 className={styles.bruh2}>Software solutions that are</h1>
     <h1 className={styles.bruh3}>simply out of this world.</h1>
   

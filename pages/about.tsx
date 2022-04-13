@@ -66,17 +66,6 @@ export default function About()
     
   
     <div className={styles.container}>
-    <Canvas className={styles.bruh}>
-      
-
-      <pointLight position={[5, 5, 5]} />
-      <mesh visible userData={{ hello: 'world' }} position={[1, 2, 3]} rotation={[Math.PI / 2, 0, 0]}>
-  
-  <meshStandardMaterial color="hotpink" transparent />
-</mesh>
-
-
-    </Canvas>
 
      
       <Head>
@@ -96,15 +85,7 @@ export default function About()
         </p>
 
 
-    <Canvas className={styles.bruh}>
-      
 
-    <pointLight position={[5, 5, 5]} />
-    <mesh scale={[3, 3, 3]} onWheel={(event) => console.log(event.delta)} >
-      <sphereBufferGeometry />
-      <meshStandardMaterial color="hotpink" />
-    </mesh>
-  </Canvas>
         
   <Link href="/">
         <a>My first page</a>
