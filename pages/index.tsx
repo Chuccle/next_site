@@ -8,13 +8,8 @@ import { Suspense } from "react";
 import { TextureLoader } from 'three'
 
 
-import { Html, useProgress } from '@react-three/drei'
 
-function Loader() {
-  const { progress } = useProgress()
-  return <Html center>{progress} % loaded</Html>
-}
-
+import {  Loader } from '@react-three/drei'
 
 
 function Sky({url} : {url:string}): JSX.Element {
@@ -188,42 +183,39 @@ export default function App() : JSX.Element {
 
 
 
-
-
   return (
     <div className={styles.bruh} >
-      
-      
-      
-
-
-      
       <h1 className={styles.bruh2}>Software solutions that are</h1>
     <h1 className={styles.bruh3}>simply out of this world.</h1>
   
-  
-
+    
   <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
-  <Suspense fallback={<Loader />}>
 
+  <Suspense fallback={null}>
+  <Suspense fallback={<Sky url={'BufferTextures/galaxy_starfield_1024x512.png'} />}>
   <Sky url={'Model_Textures/galaxy_starfield.png'} />
-
+  </Suspense>
   
   <directionalLight position={[1, 1, -1]} intensity={1} />
   
-
+  <Suspense fallback={<Moon urlTexture={'BufferTextures/moon1024x512.jpg'} urlNormalmap={'BufferTextures/moonNormal1024x512.jpg'} />}>
   <Moon urlTexture={'Model_Textures/moon_4k_color_brim16.jpg'} urlNormalmap={'Model_Textures/moon_4k_normal.jpg'} />
-
+  </Suspense>
   
-
+  <Suspense fallback={<EarthClouds url={'BufferTextures/fair_clouds_1024x512.png'} />}>
   <EarthClouds url={'Model_Textures/fair_clouds_4k.png'} />
-
+  </Suspense>
   
-
+  <Suspense fallback={<Earth urlTexture={'BufferTextures/basicTexture_1024x512.jpg'} urlBumpmap={'BufferTextures/bumpmap_1024x512.jpg'}  />}>
   <Earth urlTexture={'Model_Textures/basicTexture.jpg'} urlBumpmap={'Model_Textures/bumpmap.jpg'}/>
-
+</Suspense>
 </Suspense>
 </Canvas>
+<Loader/>
+
+
+
+
       <div />
       <div className={styles.swag} >
         <h1>About me</h1>
@@ -233,8 +225,4 @@ export default function App() : JSX.Element {
   )
 
 
-
-
 }
-
-
