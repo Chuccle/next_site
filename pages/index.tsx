@@ -4,15 +4,20 @@ import styles from '/styles/Home.module.css'
 import React, { useRef, useEffect } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import useWindowDimensions from "../hooks/useWindowDimensions"
-import { OrbitControls, Text } from '@react-three/drei'
 import { Suspense } from "react";
 import { TextureLoader } from 'three'
-import PropTypes from 'prop-types'
-import About from './about'
+
+
+
+import { Loader } from '@react-three/drei'
+
+
 
 function Sky({url} : {url:string}): JSX.Element {
 
   const texture = useLoader(TextureLoader,url);
+  
+
 
 
   return (
@@ -25,9 +30,7 @@ function Sky({url} : {url:string}): JSX.Element {
 
   
 }
-Sky.propTypes = {
-  url: PropTypes.string,
-}
+
 
 
 function Earth({urlTexture, urlBumpmap} : {urlTexture:string, urlBumpmap:string}): JSX.Element {
@@ -61,6 +64,8 @@ function Earth({urlTexture, urlBumpmap} : {urlTexture:string, urlBumpmap:string}
   }
 
   const [texture, bumpmap] = useLoader(TextureLoader,[urlTexture, urlBumpmap]);
+
+
 
   useFrame(state => {
 
@@ -104,6 +109,7 @@ function EarthClouds({url} : {url:string}): JSX.Element {
 
   const texture = useLoader(TextureLoader,url);
   
+
   const mesh = useRef<THREE.Mesh>()
 
   useFrame(state => {
@@ -127,10 +133,13 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
 
   const mesh = useRef<THREE.Mesh>(null)
 
-  const [texture, normalmap] = useLoader(TextureLoader,[urlTexture, urlNormalmap]);
+  const [texture, normalmap] = useLoader(TextureLoader,[urlTexture, urlNormalmap], undefined, function () {
+    console.log('loading');
+} );
 
 
-  var orbitRadius = 2; //distance from the origin 
+ 
+    var orbitRadius = 2; //distance from the origin 
   
   var incrementer
 
@@ -150,11 +159,12 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
         Math.sin(incrementer) * orbitRadius
       )
 
-      console.log(mesh.current.position)
-    }
+ 
+ }
 
 
   })
+
 
   return (
 
@@ -163,23 +173,28 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
       <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
     </mesh>
   )
+
+
 }
 
 
 export default function App() : JSX.Element {
+ 
+
+
 
 
 
 
   return (
     <div className={styles.bruh} >
-  
-
       <h1 className={styles.bruh2}>Software solutions that are</h1>
     <h1 className={styles.bruh3}>simply out of this world.</h1>
   
-  
+    
   <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
+  
+
   
   <Suspense fallback={<Sky url={'BufferTextures/galaxy_starfield_1024x512.png'} />}>
   <Sky url={'Model_Textures/galaxy_starfield.png'} />
@@ -200,6 +215,7 @@ export default function App() : JSX.Element {
 </Suspense>
 
 </Canvas>
+<Loader/>
 
       <div />
       <div className={styles.swag} >
@@ -208,5 +224,10 @@ export default function App() : JSX.Element {
       </div>
     </div>
   )
+
+
+
+
 }
+
 
