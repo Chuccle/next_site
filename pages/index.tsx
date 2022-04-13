@@ -130,29 +130,28 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
   const [texture, normalmap] = useLoader(TextureLoader,[urlTexture, urlNormalmap]);
 
 
-  var orbitRadius = 2; // for example
-
-  var date;
-
-
+  var orbitRadius = 2; //distance from the origin 
+  
+  var incrementer
 
 
   useFrame(state => {
-    date = Date.now() * 0.0001;
-
+   
+ // this will always have a set value of 0 meaning initial start position will be math.cos(0) * 2  and math.sin(0) * 2 == x:2, y:0, z:0 initial orbit position
+    incrementer = state.clock.getElapsedTime() / 5 
 
     if (mesh.current?.rotation && mesh.current?.position) {
 
       mesh.current.rotation.y += 0.001
 
       mesh.current.position.set(
-        Math.cos(date) * orbitRadius,
+        Math.cos(incrementer) * orbitRadius,
         0,
-        Math.sin(date) * orbitRadius
+        Math.sin(incrementer) * orbitRadius
       )
 
+      console.log(mesh.current.position)
     }
-
 
 
   })
@@ -204,8 +203,8 @@ export default function App() : JSX.Element {
 
       <div />
       <div className={styles.swag} >
-        <h1> EPIC</h1>
-        <p>br</p>
+        <h1>About me</h1>
+        <p>I am a </p>
       </div>
     </div>
   )
