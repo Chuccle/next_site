@@ -175,7 +175,7 @@ export default function App() : JSX.Element {
   return (
     <div className={styles.bruh} >
   
-<Suspense fallback={<About/>}>
+
       <h1 className={styles.bruh2}>Software solutions that are</h1>
     <h1 className={styles.bruh3}>simply out of this world.</h1>
   
@@ -201,7 +201,7 @@ export default function App() : JSX.Element {
 </Suspense>
 
 </Canvas>
-</Suspense>
+
       <div />
       <div className={styles.swag} >
         <h1> EPIC</h1>
