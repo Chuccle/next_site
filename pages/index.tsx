@@ -188,10 +188,17 @@ export default function App() : JSX.Element {
 
   return (
     <div className={styles.bruh} >
+      
+      <Loader/>
+      
+
+      
+      
       <h1 className={styles.bruh2}>Software solutions that are</h1>
     <h1 className={styles.bruh3}>simply out of this world.</h1>
   
-    
+  
+
   <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
   
 
@@ -213,7 +220,7 @@ export default function App() : JSX.Element {
 
 
 </Canvas>
-<Loader/>
+
 
       <div />
       <div className={styles.swag} >
