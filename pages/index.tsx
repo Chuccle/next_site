@@ -6,21 +6,21 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from "react";
-import dynamic from 'next/dynamic'
 
-const DynamicLazyComponent = dynamic(() => import('../components/SuspenseComponent'), {
-  suspense: true,
-})
 
 
 function Sky(): JSX.Element {
 
-  const texture = new THREE.TextureLoader().load('/galaxy_starfield.png');
-
+  const texture = new THREE.TextureLoader().load('Model_Textures/galaxy_starfield.png');
+  
+  const loadingtexture = new THREE.TextureLoader().load('BufferTextures/galaxy_starfield.png');
   return (
-    <mesh position={[0.0, 0.0, 0.0]}  >
+   
+   <mesh position={[0.0, 0.0, 0.0]}  >
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
+      <Suspense fallback={<meshBasicMaterial side={2} map={loadingtexture} attach="material" />}>
       <meshBasicMaterial side={2} map={texture} attach="material" />
+      </Suspense>
     </mesh>
   )
 }
@@ -57,7 +57,8 @@ function Earth() {
 
 
   const texture: THREE.Texture = new THREE.TextureLoader().load('Model_Textures/basicTexture.jpg');
-
+  const loadingTexture: THREE.Texture = new THREE.TextureLoader().load('BufferTextures/basicTexture_1024x512.jpg');
+  const loadingBumpmap: THREE.Texture = new THREE.TextureLoader().load('BufferTextures/bumpmap_1024x512.jpg');
   const bumpmap = new THREE.TextureLoader().load('Model_Textures/bumpmap.jpg');
 
   useFrame(state => {
@@ -91,8 +92,9 @@ function Earth() {
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
 
 
-
+   <Suspense fallback={<meshStandardMaterial map={loadingTexture} bumpMap={loadingBumpmap} bumpScale={0.05} />}>
       <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05} />
+      </Suspense>
       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
     </mesh>
@@ -105,7 +107,7 @@ function EarthClouds() {
   const mesh = useRef<THREE.Mesh>()
   //const shaderMat = useRef()
   const texture = new THREE.TextureLoader().load('Model_Textures/fair_clouds_4k.png');
-
+  const loadingTexture = new THREE.TextureLoader().load('BufferTextures/fair_clouds_1024x512.jpg');
 
   useFrame(state => {
     if (mesh.current?.rotation) {
@@ -116,7 +118,9 @@ function EarthClouds() {
 
   return (
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true}  >
+      <Suspense fallback={<meshPhongMaterial map={loadingTexture} transparent={true} />}>
       <meshPhongMaterial map={texture} transparent={true} />
+      </Suspense>
       <sphereBufferGeometry args={[1.01, 30.01, 30.01]} attach="geometry" />
     </mesh>
   )
@@ -128,9 +132,13 @@ function Moon() {
 
   const mesh = useRef<THREE.Mesh>(null)
 
+  const loadingTexture = new THREE.TextureLoader().load('/Model_Textures/moon1024x512.jpg');
+
   const texture = new THREE.TextureLoader().load('/Model_Textures/moon_4k_color_brim16.jpg',);
 
   const normalmap = new THREE.TextureLoader().load('/Model_Textures/moon_4k_normal.jpg',);
+
+  const loadingNormalmap = new THREE.TextureLoader().load('BufferTextures/moonNormal1024x512.jpg',);
 
   var orbitRadius = 2; // for example
 
@@ -162,16 +170,14 @@ function Moon() {
   return (
 
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
+      <Suspense fallback={<meshStandardMaterial map={loadingTexture} normalMap={loadingNormalmap} />}>
       <meshStandardMaterial map={texture} normalMap={normalmap} />
+      </Suspense>
       <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
     </mesh>
 
   )
 }
-
-
-
-
 
 
 export default function App() {
@@ -181,7 +187,15 @@ export default function App() {
   return (
     <div className={styles.bruh} >
       <Suspense fallback={'loading'}>
-<DynamicLazyComponent/>
+      <h1 className={styles.bruh2}>Software solutions that are</h1>
+    <h1 className={styles.bruh3}>simply out of this world.</h1>
+  <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
+  <Sky />
+  <directionalLight position={[1, 1, -1]} intensity={1} />
+  <Moon />
+  <EarthClouds />
+  <Earth />
+</Canvas>
       </Suspense>
       <div />
       <div className={styles.swag} >
