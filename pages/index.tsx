@@ -1,42 +1,41 @@
 
 import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import useWindowDimensions from "../hooks/useWindowDimensions"
 import { Suspense } from "react";
 import { TextureLoader } from 'three'
 
+React.useLayoutEffect = React.useEffect
+
+import { Loader } from '@react-three/drei'
 
 
-import {  Loader } from '@react-three/drei'
+function Sky({ url }: { url: string }): JSX.Element {
 
+  const texture = useLoader(TextureLoader, url);
 
-function Sky({url} : {url:string}): JSX.Element {
-
-  const texture = useLoader(TextureLoader,url);
-  
 
 
 
   return (
-   
-   <mesh position={[0.0, 0.0, 0.0]}  >
+
+    <mesh position={[0.0, 0.0, 0.0]}  >
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
       <meshBasicMaterial side={2} map={texture} attach="material" />
     </mesh>
   )
 
-  
+
 }
 
 
 
-function Earth({urlTexture, urlBumpmap} : {urlTexture:string, urlBumpmap:string}): JSX.Element {
+function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: string }): JSX.Element {
 
   const mesh = useRef<THREE.Mesh>(null)
 
-  var cameraStartPosZ = ViewportAdjustment()
+  var cameraStartPosZ = -1.75
 
   var cameraEndPosZ: number = cameraStartPosZ - 0.75
 
@@ -46,23 +45,9 @@ function Earth({urlTexture, urlBumpmap} : {urlTexture:string, urlBumpmap:string}
 
 
 
-  function ViewportAdjustment() {
-
-    // var windowWidth = useWindowDimensions().width || 0 //
-    // var windowHeight = useWindowDimensions().height || 0
 
 
-
-    //if (windowHeight > windowWidth) {
-
-    //console.log("height is greater or equal to width")
-
-
-    return -1.75
-
-  }
-
-  const [texture, bumpmap] = useLoader(TextureLoader,[urlTexture, urlBumpmap]);
+  const [texture, bumpmap] = useLoader(TextureLoader, [urlTexture, urlBumpmap]);
 
 
 
@@ -104,10 +89,10 @@ function Earth({urlTexture, urlBumpmap} : {urlTexture:string, urlBumpmap:string}
 }
 
 
-function EarthClouds({url} : {url:string}): JSX.Element {
+function EarthClouds({ url }: { url: string }): JSX.Element {
 
-  const texture = useLoader(TextureLoader,url);
-  
+  const texture = useLoader(TextureLoader, url);
+
 
   const mesh = useRef<THREE.Mesh>()
 
@@ -127,26 +112,26 @@ function EarthClouds({url} : {url:string}): JSX.Element {
 }
 
 
-function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:string}): JSX.Element {
+function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: string }): JSX.Element {
 
 
   const mesh = useRef<THREE.Mesh>(null)
 
-  const [texture, normalmap] = useLoader(TextureLoader,[urlTexture, urlNormalmap], undefined, function () {
+  const [texture, normalmap] = useLoader(TextureLoader, [urlTexture, urlNormalmap], undefined, function () {
     console.log('loading');
-} );
+  });
 
 
- 
-    var orbitRadius = 2; //distance from the origin 
-  
+
+  var orbitRadius = 2; //distance from the origin 
+
   var incrementer
 
 
   useFrame(state => {
-   
- // this will always have a set value of 0 meaning initial start position will be math.cos(0) * 2  and math.sin(0) * 2 == x:2, y:0, z:0 initial orbit position
-    incrementer = state.clock.getElapsedTime() / 5 
+
+    // this will always have a set value of 0 meaning initial start position will be math.cos(0) * 2  and math.sin(0) * 2 == x:2, y:0, z:0 initial orbit position
+    incrementer = state.clock.getElapsedTime() / 5
 
     if (mesh.current?.rotation && mesh.current?.position) {
 
@@ -158,8 +143,8 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
         Math.sin(incrementer) * orbitRadius
       )
 
- 
- }
+
+    }
 
 
   })
@@ -177,8 +162,8 @@ function Moon({urlTexture, urlNormalmap} : {urlTexture:string, urlNormalmap:stri
 }
 
 
-export default function App() : JSX.Element {
- 
+export default function App(): JSX.Element {
+
 
 
 
@@ -186,32 +171,32 @@ export default function App() : JSX.Element {
   return (
     <div className={styles.bruh} >
 
-  
-    
-  <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
 
-  <Suspense fallback={null}>
 
-  <Sky url={'Model_Textures/galaxy_starfield.png'} />
+      <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
 
-  
-  <directionalLight position={[1, 1, -1]} intensity={1} />
+        <Suspense fallback={null}>
 
-  <Moon urlTexture={'Model_Textures/moon_4k_color_brim16.jpg'} urlNormalmap={'Model_Textures/moon_4k_normal.jpg'} />
+          <Sky url={'Model_Textures/galaxy_starfield.png'} />
 
-  
 
-  <EarthClouds url={'Model_Textures/fair_clouds_4k.png'} />
+          <directionalLight position={[1, 1, -1]} intensity={1} />
 
-  
+          <Moon urlTexture={'Model_Textures/moon_4k_color_brim16.jpg'} urlNormalmap={'Model_Textures/moon_4k_normal.jpg'} />
 
-  <Earth urlTexture={'Model_Textures/basicTexture.jpg'} urlBumpmap={'Model_Textures/bumpmap.jpg'}/>
 
-</Suspense>
-</Canvas>
-<Loader/>
-<h1 className={styles.bruh2}>Software solutions that are</h1>
-    <h1 className={styles.bruh3}>simply out of this world.</h1>
+
+          <EarthClouds url={'Model_Textures/fair_clouds_4k.png'} />
+
+
+
+          <Earth urlTexture={'Model_Textures/basicTexture.jpg'} urlBumpmap={'Model_Textures/bumpmap.jpg'} />
+
+        </Suspense>
+      </Canvas>
+      <Loader />
+      <h1 className={styles.bruh2}>Software solutions that are</h1>
+      <h1 className={styles.bruh3}>simply out of this world.</h1>
       <div />
       <div className={styles.swag} >
         <h1>About me</h1>
