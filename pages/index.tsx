@@ -1,29 +1,41 @@
 
 import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import useWindowDimensions from "../hooks/useWindowDimensions"
-import { OrbitControls } from '@react-three/drei'
+import { Suspense } from "react";
+import { TextureLoader } from 'three'
+
+React.useLayoutEffect = React.useEffect
+
+import { Loader } from '@react-three/drei'
 
 
-function Sky(): JSX.Element {
+function Sky({ url }: { url: string }): JSX.Element {
 
-  const texture = new THREE.TextureLoader().load('/galaxy_starfield.png');
+  const texture = useLoader(TextureLoader, url);
+
+
+
 
   return (
+
     <mesh position={[0.0, 0.0, 0.0]}  >
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
       <meshBasicMaterial side={2} map={texture} attach="material" />
     </mesh>
   )
+
+
 }
 
-function Earth() {
+
+
+function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: string }): JSX.Element {
 
   const mesh = useRef<THREE.Mesh>(null)
 
-  var cameraStartPosZ = ViewportAdjustment()
+  var cameraStartPosZ = -1.75
 
   var cameraEndPosZ: number = cameraStartPosZ - 0.75
 
@@ -33,29 +45,13 @@ function Earth() {
 
 
 
-  function ViewportAdjustment() {
-
-    // var windowWidth = useWindowDimensions().width || 0 //
-    // var windowHeight = useWindowDimensions().height || 0
 
 
-
-    //if (windowHeight > windowWidth) {
-
-    //console.log("height is greater or equal to width")
+  const [texture, bumpmap] = useLoader(TextureLoader, [urlTexture, urlBumpmap]);
 
 
-    return -1.75
-
-  }
-
-
-  const texture: THREE.Texture = new THREE.TextureLoader().load('Model_Textures/basicTexture.jpg');
-
-  const bumpmap = new THREE.TextureLoader().load('Model_Textures/bumpmap.jpg');
 
   useFrame(state => {
-
 
 
     if (mesh.current?.rotation) {
@@ -84,9 +80,8 @@ function Earth() {
   return (
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
 
-
-
       <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05} />
+
       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
     </mesh>
@@ -94,12 +89,12 @@ function Earth() {
 }
 
 
-function EarthClouds() {
+function EarthClouds({ url }: { url: string }): JSX.Element {
+
+  const texture = useLoader(TextureLoader, url);
+
 
   const mesh = useRef<THREE.Mesh>()
-  //const shaderMat = useRef()
-  const texture = new THREE.TextureLoader().load('Model_Textures/fair_clouds_4k.png');
-
 
   useFrame(state => {
     if (mesh.current?.rotation) {
@@ -117,41 +112,43 @@ function EarthClouds() {
 }
 
 
-function Moon() {
+function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: string }): JSX.Element {
 
 
   const mesh = useRef<THREE.Mesh>(null)
 
-  const texture = new THREE.TextureLoader().load('/Model_Textures/moon_4k_color_brim16.jpg',);
-
-  const normalmap = new THREE.TextureLoader().load('/Model_Textures/moon_4k_normal.jpg',);
-
-  var orbitRadius = 2; // for example
-
-  var date;
+  const [texture, normalmap] = useLoader(TextureLoader, [urlTexture, urlNormalmap], undefined, function () {
+    console.log('loading');
+  });
 
 
+
+  var orbitRadius = 2; //distance from the origin 
+
+  var incrementer
 
 
   useFrame(state => {
-    date = Date.now() * 0.0001;
 
+    // this will always have a set value of 0 meaning initial start position will be math.cos(0) * 2  and math.sin(0) * 2 == x:2, y:0, z:0 initial orbit position
+    incrementer = state.clock.getElapsedTime() / 5
 
     if (mesh.current?.rotation && mesh.current?.position) {
 
       mesh.current.rotation.y += 0.001
 
       mesh.current.position.set(
-        Math.cos(date) * orbitRadius,
+        Math.cos(incrementer) * orbitRadius,
         0,
-        Math.sin(date) * orbitRadius
+        Math.sin(incrementer) * orbitRadius
       )
+
 
     }
 
 
-
   })
+
 
   return (
 
@@ -159,34 +156,54 @@ function Moon() {
       <meshStandardMaterial map={texture} normalMap={normalmap} />
       <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
     </mesh>
-
   )
+
+
 }
 
 
+export default function App(): JSX.Element {
 
 
 
 
-export default function App() {
 
   return (
     <div className={styles.bruh} >
+
+
+
+      <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
+
+        <Suspense fallback={null}>
+
+          <Sky url={'Model_Textures/galaxy_starfield.png'} />
+
+
+          <directionalLight position={[1, 1, -1]} intensity={1} />
+
+          <Moon urlTexture={'Model_Textures/moon_4k_color_brim16.jpg'} urlNormalmap={'Model_Textures/moon_4k_normal.jpg'} />
+
+
+
+          <EarthClouds url={'Model_Textures/fair_clouds_4k.png'} />
+
+
+
+          <Earth urlTexture={'Model_Textures/basicTexture.jpg'} urlBumpmap={'Model_Textures/bumpmap.jpg'} />
+
+        </Suspense>
+      </Canvas>
+      <Loader />
       <h1 className={styles.bruh2}>Software solutions that are</h1>
       <h1 className={styles.bruh3}>simply out of this world.</h1>
-      <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
-        <Sky />
-        <directionalLight position={[1, 1, -1]} intensity={1} />
-        <Moon />
-        <EarthClouds />
-        <Earth />
-      </Canvas>
       <div />
       <div className={styles.swag} >
-        <h1> EPIC</h1>
-        <p>br</p>
+        <h1>About me</h1>
+        <p>I am a </p>
       </div>
     </div>
   )
-}
 
+
+}
