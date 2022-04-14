@@ -1,22 +1,25 @@
 
 import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Suspense } from "react";
-import { TextureLoader } from 'three'
+import { TextureLoader} from 'three'
+import {Text,} from '@react-three/drei'
+import { Loader,  } from '@react-three/drei'
+import useWindowDimensions  from '../hooks/useWindowDimensions';
+
+
+
 
 React.useLayoutEffect = React.useEffect
 
-import { Loader } from '@react-three/drei'
 
 
 function Sky({ url }: { url: string }): JSX.Element {
 
+
   const texture = useLoader(TextureLoader, url);
-
-
-
 
   return (
 
@@ -31,11 +34,66 @@ function Sky({ url }: { url: string }): JSX.Element {
 
 
 
+
+function ViewportZoomAdjustment() {
+
+
+  const { width, height } = useWindowDimensions();
+
+  if (width !== undefined && height !== undefined) {
+    switch (true) {
+
+      case  width <= 2560:
+        return -1.8
+
+      case  width <= 768:
+
+        return -2
+
+      case  width <= 480:
+
+        return -2.2
+
+      }
+
+
+  
+    }
+  
+  return -1.6
+  }
+
+
+
+
+
+
+
+
+
 function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: string }): JSX.Element {
 
   const mesh = useRef<THREE.Mesh>(null)
+  
+  const { width, height } = useWindowDimensions();
 
-  var cameraStartPosZ = -1.75
+  if (width !== undefined && height !== undefined) {
+console.log(width, height)
+  
+
+
+
+
+}
+
+
+
+
+  
+
+
+
+  const cameraStartPosZ = ViewportZoomAdjustment()
 
   var cameraEndPosZ: number = cameraStartPosZ - 0.75
 
@@ -78,7 +136,7 @@ function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: str
 
 
   return (
-    <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
+    <mesh position={[0.0, 0.0, 0.0]}  ref={mesh} castShadow={true} receiveShadow={true} >
 
       <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05} />
 
@@ -123,7 +181,7 @@ function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: 
 
 
 
-  var orbitRadius = 2; //distance from the origin 
+  var orbitRadius = 1.8; //distance from the origin 
 
   var incrementer
 
@@ -167,7 +225,6 @@ export default function App(): JSX.Element {
 
 
 
-
   return (
     <div className={styles.bruh} >
 
@@ -176,11 +233,14 @@ export default function App(): JSX.Element {
       <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
 
         <Suspense fallback={null}>
-
+        <Text color="white" position={[0,0,-1.4]} rotation={[0,-9.4,0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff" >Software Development that is</Text>
+<Text color="white" position={[0,-0.1,-2.1]} rotation={[0,-9.4,0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff"  >Simply out of this world.</Text>
           <Sky url={'Model_Textures/galaxy_starfield.png'} />
 
 
           <directionalLight position={[1, 1, -1]} intensity={1} />
+
+
 
           <Moon urlTexture={'Model_Textures/moon_4k_color_brim16.jpg'} urlNormalmap={'Model_Textures/moon_4k_normal.jpg'} />
 
@@ -195,8 +255,7 @@ export default function App(): JSX.Element {
         </Suspense>
       </Canvas>
       <Loader />
-      <h1 className={styles.bruh2}>Software solutions that are</h1>
-      <h1 className={styles.bruh3}>simply out of this world.</h1>
+
       <div />
       <div className={styles.swag} >
         <h1>About me</h1>
