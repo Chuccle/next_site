@@ -4,11 +4,11 @@ import styles from '/styles/Home.module.css'
 import React, { useEffect, useRef } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Suspense } from "react";
-import { TextureLoader} from 'three'
+import { PerspectiveCamera, TextureLoader} from 'three'
 import {Text,} from '@react-three/drei'
 import { Loader,  } from '@react-three/drei'
 import useWindowDimensions  from '../hooks/useWindowDimensions';
-
+import {useAspect} from '@react-three/drei'
 
 
 
@@ -19,11 +19,13 @@ React.useLayoutEffect = React.useEffect
 function Sky({ url }: { url: string }): JSX.Element {
 
 
+
   const texture = useLoader(TextureLoader, url);
 
   return (
 
-    <mesh position={[0.0, 0.0, 0.0]}  >
+    <mesh   position={[0.0, 0.0, 0.0]}  >
+      <Text scale={ViewportScaleAdjustment()}  outlineColor="white" outlineWidth={0.005}  color="black" position={[0, 0, -1.4]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">Software Development that is</Text><Text  scale={ViewportScaleAdjustment()}    color="white" position={[0, -0.075, -2.1]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">simply out</Text><Text scale={ViewportScaleAdjustment()}    color="white"  position={[0, -0.175, -2.1]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">of this world.</Text>
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
       <meshBasicMaterial side={2} map={texture} attach="material" />
     </mesh>
@@ -35,36 +37,31 @@ function Sky({ url }: { url: string }): JSX.Element {
 
 
 
-function ViewportZoomAdjustment() {
+function ViewportScaleAdjustment() {
 
 
   const { width, height } = useWindowDimensions();
 
   if (width !== undefined && height !== undefined) {
-    switch (true) {
-
-      case  width <= 2560:
-        return -1.8
-
-      case  width <= 768:
-
-        return -2
-
-      case  width <= 480:
-
-        return -2.2
-
-      }
 
 
-  
-    }
-  
-  return -1.6
+    if (width < 400) {
+     
+      return 0.5 } 
+      
+      else if (width < 500) {
+     
+      return 0.6
+      
+    } else if (width < 610) {
+
+      return 0.75
+
+}
   }
 
-
-
+return 1
+}
 
 
 
@@ -75,27 +72,16 @@ function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: str
 
   const mesh = useRef<THREE.Mesh>(null)
   
-  const { width, height } = useWindowDimensions();
+  const scale = useAspect(
+    // Aspect ratio: cover | ... more to come, PR's welcome ;)
+1,                     // Pixel-width
+1,                      // Pixel-height
+           // Optional scaling factor
+)
 
-  if (width !== undefined && height !== undefined) {
-console.log(width, height)
-  
+  const cameraStartPosZ = -1.8
 
-
-
-
-}
-
-
-
-
-  
-
-
-
-  const cameraStartPosZ = ViewportZoomAdjustment()
-
-  var cameraEndPosZ: number = cameraStartPosZ - 0.75
+  var cameraEndPosZ: number = cameraStartPosZ - 0.8
 
   var currentPosZ: number = cameraStartPosZ
 
@@ -129,14 +115,13 @@ console.log(width, height)
 
 
     //we set the position of the camera to the currentPosZ    
-    state.camera.position.z = currentPosZ
-
-
+    
+state.camera.position.set(0, 0, currentPosZ)
   })
 
 
   return (
-    <mesh position={[0.0, 0.0, 0.0]}  ref={mesh} castShadow={true} receiveShadow={true} >
+    <mesh  position={[0.0, 0.0, 0.0]}  ref={mesh} castShadow={true} receiveShadow={true} >
 
       <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05} />
 
@@ -152,7 +137,7 @@ function EarthClouds({ url }: { url: string }): JSX.Element {
   const texture = useLoader(TextureLoader, url);
 
 
-  const mesh = useRef<THREE.Mesh>()
+  const mesh = useRef<THREE.Mesh>(null)
 
   useFrame(state => {
     if (mesh.current?.rotation) {
@@ -203,7 +188,7 @@ function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: 
 
 
     }
-
+    
 
   })
 
@@ -211,6 +196,7 @@ function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: 
   return (
 
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
+     
       <meshStandardMaterial map={texture} normalMap={normalmap} />
       <sphereBufferGeometry args={[0.25, 120, 120]} attach="geometry" />
     </mesh>
@@ -222,7 +208,12 @@ function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: 
 
 export default function App(): JSX.Element {
 
+  
 
+ 
+
+  
+  
 
 
   return (
@@ -230,11 +221,12 @@ export default function App(): JSX.Element {
 
 
 
-      <Canvas shadows={true} camera={{ position: [0, 0, -0.1] }}>
+      <Canvas  shadows={true} camera={{ position: [0, 0, -1.4] }   }  >
+
 
         <Suspense fallback={null}>
-        <Text color="white" position={[0,0,-1.4]} rotation={[0,-9.4,0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff" >Software Development that is</Text>
-<Text color="white" position={[0,-0.1,-2.1]} rotation={[0,-9.4,0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff"  >Simply out of this world.</Text>
+
+
           <Sky url={'Model_Textures/galaxy_starfield.png'} />
 
 
