@@ -25,7 +25,8 @@ background-color: white;
   
 	position: absolute;
 
-width: 100%;
+width: 100vw;
+
 
 
 }
@@ -116,19 +117,45 @@ text-color:white;
 color:white;
 
 }
+
 .box {
+  position: relative;
   z-index:10;
   background-color: #3b4351;
   margin-top: -1rem;
-  margin-left:10vw;
-  margin-right:10vw;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 border-radius: 1rem;  
 display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-
+grid-template-columns: repeat(3, 1fr);
+margin-left: 10vw;
+margin-right: 10vw;
   
 
+}
+
+
+@media (max-width: 600px) {
+  .box {
+    grid-template-columns: 1fr;
+  }
+
+  .section1 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    
+  }
+
+  .section2 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    border-top:0.5px dashed #252730;
+    border-bottom:0.5px dashed #252730;
+  }
+
+  .section3 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
 }
 
 
