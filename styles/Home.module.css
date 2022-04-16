@@ -1,6 +1,4 @@
-.container {
-  padding: 0 2rem;
-}
+
 
 .main {
   min-height: 100vh;
@@ -12,13 +10,124 @@
   align-items: center;
 }
 
+.accent{
+height: 60vh;
+background-color: white;
+
+
+}
+
 .swag{
-  background-color: white;
-  padding: 0 0rem;
-  margin:0 0rem;
-  max-width: 100%;
-  max-height: 100%;
-  height:100vh;
+ 
+
+
+  background-color: #252730;
+  
+	position: absolute;
+
+width: 100%;
+
+
+}
+
+
+
+
+
+.IntroBox{
+z-index:10;
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+}
+
+.IntroText {
+  z-index:10;
+  font-size:2rem;
+  font-family: Arial,Helvetica Neue,Helvetica,sans-serif; 
+  color:black;
+  text-align:center;
+  margin-bottom:10rem;
+
+}
+
+
+.boxTitleText{
+  z-index:10;
+  font-size:2rem;
+  font-family: Arial,Helvetica Neue,Helvetica,sans-serif; 
+  color:white;
+  text-align:center;
+  margin-bottom:10rem;
+
+}
+
+.section1{
+  z-index:10;
+  font-color:white;
+  justify-content:center;
+  text-align:center;
+grid-column-start:1;
+grid-column-end:1;
+
+}
+
+
+.section1Icon {
+
+width:5vw;
+margin-top:3vw;
+color:white;
+fill:white;
+
+
+stroke:white;
+
+
+
+
+}
+
+.section2{
+  z-index:10;
+  justify-content:center;
+  text-align:center;
+grid-column-start:2;
+grid-column-end:2;
+border-left:0.5px dashed #252730;
+border-right:0.5px dashed #252730;
+
+}
+
+.section3{
+  z-index:10;
+  justify-content:center;
+grid-column-start:3;
+grid-column-end:3;
+text-align:center;
+
+}
+
+
+.AboutMe {
+  z-index:10;
+text-color:white;
+color:white;
+
+}
+.box {
+  z-index:10;
+  background-color: #3b4351;
+  margin-top: -1rem;
+  margin-left:10vw;
+  margin-right:10vw;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 1rem;  
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+
+  
 
 }
 

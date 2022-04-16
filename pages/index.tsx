@@ -14,10 +14,6 @@ import { useCamera } from '@react-three/drei'
 
 React.useLayoutEffect = React.useEffect
 
-
-
-
-
 function ResponsiveCamera() {
 
   const context = useThree()
@@ -73,14 +69,14 @@ function ResponsiveCamera() {
 
 function Sky({ url }: { url: string }): JSX.Element {
 
-
-
   const texture = useLoader(TextureLoader, url);
 
   return (
 
     <mesh position={[0.0, 0.0, 0.0]}  >
-      <Text outlineColor="white" outlineWidth={0.005} color="black" position={[0, 0, -1.4]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">Software Development that is</Text><Text color="white" position={[0, -0.075, -2.1]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">simply out</Text><Text color="white" position={[0, -0.175, -2.1]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">of this world.</Text>
+      <Text outlineColor="white" outlineWidth={0.005} color="black" position={[0, 0, -1.4]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">Software Development that is</Text>
+      <Text color="white" position={[0, -0.075, -2.1]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">simply out</Text>
+      <Text color="white" position={[0, -0.175, -2.1]} rotation={[0, -9.4, 0]} anchorX="center" anchorY="middle" font="/fonts/Roboto-Black-webfont.woff">of this world.</Text>
       <boxBufferGeometry args={[100, 100, 100]} attach="geometry" />
       <meshBasicMaterial side={2} map={texture} attach="material" />
     </mesh>
@@ -91,19 +87,9 @@ function Sky({ url }: { url: string }): JSX.Element {
 
 
 
-
-
-
-
-
-
 function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: string }): JSX.Element {
 
   const mesh = useRef<THREE.Mesh>(null)
-
-
-
-
 
   const cameraStartPosZ = -1.8
 
@@ -111,11 +97,7 @@ function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: str
 
   var currentPosZ: number = cameraStartPosZ
 
-
   const [texture, bumpmap] = useLoader(TextureLoader, [urlTexture, urlBumpmap]);
-
-
-
 
   useFrame(state => {
 
@@ -157,7 +139,6 @@ function EarthClouds({ url }: { url: string }): JSX.Element {
 
   const texture = useLoader(TextureLoader, url);
 
-
   const mesh = useRef<THREE.Mesh>(null)
 
   useFrame(state => {
@@ -177,8 +158,6 @@ function EarthClouds({ url }: { url: string }): JSX.Element {
 
 
 function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: string }): JSX.Element {
-
-
 
   const mesh = useRef<THREE.Mesh>(null)
 
@@ -230,17 +209,12 @@ function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: 
 
 export default function App(): JSX.Element {
 
-
-
-
-
-
   return (
-    <div className={styles.bruh} >
+    <div className={styles.bruh}>
 
 
 
-      <Canvas shadows={true}   >
+      <Canvas shadows={true}>
 
 
 
@@ -270,12 +244,31 @@ export default function App(): JSX.Element {
       </Canvas>
       <Loader />
 
-      <div />
+
       <div className={styles.swag} >
-        <h1>About me</h1>
-        <p>I am a </p>
+       <div className={styles.container}></div>
+        <div className={styles.box}>
+        
+          <div className={styles.section1}>
+          <img className={styles.section1Icon} src={'/Site_Assets/Icon.svg'} />
+            <h1 className={styles.boxTitleText}>example 1</h1>
+          
+        </div>
+        
+        <div className={styles.section2}>
+        <img className={styles.section1Icon} src={'/Site_Assets/html2.svg'} />
+            <h1 className={styles.boxTitleText}>example 2</h1>
+        </div>
+
+        <div className={styles.section3}>
+        <img className={styles.section1Icon} src={'/Site_Assets/html3.svg'} />
+            <h1 className={styles.boxTitleText}>example 3</h1>
+        </div>
+        </div>
       </div>
     </div>
+
+  
   )
 
 
