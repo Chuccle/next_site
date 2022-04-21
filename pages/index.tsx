@@ -10,6 +10,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useSpring, animated } from '@react-spring/three'
 import { useGesture } from '@use-gesture/react'
 import { useCamera } from '@react-three/drei'
+import Image from 'next/image'
 
 
 React.useLayoutEffect = React.useEffect
@@ -27,23 +28,25 @@ function ResponsiveCamera() {
 
     case context.viewport.aspect < 0.5:
 
-      //   context.camera.fov = 110
+      //     --> broken   context.camera.fov = 110
 
       fov.current = 110
 
       break;
 
+
     case context.viewport.aspect < 0.6:
 
-      //  context.camera.fov = 100
+      //    --> broken    context.camera.fov = 100
 
       fov.current = 100
 
+
       break;
 
-    case context.viewport.aspect < 0.8:
+    case context.viewport.aspect < 0.7:
 
-      // context.camera.fov = 90
+      //    --> broken  context.camera.fov = 90
 
       fov.current = 90
 
@@ -51,10 +54,20 @@ function ResponsiveCamera() {
 
     default:
 
-      // context.camera.fov = 75
+      //     --> broken  context.camera.fov = 75
 
-      fov.current = 75
+      fov.current = 80
   }
+
+
+  // Less verbose and is too tricky to follow a linear formula 
+
+  //if (context.viewport.aspect < 0.7) {
+  // fov.current = 10 * (context.viewport.aspect + 10)
+  // }
+
+
+
 
 
   return (<mesh>
@@ -244,31 +257,102 @@ export default function App(): JSX.Element {
       </Canvas>
       <Loader />
 
+      <section className={styles.accent}>
 
-      <div className={styles.swag} >
-       <div className={styles.container}></div>
+
+
+        <img
+          src="/Site_Assets/spaceman.png"
+          alt="Picture of the author"
+          className={styles.IntroImage}
+        />
+
+
+
+        <div className={styles.Introbox}>
+
+          <h1 className={styles.IntroTitleText}>Hi, my name is Charlie</h1>
+          <p className={styles.IntroText}>I am a software developer that is always pushing the boundaries on what is possible. </p>
+        </div>
+      </section>
+      <section className={styles.background}>
         <div className={styles.box}>
-        
+
           <div className={styles.section1}>
-          <img className={styles.section1Icon} src={'/Site_Assets/Icon.svg'} />
-            <h1 className={styles.boxTitleText}>example 1</h1>
-          
-        </div>
-        
-        <div className={styles.section2}>
-        <img className={styles.section1Icon} src={'/Site_Assets/html2.svg'} />
-            <h1 className={styles.boxTitleText}>example 2</h1>
+            <img className={styles.section1Icon} src={'/Site_Assets/Icon.svg'} />
+
+            <h1 className={styles.boxTitleText}>Front-end Development</h1>
+            <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
+
+            <h2>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
+
+            <h2>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
+
+            <h2>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
+
+          </div>
+
+          <div className={styles.section2}>
+            <img className={styles.section1Icon} src={'/Site_Assets/html2.svg'} />
+            <h1 className={styles.boxTitleText}>Application Architecture </h1>
+            <p className={styles.boxText}>Designing software stacks and designing and researching into solutions</p>
+            <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
+          </div>
+
+          <div className={styles.section3}>
+            <img className={styles.section1Icon} src={'/Site_Assets/html3.svg'} />
+            <h1 className={styles.boxTitleText}>Back-end Development</h1>
+            <p className={styles.boxText}>Efficient SQL schema, MySQL, MariaDB, MongoDB and Node.js with Express</p>
+          </div>
+
         </div>
 
-        <div className={styles.section3}>
-        <img className={styles.section1Icon} src={'/Site_Assets/html3.svg'} />
-            <h1 className={styles.boxTitleText}>example 3</h1>
+
+      </section>
+
+      <section className={styles.background}>
+
+
+        <div className={styles.container}>
+
+          <h1 className={styles.ProjectSectionTitleText}>My projects</h1>
+          <p className={styles.IntroText}>Here are some projects I have created </p>
+
+          <div className={styles.projectgrid}>
+            <div className={styles.card1}>
+              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            </div>
+            <div className={styles.card2}>
+              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            </div>
+
+            <div className={styles.card3}>
+              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            </div>
+
+            <div className={styles.card4}>
+              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            </div>
+
+            <div className={styles.card5}>
+              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            </div>
+
+            <div className={styles.card6}>
+              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            </div>
+          </div>
+
+
         </div>
-        </div>
-      </div>
+      </section>
     </div>
 
-  
+
+
   )
 
 
