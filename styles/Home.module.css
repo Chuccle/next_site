@@ -167,14 +167,29 @@
 
 }
 
+
+.gridthumb:hover {
+
+  opacity: 0.0;
+font-size: 1.5rem;
+
+
+}
+
+
+
+
+
+
 .card1 {
 
-
-
+font-size: 0;
+  background-color: #35858B;
   grid-column-start: 1;
   grid-rows-end: 1;
   border: thin gray solid;
-  border-radius: 10px;
+  border-radius: 1rem;
+  width: 30vw;
   height: 30vh
 
 
@@ -184,7 +199,7 @@
 
   width: fill;
   height: fill;
-  border-radius: 10px;
+  border-radius: 1rem;
 
 
 
@@ -193,72 +208,80 @@
 
 .card2 {
 
-
+  font-size: 0;
+  background-color: #35858B;
   grid-column-start: 2;
   grid-rows-end: 1;
   border: thin gray solid;
-  border-radius: 10px;
+  border-radius: 1rem;
+  width: 30vw;
   height: 30vh
 
 }
 
 .card3 {
 
-
+  font-size: 0;
+  background-color: #35858B;
   grid-column-start: 3;
   grid-rows-end: 1;
   border: thin gray solid;
-  border-radius: 10px;
+  border-radius: 1rem;
+  width: 30vw;
   height: 30vh
 }
 
 .card4 {
 
-
+  font-size: 0;
+  background-color: #35858B;
   grid-column-start: 1;
   grid-rows-end: 2;
   border: thin gray solid;
-  border-radius: 10px;
-  height: 30vh
+  border-radius: 1rem;
+  height: 30vh;
+  width: 30vw;
 }
 
 
 .card5 {
 
-
+  font-size: 0;
+  background-color: #35858B;
   grid-column-start: 2;
   grid-rows-end: 2;
   border: thin gray solid;
-  border-radius: 10px;
-  height: 30vh
+  border-radius: 1rem;
+  height: 30vh;
+  width: 30vw;
+
 }
 
 .card6 {
 
-
+  font-size: 0;
+  background-color: #35858B;
   grid-column-start: 3;
   grid-rows-end: 2;
   border: thin gray solid;
-  border-radius: 10px;
-  height: 30vh
+  border-radius: 1rem;
+  width: 30vw;
+  height: 30vh;
 }
 
 
 .projectgrid {
 
   z-index: 10;
-  background-color: #3b4351;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* 3 columns */
   grid-template-rows: repeat(2, 1fr);
-  grid-gap: 2rem;
-  margin-left: 10vw;
-  margin-right: 10vw;
-  
-  padding: 2rem
+  grid-gap: 2vw 2vh;
+
+  width:auto;
+  padding: 2vw;
 
 
 }
@@ -278,7 +301,7 @@
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .box {
     grid-template-columns: 1fr;
   }
@@ -286,40 +309,46 @@
   .card1 {
     grid-column-start: 1;
     grid-rows-end: 1;
+    width: 100%;
+
 
   }
 
   .card2  {
     grid-column-start: 1;
+    width: 100%;
 
 
   }
 
   .card3 {
     grid-column-start: 1;
+    width: 100%;
 
 
   }
 
   .card4 {
     grid-column-start: 1;
-
+    width: 100%;
 
   }
   .card5 {
     grid-column-start: 1;
-
+    width: 100%;
 
   }
 
   .card6 {
     grid-column-start: 1;
-
+    width: 100%;
 
   }
 
   .projectgrid {
     grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: auto;
   }
 
   .section1 {

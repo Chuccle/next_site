@@ -323,6 +323,8 @@ export default function App(): JSX.Element {
 
           <div className={styles.projectgrid}>
             <div className={styles.card1}>
+              
+             
               <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
             </div>
             <div className={styles.card2}>
