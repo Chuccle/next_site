@@ -24,7 +24,15 @@
 }
 
 
+.subheading{
+  z-index: 10;
+  font-size: 1.5rem;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  color: white;
+  text-align: center;
 
+
+}
 
 .boxText {
 
@@ -33,8 +41,11 @@
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   color: white;
   text-align: center;
+  margin:2rem;
+  margin-bottom:8vh;
 
 }
+
 
 
 .IntroBox {
@@ -168,29 +179,46 @@
 }
 
 
-.gridthumb:hover {
 
-  opacity: 0.0;
-font-size: 1.5rem;
 
+.caption {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  z-index:-1;
+  transition: 0.3s;
+  font-size: 1.5rem;
+  font-size:3rem;
+   
+}
+
+
+.gridthumb:hover{
+
+  transition: 0.3s;
+  opacity: 0.35;
+filter: blur(5px);
 
 }
 
 
 
-
-
-
 .card1 {
 
-font-size: 0;
   background-color: #35858B;
   grid-column-start: 1;
   grid-rows-end: 1;
   border: thin gray solid;
   border-radius: 1rem;
   width: 30vw;
-  height: 30vh
+  height: 30vh;
+  z-index: 100;
+  position: relative;
+ 
 
 
 }
@@ -201,39 +229,38 @@ font-size: 0;
   height: fill;
   border-radius: 1rem;
 
-
-
-
 }
 
 .card2 {
 
-  font-size: 0;
+
   background-color: #35858B;
   grid-column-start: 2;
   grid-rows-end: 1;
   border: thin gray solid;
   border-radius: 1rem;
   width: 30vw;
-  height: 30vh
-
+  height: 30vh;
+  z-index: 100;
+  position: relative;
 }
 
 .card3 {
 
-  font-size: 0;
   background-color: #35858B;
   grid-column-start: 3;
   grid-rows-end: 1;
   border: thin gray solid;
   border-radius: 1rem;
   width: 30vw;
-  height: 30vh
+  height: 30vh;
+  position: relative;
+  z-index: 100;
+  position: relative;
 }
 
 .card4 {
 
-  font-size: 0;
   background-color: #35858B;
   grid-column-start: 1;
   grid-rows-end: 2;
@@ -241,12 +268,13 @@ font-size: 0;
   border-radius: 1rem;
   height: 30vh;
   width: 30vw;
+  z-index: 100;
+  position: relative;
 }
 
 
 .card5 {
 
-  font-size: 0;
   background-color: #35858B;
   grid-column-start: 2;
   grid-rows-end: 2;
@@ -254,12 +282,13 @@ font-size: 0;
   border-radius: 1rem;
   height: 30vh;
   width: 30vw;
+  z-index: 100;
+  position: relative;
 
 }
 
 .card6 {
 
-  font-size: 0;
   background-color: #35858B;
   grid-column-start: 3;
   grid-rows-end: 2;
@@ -267,6 +296,8 @@ font-size: 0;
   border-radius: 1rem;
   width: 30vw;
   height: 30vh;
+  z-index: 100;
+  position: relative;
 }
 
 

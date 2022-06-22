@@ -1,16 +1,13 @@
 
 import * as THREE from 'three'
 import styles from '/styles/Home.module.css'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import { Suspense } from "react";
-import { TextureLoader, CameraHelper, Camera, Vector3 } from 'three'
-import { Text, Loader, OrthographicCamera, PerspectiveCamera, OrbitControls } from '@react-three/drei'
-import useWindowDimensions from '../hooks/useWindowDimensions';
-import { useSpring, animated } from '@react-spring/three'
-import { useGesture } from '@use-gesture/react'
-import { useCamera } from '@react-three/drei'
-import Image from 'next/image'
+import { TextureLoader } from 'three'
+import { Text, Loader, PerspectiveCamera } from '@react-three/drei'
+
+
 
 
 React.useLayoutEffect = React.useEffect
@@ -139,7 +136,7 @@ function Earth({ urlTexture, urlBumpmap }: { urlTexture: string, urlBumpmap: str
   return (
     <mesh position={[0.0, 0.0, 0.0]} ref={mesh} castShadow={true} receiveShadow={true} >
 
-      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.05} />
+      <meshStandardMaterial map={texture} bumpMap={bumpmap} bumpScale={0.15} />
 
       <sphereBufferGeometry args={[1, 60, 60]} attach="geometry" />
 
@@ -284,21 +281,26 @@ export default function App(): JSX.Element {
             <h1 className={styles.boxTitleText}>Front-end Development</h1>
             <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
 
-            <h2>Lorem ipsum dolor amet </h2>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
             <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
 
-            <h2>Lorem ipsum dolor amet </h2>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
             <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
 
-            <h2>Lorem ipsum dolor amet </h2>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
             <p className={styles.boxText} >Javascript, Typescript, HTML, CSS and frameworks like React and Next.js</p>
-
           </div>
 
           <div className={styles.section2}>
             <img className={styles.section1Icon} src={'/Site_Assets/html2.svg'} />
             <h1 className={styles.boxTitleText}>Application Architecture </h1>
-            <p className={styles.boxText}>Designing software stacks and designing and researching into solutions</p>
+            <p className={styles.boxText}>Designing software stacks and designing and researching into solutions 
+            <br/>Security, understanding of vulnerabilities and secure solutions (JWT)</p>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
             <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
           </div>
 
@@ -306,6 +308,13 @@ export default function App(): JSX.Element {
             <img className={styles.section1Icon} src={'/Site_Assets/html3.svg'} />
             <h1 className={styles.boxTitleText}>Back-end Development</h1>
             <p className={styles.boxText}>Efficient SQL schema, MySQL, MariaDB, MongoDB and Node.js with Express</p>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
+            <h2 className={styles.subheading}>Lorem ipsum dolor amet </h2>
+            <p className={styles.boxText}>Security, understanding of vulnerabilities and secure solutions (JWT) </p>
+
           </div>
 
         </div>
@@ -322,33 +331,40 @@ export default function App(): JSX.Element {
           <p className={styles.IntroText}>Here are some projects I have created </p>
 
           <div className={styles.projectgrid}>
+            
             <div className={styles.card1}>
-              
-             
+            <a href="quizapp">
               <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+              </a>
+              <p className={styles.caption}>Quizapp</p>
             </div>
+            
             <div className={styles.card2}>
-              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            <a href="alarmsystem"> <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img></a>
+            <p className={styles.caption}>Alarm System</p>
             </div>
 
             <div className={styles.card3}>
-              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            <a href="taxiapp"> <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img> </a>
+            <p className={styles.caption}>TaxiApp</p>
             </div>
 
             <div className={styles.card4}>
-              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            <a href="rentalapp"> <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img></a>
+            <p className={styles.caption}>Car rental app</p>
             </div>
 
             <div className={styles.card5}>
-              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            <a href="phpwebpage">  <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img></a>
+            <p className={styles.caption}>PHP website</p>
             </div>
 
             <div className={styles.card6}>
-              <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img>
+            <a href="portfolio">   <img className={styles.gridthumb} src={'/Site_Assets/Quizapp.png'}></img></a>
+            <p className={styles.caption}>Portfolio site</p>
             </div>
+          
           </div>
-
-
         </div>
       </section>
     </div>
