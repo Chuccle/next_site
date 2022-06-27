@@ -189,7 +189,7 @@ function Moon({ urlTexture, urlNormalmap }: { urlTexture: string, urlNormalmap: 
 
     if (mesh.current?.rotation && mesh.current?.position) {
 
-      mesh.current.rotation.y += 0.001
+      mesh.current.rotation.y += 0.0015
 
       mesh.current.position.set(
         Math.cos(incrementer) * orbitRadius,
@@ -259,7 +259,7 @@ export default function App(): JSX.Element {
 
 
         <img
-          src="/Site_Assets/spaceman.png"
+          src="/Site_Assets/Spaceman.png"
           alt="Picture of the author"
           className={styles.IntroImage}
         />
