@@ -2,12 +2,12 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
-export default function Quizapp() {
+export default function CV() {
   return (
     <>
       <div className={styles.container}>
         <Head>
-          <title>The making of quizapp</title>
+          <title>Charlie Cohen CV</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
@@ -27,7 +27,7 @@ export default function Quizapp() {
             token to provide both a http cookie for the refresh token
             authorization header for a session.
             <br />
-            The refresh and access token contain the user`s id in the table. The
+            The refresh and access token contain the user’s id in the table. The
             expiry of the access token is 15 minutes.
             <br />
             We construct the schema of the database by creating a table for
