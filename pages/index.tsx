@@ -5,6 +5,7 @@ import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { Suspense } from "react";
 import { TextureLoader } from "three";
 import { Text, Loader, PerspectiveCamera } from "@react-three/drei";
+import Sidebar from "../components/sidebar";
 
 React.useLayoutEffect = React.useEffect;
 
@@ -221,37 +222,6 @@ function Moon({
   );
 }
 
-function Sidebar(): JSX.Element {
-  const [sidebarActive, SetSidebarActive] = useState(false);
-
-  return (
-    <>
-      <div
-        className={styles.SidebarBtn}
-        onClick={
-          sidebarActive
-            ? () => SetSidebarActive(false)
-            : () => SetSidebarActive(true)
-        }
-      >
-        &#9776;
-      </div>
-      <div className={sidebarActive ? styles.Sidebar : styles.SidebarInvis}>
-        <div className={styles.SidebarElementContainer}>
-          <a className={styles.SidebarElement} href="#home">
-            Home
-          </a>
-          <a className={styles.SidebarElement} href="#news">
-            News
-          </a>
-          <a className={styles.SidebarElement} href="#contact">
-            Contact
-          </a>
-        </div>
-      </div>
-    </>
-  );
-}
 
 export default function App(): JSX.Element {
   return (
