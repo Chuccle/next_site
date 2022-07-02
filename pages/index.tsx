@@ -5,49 +5,26 @@ import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { Suspense } from "react";
 import { TextureLoader } from "three";
 import { Text, Loader, PerspectiveCamera } from "@react-three/drei";
+import Sidebar from "../components/sidebar";
+import Link from "next/link";
+import Image from "next/image";
 
-React.useLayoutEffect = React.useEffect;
 
 function ResponsiveCamera() {
   const context = useThree();
 
   const fov = useRef<number>(75);
 
-  //for some reason the commented implementation below is bugged and doesn't recognise the fov property
+  // will increase fov based on aspect ratio to prevent model clipping
+  if (context.viewport.aspect < 0.8) {
 
-  switch (true) {
-    case context.viewport.aspect < 0.5:
-      //     --> broken   context.camera.fov = 110
+    fov.current = 10 * (context.viewport.aspect + 10)
 
-      fov.current = 110;
+  } else {
 
-      break;
+    fov.current = 80;
 
-    case context.viewport.aspect < 0.6:
-      //    --> broken    context.camera.fov = 100
-
-      fov.current = 100;
-
-      break;
-
-    case context.viewport.aspect < 0.7:
-      //    --> broken  context.camera.fov = 90
-
-      fov.current = 90;
-
-      break;
-
-    default:
-      //     --> broken  context.camera.fov = 75
-
-      fov.current = 80;
   }
-
-  // Less verbose and is too tricky to follow a linear formula
-
-  //if (context.viewport.aspect < 0.7) {
-  // fov.current = 10 * (context.viewport.aspect + 10)
-  // }
 
   return (
     <mesh>
@@ -112,6 +89,7 @@ function Earth({
   urlTexture: string;
   urlBumpmap: string;
 }): JSX.Element {
+  
   const mesh = useRef<THREE.Mesh>(null);
 
   const cameraStartPosZ = -1.8;
@@ -133,7 +111,6 @@ function Earth({
     }
 
     //we set the position of the camera to the currentPosZ
-
     state.camera.position.set(0, 0, currentPosZ);
   });
 
@@ -225,41 +202,10 @@ function Moon({
   );
 }
 
-function Sidebar(): JSX.Element {
-  const [sidebarActive, SetSidebarActive] = useState(false);
-
-  return (
-    <>
-      <div
-        className={styles.SidebarBtn}
-        onClick={
-          sidebarActive
-            ? () => SetSidebarActive(false)
-            : () => SetSidebarActive(true)
-        }
-      >
-        &#9776;
-      </div>
-      <div className={sidebarActive ? styles.Navbar : styles.Navbar2}>
-        <div className={styles.SidebarElementContainer}>
-          <a className={styles.SidebarElement} href="#home">
-            Home
-          </a>
-          <a className={styles.SidebarElement} href="#news">
-            News
-          </a>
-          <a className={styles.SidebarElement} href="#contact">
-            Contact
-          </a>
-        </div>
-      </div>
-    </>
-  );
-}
 
 export default function App(): JSX.Element {
   return (
-    <div className={styles.bruh}>
+    <div className={styles.mainbackground}>
       <Sidebar />
 
       <Canvas className={styles.canvas} shadows={true}>
@@ -286,17 +232,12 @@ export default function App(): JSX.Element {
       <Loader />
 
       <section className={styles.accent}>
-        <img
-          src="/Site_Assets/Spaceman.png"
-          alt="Picture of the author"
-          className={styles.IntroImage}
-        />
-
+        <Image src="/Site_Assets/Spaceman.png" alt="Picture of the author" width={'250'} height={'250'} />
         <div className={styles.Introbox}>
           <h1 className={styles.IntroTitleText}>Hi, my name is Charlie</h1>
           <p className={styles.IntroText}>
             I am a software developer that is always pushing the boundaries on
-            what is possible.{" "}
+            what is possible.
           </p>
         </div>
       </section>
@@ -402,67 +343,63 @@ export default function App(): JSX.Element {
 
           <div className={styles.projectgrid}>
             <div className={styles.card1}>
-              <a href="quizapp">
-                <img
-                  className={styles.gridthumb}
-                  src={"/Site_Assets/Quizapp.png"}
-                ></img>
-              </a>
+
+              <Link href="/quizapp" passHref>
+                <div className={styles.gridthumb}>
+                  <Image layout="fill" src={"/Site_Assets/Quizapp.png"} alt={"link to Quizapp deep dive"} style={{ borderRadius: '1rem', cursor: 'pointer' }}  >
+                  </Image>
+                </div>
+              </Link>
               <p className={styles.caption}>Quizapp</p>
             </div>
 
             <div className={styles.card2}>
-              <a href="alarmsystem">
-                {" "}
-                <img
-                  className={styles.gridthumb}
-                  src={"/Site_Assets/Quizapp.png"}
-                ></img>
-              </a>
+              <Link href="/quizapp" passHref>
+                <div className={styles.gridthumb}>
+                  <Image layout="fill" src={"/Site_Assets/Quizapp.png"} alt={"link to Alarm system deep dive"} style={{ borderRadius: '1rem', cursor: 'pointer' }}  >
+                  </Image>
+                </div>
+              </Link>
               <p className={styles.caption}>Alarm System</p>
             </div>
 
             <div className={styles.card3}>
-              <a href="taxiapp">
-                {" "}
-                <img
-                  className={styles.gridthumb}
-                  src={"/Site_Assets/Quizapp.png"}
-                ></img>{" "}
-              </a>
+              <Link href="/quizapp" passHref>
+                <div className={styles.gridthumb}>
+                  <Image layout="fill" src={"/Site_Assets/Quizapp.png"} alt={"link to Taxiapp deep dive"} style={{ borderRadius: '1rem', cursor: 'pointer' }}   >
+                  </Image>
+                </div>
+              </Link>
               <p className={styles.caption}>TaxiApp</p>
             </div>
 
             <div className={styles.card1}>
-              <a href="rentalapp">
-                {" "}
-                <img
-                  className={styles.gridthumb}
-                  src={"/Site_Assets/Quizapp.png"}
-                ></img>
-              </a>
-              <p className={styles.caption}>Car rental app</p>
+              <Link href="/quizapp" passHref>
+                <div className={styles.gridthumb}>
+                  <Image layout="fill" src={"/Site_Assets/Quizapp.png"} alt={"link to Rental app deep dive"} style={{ borderRadius: '1rem', cursor: 'pointer' }}  >
+                  </Image>
+                </div>
+              </Link>
+              <p className={styles.caption}>Rental app</p>
             </div>
 
             <div className={styles.card2}>
-              <a href="phpwebpage">
-                {" "}
-                <img
-                  className={styles.gridthumb}
-                  src={"/Site_Assets/Quizapp.png"}
-                ></img>
-              </a>
+              <Link href="/quizapp" passHref>
+                <div className={styles.gridthumb}>
+                  <Image layout="fill" src={"/Site_Assets/Quizapp.png"} alt={"link to PHP website deep dive"} style={{ borderRadius: '1rem', cursor: 'pointer' }}   >
+                  </Image>
+                </div>
+              </Link>
               <p className={styles.caption}>PHP website</p>
             </div>
 
             <div className={styles.card3}>
-              <a href="portfolio">
-                {" "}
-                <img
-                  className={styles.gridthumb}
-                  src={"/Site_Assets/Quizapp.png"}
-                ></img>
-              </a>
+              <Link href="/quizapp" passHref>
+                <div className={styles.gridthumb}>
+                  <Image layout="fill" src={"/Site_Assets/Quizapp.png"} alt={"link to portfolio website deep dive"} style={{ borderRadius: '1rem', cursor: 'pointer' }}  >
+                  </Image>
+                </div>
+              </Link>
               <p className={styles.caption}>Portfolio site</p>
             </div>
           </div>

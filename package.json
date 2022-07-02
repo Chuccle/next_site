@@ -16,6 +16,7 @@
     "next": "^12.1.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-gistlab": "^1.0.8",
     "three": "^0.139.0"
   },
   "devDependencies": {
