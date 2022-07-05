@@ -1,23 +1,23 @@
 import Head from "next/head";
-import styles from "../styles/Quizapp.module.css";
+import styles from "../styles/Projects.module.css";
 import { GithubGist } from "react-gistlab";
-import Sidebar from "../components/sidebar";
+
 
 export default function Quizapp() {
 
   return (
     <div className={styles.background}>
-         <Sidebar />
       <Head>
         <title>The making of quizapp</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <h1 className={styles.title}>The making of quizapp</h1>
-      <div className={styles.textcontainer}>
+      
         <div className={styles.imagecontainer}>
           <img className={styles.quizappimg} src={"/Site_Assets/quizapp_dashboard.png"}></img>
         </div>
+        <div className={styles.textcontainer}>
         <h2 className={styles.subheading}>Introduction </h2>
         <p className={styles.description}>
           This whole solution relies on Node.js for the server, Express for
@@ -57,24 +57,27 @@ export default function Quizapp() {
           However, with the refresh tokens having quite some power I needed to keep them secure.
           I decided to ensure that the refresh token was stored as an HTTP-Only cookie which cannot be read by Javascript.
         </p>
+        </div>
         <div className={styles.imagecontainer}>
           <img className={styles.quizappimg} src={"/Site_Assets/login workflow.png"}></img>
         </div>
-
+        <div className={styles.textcontainer}>
         <h2 className={styles.subheading}>Database</h2>
         <p className={styles.description}>
           I constructed the schema of the database by creating a table for
           users, a table for their scores, a table for quizzes and questions
           and a table for question options.
         </p>
+        </div>
         <div className={styles.code} >
-          <GithubGist
+          <GithubGist 
             url="https://gist.github.com/Chuccle/e67dbb626792f667f5e6101f77f67772"
             Loading={() => <p>Loading...</p>}></GithubGist>
         </div>
+        <div className={styles.textcontainer}>
         <p className={styles.description}>
           This was to minimize data duplication and create much more efficient
-          querying.This did come back to bite me however, when my queries
+          querying. This did come back to bite me however, when my queries
           became pretty complex very fast.
         </p>
         <p className={styles.description}>
@@ -89,20 +92,23 @@ export default function Quizapp() {
           send a refresh request to ensure that the token is in date and
           ensure the API request works seamlessly.
         </p>
+        </div>
         <div className={styles.imagecontainer}>
           <img className={styles.quizappimg} src={"/Site_Assets/seamless session quizapp.png"}></img>
         </div>
-
+        <div className={styles.textcontainer}>
         <h2 className={styles.subheading}>API code </h2>
         <p className={styles.description}>
           Below is the code snippet for the API endppoint, it`s written in node.js. I used the express framework for the middleware.
         </p>
+        </div>
         <div className={styles.code} >
           <GithubGist
             url="https://gist.github.com/Chuccle/07cb855aae7c1a41025d9b0039b5de47"
             Loading={() => <p>Loading...</p>}
           />
         </div>
+        <div className={styles.textcontainer}>
         <p className={styles.description}>
           Full code available - <a href="https://github.com/Chuccle">
             <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" fill="white"  >
@@ -110,7 +116,7 @@ export default function Quizapp() {
             </svg>
           </a>
         </p>
-      </div>
+        </div>
     </div>
   );
 }
