@@ -1,74 +1,123 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/CV.module.css";
 import Link from "next/link";
 
-export default function CV() {
+export default function CV(): JSX.Element {
   return (
-    <div className={styles.background}>
+    <div className={styles.wrapper}>
       <Head>
         <title>The making of quizapp</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className={styles.title}>The making of quizapp</h1>
-      <div className={styles.textcontainer}>
-      <div className={styles.imagecontainer}>
-        <img className={styles.quizappimg} src={"/Site_Assets/quizapp_dashboard.png"}></img>
-      </div>
 
-      <h2 className={styles.subheading}>Introduction </h2>
-      <p className={styles.description}>
-        This whole solution relies on Node.js for the server, Express for
-        the middleware, React for the front-end framework and MariaDB for
-        the database.
+      <main className={styles.main}>
 
-        I also implemented tailwind CSS framework since I wanted to increase
-        the efficiency in which I styled the many elements inside the
-        front-end.
-        </p>
+        <article>
+          <header><h1>CV</h1></header>
 
-        <h2 className={styles.subheading}>Authentication </h2>
-        <p className={styles.description}>
-        First I constructed the login and authentication system, I used json web
-        token to provide both a http cookie for the refresh token
-        authorization header for a session.
-        The refresh and access token contain the user`s id in the table. The
-        expiry of the access token is 15 minutes.
-        </p>
-        <div className={styles.imagecontainer}>
-        <img className={styles.quizappimg} src={"/Site_Assets/login workflow.png"}></img>
-      
-      </div>
+          <h2>Introduction</h2>
 
-        <h2 className={styles.subheading}>Database </h2>
-        <p className={styles.description}>
-        I constructed the schema of the database by creating a table for
-        users, a table for their scores, a table for quizzes and questions
-        and a table for question options.
-        </p>
-        <p className={styles.description}>
-        This was to minimize data duplication and create much more efficient
-        querying.This did come back to bite me however, when my queries
-        became pretty complex very fast.
-        </p>
-       <p className={styles.description}>
-        As I was using MariaDB I could make use of the better performance
-        and features than MYSQL if I were to have used an object relational
-        mapper like sequelize I would have lost the flexibility and
-        performance of raw SQL queries
-        </p>
-        <h2 className={styles.subheading}>Token flow </h2>
-        <p className={styles.description}>
-        Every time, before sending an API request to the server we first
-        send a refresh request to ensure that the token is in date and
-        ensure the API request works seamlessly.
-       
+          <hr />
 
-      </p>
-      <div className={styles.imagecontainer}>
-      <img className={styles.quizappimg} src={"/Site_Assets/seamless session quizapp.png"}></img>
-      </div>
-      </div>
+          <p>I have a zeal for all aspects of IT; in my spare time I enjoy coding personal projects.
+            I am also a good communicator, I gave speeches as part of my role as Head Boy at secondary school.
+            My ability to explain procedures in a user friendly way means that I was the &apos;go to&apos; person at a children&apos;s coding club where I was a volunteer.
+            Comfortable working as part of a team or independently I have a can do attitude and am a fast learner. A company that gave me the opportunity to develop my skills, would find me a loyal and dedicated worker.</p>
+
+          <h2>Skills</h2>
+
+          <hr />
+
+          <figure><table><tbody>
+
+            <tr><td><strong>Development skills:</strong></td>
+
+              <td>VB.NET/C#,
+                Typescript,
+                HTML,
+                CSS,
+                SQL,
+                C++,
+                Rust,
+                Kotlin</td></tr>
+
+            <tr><td><strong>Software skills:</strong></td>
+
+              <td>Git,
+                Microsoft office,
+                MS Teams,
+                Heroku,
+                Linux
+              </td></tr>
+
+          </tbody></table></figure>
+
+
+          <h2>Qualifications</h2>
+
+          <hr />
+
+          <ul>
+            <li> 8 GCSE Grade 4 - 9 including English and Maths </li>
+            <li> Silver Duke of York award for Young Enterprise </li>
+            <li> Distinction * Cambridge Nationals ICT </li>
+            <li> Distinction * ECDL </li>
+            <li> D*D*D* Level 3 BTEC BIT Extended Diploma </li>
+          </ul>
+
+          <h2>Experience</h2>
+
+          <hr />
+
+          <h3>Workshop Technician • ITChampion</h3>
+
+          <p><em>March &#8208; August 2020</em> </p>
+
+          <p>At ITChampion my duties included diagnosis, repair, build, and configuration of client specific PCs and phones. Due to the Covid-19 pandemic, I was regularly in charge of the workshop; co-ordinating and distributing workload between my colleagues
+            An example of a rather complex client specific setup I had to do was on a surface pro laptop. The client insisted on having a bitlocker pin and TPM verification in which I had to edit group policy settings and use cmdlets in PowerShell to allow a preboot on-screen keyboard.
+          </p>
+
+          <p>
+            I would also liaise with our company&apos;s suppliers; handling warranties, repairs, and returns. I was also very proactive on service degradation on any of our client&apos;s platforms.
+            Occasionally. I would also handle support calls for password resets and PC problems via our RMM (ConnectWise).
+          </p>
+
+          <p>I was very vigilant about the level of authorisation a particular client from a company had and curated a VIP list consisting of those who had the most authorisation within their respective organisations and companies.</p>
+
+
+          <h2>Projects</h2>
+          <hr />
+
+          <h3>Commercial/freelance:</h3>
+
+          <p><strong>Exe valley cars</strong> - I created an android application that schedules appointments and their times based on the user&apos;s location.</p>
+
+          <h3>Personal:</h3>
+
+          <p><strong>Quizapp</strong>- A fully functioning MERN web application which features a stateless authentication system</p>
+
+          <p><strong>Alarm system</strong>- A high performance application involving a BBC microbit with a PIR sensor connected via USB to a raspberry PI and connected to an actix rust web server. </p>
+
+          <h3>Links:</h3>
+          <ul>
+            <li><Link href="https://github.com/Chuccle/TaxiApp">Taxiapp</Link> (open source version)</li>
+            <li><Link href="https://github.com/Chuccle/quiz-app">Quizapp front end</Link> </li>
+            <li><Link href="https://github.com/Chuccle/quizapp-backend">Quizapp back end </Link></li>
+            <li><Link href="https://github.com/Chuccle/My-old-Car-rental-application-project">Car rental app </Link></li>
+            <li><Link href="https://github.com/Chuccle/pir-microbit-sensor-serial-write">Microbit code</Link></li>
+            <li><Link href="https://github.com/Chuccle/Microbit_HTTP_Proxy">Microbit HTTP Proxy</Link></li>
+            <li><Link href="https://github.com/Chuccle/emailserver">Email Server</Link></li>
+          </ul>
+
+          <h2>Referees</h2>
+
+          <hr />
+
+          <p><strong>Ruth Horne</strong> - Exe valley cars: exevalleycars@hotmail.co.uk</p>
+
+        </article>
+      </main>
     </div>
   );
 }

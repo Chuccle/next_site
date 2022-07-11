@@ -3,10 +3,10 @@ import styles from "../styles/Projects.module.css";
 import { GithubGist } from "react-gistlab";
 
 
-export default function Quizapp() {
+export default function Quizapp(): JSX.Element {
 
   return (
-    <div className={styles.background}>
+    <div>
       <Head>
         <title>The making of quizapp</title>
         <link rel="icon" href="/favicon.ico" />
@@ -99,7 +99,7 @@ export default function Quizapp() {
         <div className={styles.textcontainer}>
         <h2 className={styles.subheading}>API code </h2>
         <p className={styles.description}>
-          Below is the code snippet for the API endppoint, it`s written in node.js. I used the express framework for the middleware.
+          Below is the code snippet for the API endppoint, it&apos;s written in node.js. I used the express framework for the middleware.
         </p>
         </div>
         <div className={styles.code} >
