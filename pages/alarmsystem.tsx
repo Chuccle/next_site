@@ -9,14 +9,14 @@ export default function AlarmSystem(): JSX.Element {
     return (
         <div>
             <Head>
-                <title>The making of the Alarm system</title>
-                <link rel="icon" href="/favicon.ico" />
+                <title>The making of the alarm system</title>
+                <link rel="icon" type="image/svg+xml" href="favicon.svg" />
             </Head>
 
-            <h1 className={styles.title}>The making of Alarm system</h1>
+            <h1 className={styles.title}>The making of alarm system</h1>
 
             <div className={styles.imagecontainer}>
-                <img className={styles.quizappimg} src={"/Site_Assets/alarmsystem.png"}></img>
+                <img className={styles.quizappimg} src={"/Site_Assets/AlarmSystem.png"}></img>
             </div>
             <div className={styles.textcontainer}>
                 <h2 className={styles.subheading}>Introduction </h2>
@@ -128,7 +128,7 @@ export default function AlarmSystem(): JSX.Element {
                 <h2 className={styles.subheading}>Server</h2>
                 <p className={styles.description}>
                     The first step was to establish a server. I decided to make my server in Rust using the Actix framework, learning from my Node.js experience;
-                    I decided to use an Object Relational Mapper (ORM) in the from of Diesel
+                    I decided to use an Object Relational Mapper (ORM) in the from of Diesel.
                 </p>
                 <p className={styles.description}>
                     For my database I used Postgres, which was fast, reliable and easy to use. <br /> I was able to quickly and easily setup the schema and normalise the data,

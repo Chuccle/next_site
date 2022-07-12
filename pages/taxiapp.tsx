@@ -10,7 +10,7 @@ export default function TaxiApp(): JSX.Element {
         <div>
             <Head>
                 <title>The making of the TaxiApp</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" type="image/svg+xml" href="favicon.svg" />
             </Head>
 
             <h1 className={styles.title}>The making of TaxiApp</h1>
@@ -52,7 +52,7 @@ export default function TaxiApp(): JSX.Element {
                     </GithubGist>
                 </div>
                 <p className={styles.description}>
-                    The value of the textbox and the active unit type is then saved into the local storage via sharedPreferences. Later referenced inside our APIs
+                    The value of the textbox and the active unit type is then saved into the local storage via sharedPreferences. Later referenced inside our APIs.
                 </p>
             </div>
             <div className={styles.textcontainer}>
@@ -63,7 +63,7 @@ export default function TaxiApp(): JSX.Element {
             </div>
             <div className={styles.textcontainer}>
                 <p className={styles.description}>
-                    To accurately gather details of the destination and pickup location, the app uses the Places autocomplete API, this guarantees that the user will be able to select a valid location and provides accuracy to be later used in the Distance matrix API
+                    To accurately gather details of the destination and pickup location, the app uses the Places autocomplete API, this guarantees that the user will be able to select a valid location and provides accuracy to be later used in the Distance matrix API.
                 </p>
 
                 <p className={styles.description}>

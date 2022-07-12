@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Projects.module.css";
 import { GithubGist } from "react-gistlab";
-import Image from "next/image";
+
 
 
 export default function CarRentalApp(): JSX.Element {
@@ -10,7 +10,7 @@ export default function CarRentalApp(): JSX.Element {
         <div>
             <Head>
                 <title>The making of the Car rental app</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" type="image/svg+xml" href="favicon.svg" />
             </Head>
 
             <h1 className={styles.title}>The making of Car Rental App</h1>
@@ -81,7 +81,7 @@ export default function CarRentalApp(): JSX.Element {
                 </div>
                 
                 <p className={styles.description}>
-                    I opted to instead use a dictionary with O(1) operations to store the data instead, this worked well too as it was great for exporting to text file with the key-value format
+                    I opted to instead use a dictionary with O(1) operations to store the data instead, this worked well too as it was great for exporting to text file with the key-value format.
                 </p>
                 
                 <p className={styles.description}>

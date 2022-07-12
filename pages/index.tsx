@@ -214,7 +214,7 @@ export default function App(): JSX.Element {
         <div>
             <Head>
                 <title>Home</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" type="image/svg+xml" href="favicon.svg" />
             </Head>
 
             <Canvas style={{ height: '100vh', zIndex: 0 }} shadows={true}>
@@ -425,7 +425,7 @@ export default function App(): JSX.Element {
                             </div>
                             <div className={styles.overlay} style={{ backgroundColor: '#06abba' }}>
                                 <p className={styles.caption}>A website which allows users to upload their CVs to a database</p>
-                                <Link href="/quizapp" passHref>
+                                <Link href="/phpsite" passHref>
                                     <p className={styles.button}>See more</p>
                                 </Link>
                             </div>
@@ -437,7 +437,7 @@ export default function App(): JSX.Element {
                             </div>
                             <div className={styles.overlay} style={{ backgroundColor: '#000' }}>
                                 <p className={styles.caption}>A website which shows WebGL graphics and animation </p>
-                                <Link href="/quizapp" passHref>
+                                <Link href="/nextsite" passHref>
                                     <p className={styles.button}>See more</p>
                                 </Link> </div>
                         </div>

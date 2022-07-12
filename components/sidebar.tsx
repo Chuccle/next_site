@@ -26,7 +26,7 @@ export default function Sidebar(): JSX.Element {
             </Link>
           </div>
           <div className={styles.SidebarElement}>
-            <Link href="/cv">
+            <Link href="/resume">
               CV
             </Link>
           </div>

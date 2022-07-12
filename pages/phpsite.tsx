@@ -10,21 +10,20 @@ export default function PHPSite(): JSX.Element {
         <div>
             <Head>
                 <title>The making of the PHP site</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" type="image/svg+xml" href="favicon.svg" />
             </Head>
 
             <h1 className={styles.title}>The making of the PHP site</h1>
 
             <div className={styles.imagecontainer}>
-                <img className={styles.quizappimg} src={"/Site_Assets/rental.png"} />
+                <img className={styles.quizappimg} src={"/Site_Assets/phpsite.png"} />
             </div>
             <div className={styles.textcontainer}>
 
                 <h2 className={styles.subheading}>Introduction </h2>
 
                 <p className={styles.description}>
-                    This was project was designed for a theoretical scenario of a car rental company, the app originally was a submission for a college project.
-                    Later on, I became disatisfied with the project and it&apos;s implementation and began redeveloping it. The app was to be written in Windows Forms.
+                    This project was designed to be a simple HTML and CSS website with a form handler for a hypothetical company as a project scenario, much like my car rental app.
                 </p>
 
                 <p className={styles.description}>
@@ -32,99 +31,78 @@ export default function PHPSite(): JSX.Element {
                 </p>
 
                 <ul className={styles.description} >
-                    <li>Should not allow customers under 25</li>
-                    <li>Should have a small, medium and large class of vehicles</li>
-                    <li>Should have duration of rental </li>
+                    <li>Should have a form for interested candiates to apply</li>
+                    <li>Should feature modern UX and UI techniques</li>
+                    <li>Should have multiple pages.</li>
                 </ul>
 
                 <p className={styles.description}>
-                    Another stipulation was that the app should be written in VB.NET, this was fine since it very similar to C# a language I am familiar with.
-                </p>
-                
-                <p className={styles.description}>
-                    I of course added features i felt were integral to such an app including: data validation, cost caculation algorithms and a export of the data to a text file.
+                    I quickly realised that after implementing my form that using third party handlers came with lots of limitations, so I decided to come up with my own,
+                    I also wanted to provide a way of submitting a CV in the form of a PDF file.
                 </p>
 
-                <h2 className={styles.subheading}>Redevelopment </h2>
+
+                <h2 className={styles.subheading}>Form handler</h2>
 
                 <p className={styles.description}>
-                    Initially, the app had plenty of duplicate code and lots of branches, at first I used switch cases to act as jump tables for the branches but it was still messy and inefficient.
-                </p>
-
-                <div className={styles.code} >
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/bda155d8f6002e8ab0bfa37f7bddfd2f"
-                        Loading={() => <p>Loading...</p>}>
-                    </GithubGist>
-                </div>
-                <p className={styles.description}>
-                    I decided that the first matter was to modularise the validation code and make it more readable. I achieved this by making a module called ValidationComponent which held functions
-                    that would be referenced in the main code.
+                    Initially as I stated earlier I was using a third party form handler; Later I opted to create my own in PHP.
+                    The form would send all the data to a dedicated PHP file in which the data would be parameterised and inserted into a database table.
                 </p>
 
                 <div className={styles.code} >
                     <GithubGist
-                        url="https://gist.github.com/Chuccle/59b77bbe677fe4e54d2650c76a9ed941"
+                        url="https://gist.github.com/Chuccle/c94a0a9b047ee583f09994b778e1d6a3"
                         Loading={() => <p>Loading...</p>}>
                     </GithubGist>
                 </div>
-                
                 <p className={styles.description}>
-                    A second issue was the public variables scattered about, this would be unmaintainable and violated the principle of encapsulation.
+                    Parameterising as usual is extremely important and at first I had completely neglected to do this, upon reviewing and security testing my app I quickly rectified this.
                 </p>
-                
-                <div className={styles.code} >
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/529f4f168376debd1bbe841080db21d3"
-                        Loading={() => <p>Loading...</p>}>
-                    </GithubGist>
-                </div>
-                
+
                 <p className={styles.description}>
-                    I opted to instead use a dictionary with O(1) operations to store the data instead, this worked well too as it was great for exporting to text file with the key-value format
+                    I also deliberately stored the PDF as a binary file in the database, this was so that the file could be stored as raw data and then be read by the PHP script later.
                 </p>
-                
-                <p className={styles.description}>
-                    Interestingly, the Dictionary interface I used didn&apos;t come with a Add/Update method, so I had to make my own solution.
-                </p>
-                
-                <div className={styles.code} >
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/e3cc0abad50d98540cb5b5e0d06c5b9b"
-                        Loading={() => <p>Loading...</p>}>
-                    </GithubGist>
-                </div>
 
             </div>
 
             <div className={styles.textcontainer}>
 
-                <h2 className={styles.subheading}>Database support</h2>
+                <h2 className={styles.subheading}>PDF viewing</h2>
 
                 <p className={styles.description}>
-                    The next step was to move past the rather impractical and crude text file data export and instead export to a SQL database.
+                    The next step was allowing a administrative user to view the PDFs that were uploaded.
                 </p>
 
                 <p className={styles.description}>
-                    The first thing I did was create a schema. This schema was normalised in such a way that made it more efficient and maintainable,
-                    it also offers flexibility to add new classes of vehicles and durations.
+                    I began by making two pages, one for the registration as an admin and one for logging in as an admin, these pages were designed to be used as authoristion into the projects.php page 
+                    but I still need to implement the session code.
                 </p>
 
                 <div className={styles.code} >
                     <GithubGist
-                        url="https://gist.github.com/Chuccle/010e1e5d326f78bed4a9e0b4eb1a1e1e"
+                        url="https://gist.github.com/Chuccle/2c33bf6a19f94a57435bb7eb34c06b64"
                         Loading={() => <p>Loading...</p>}>
                     </GithubGist>
                 </div>
 
                 <p className={styles.description}>
-                    The SQL code was fairly simple, I simply parmeterised all the values inside my dictionary and ran them through queries.
+                    The last part of the project was the projects.php page, this would display the name of the PDFs registered inside the database, and allow the user to view the PDF.
                 </p>
 
+                <div className={styles.code} >
+                    <GithubGist
+                        url="https://gist.github.com/Chuccle/bcea2fcbd971ef8dac213f22f77be3e4"
+                        Loading={() => <p>Loading...</p>}>
+                    </GithubGist>
+                </div>
+
+        
+            
             </div>
 
             <div className={styles.imagecontainer}>
-                <img className={styles.quizappimg} src={"/Site_Assets/rentalapp.png"} />
+                <img className={styles.quizappimg} src={"/Site_Assets/pdf.png"} />
+                
             </div>
 
             <div className={styles.textcontainer}>

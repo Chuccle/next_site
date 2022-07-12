@@ -9,7 +9,7 @@ export default function Quizapp(): JSX.Element {
     <div>
       <Head>
         <title>The making of quizapp</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
       </Head>
 
       <h1 className={styles.title}>The making of quizapp</h1>
@@ -84,7 +84,7 @@ export default function Quizapp(): JSX.Element {
           As I was using MariaDB I could make use of the better performance
           and features than MYSQL if I were to have used an object relational
           mapper like sequelize I would have lost the flexibility and
-          performance of raw SQL queries
+          performance of raw SQL queries.
         </p>
         <h2 className={styles.subheading}>Token flow </h2>
         <p className={styles.description}>
