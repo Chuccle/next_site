@@ -1,0 +1,69 @@
+.subheading {
+    font-size: 2rem;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    color: white;
+    text-align: left;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    top: 3rem;
+    line-height: 1.15;
+    font-size: 4rem;
+    color: #fff;
+    text-align: center;
+}
+
+.background {
+    background-color: #252730;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+}
+
+
+.imagecontainer {
+    display: flex;
+    justify-content: center;
+}
+
+.quizappimg {
+    margin-top: 1rem;
+    height: auto;
+    max-width: 40vw;
+    border: 2px solid #000;
+}
+
+.code {
+    max-width: 40vw;
+    margin: auto;
+}
+
+.description {
+    line-height: 1.5;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.textcontainer {
+
+    margin: 0 auto;
+    max-width: 50vw;
+}
+
+@media screen and (max-width: 900px) {
+    .textcontainer {
+        max-width: 75vw;
+    }
+
+    .code {
+        max-width: 75vw;
+    }
+
+    .quizappimg {
+        max-width: 75vw; ;
+    }
+
+}

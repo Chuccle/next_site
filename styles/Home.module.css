@@ -17,7 +17,7 @@
 }
 
 .boxText {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   color: white;
   text-align: center;
@@ -33,14 +33,10 @@
   margin-top: 0rem;
 }
 
-
 .container {
   width: 100%;
-
   position: relative;
-
   display: flex;
-
   flex-direction: column;
 }
 
@@ -58,6 +54,7 @@
   color: white;
   text-align: center;
   margin-top: 0rem;
+  line-height: 2rem;
 }
 
 .boxTitleText {
@@ -107,42 +104,24 @@
 
 .caption {
   position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 3vh 2vw;
   text-align: center;
   color: white;
-  font-weight: bold;
-  transition: 0.3s;
+  font-weight: 350;
+  transition: 0.5s;
   font-size: 1.5rem;
-  font-size: 3rem;
-  z-index: -1;
 }
-
-.gridthumb:hover {
-  transition: 0.3s;
-  opacity: 0.3;
-  filter: blur(3px);
-}
-
 
 .Sidebar {
   position: fixed;
   background-color: #333;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   transition: 0.5s;
   margin: 0;
   padding: 0;
   z-index: 10;
-}
-
-.canvas {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: -1;
 }
 
 .Sidebar a {
@@ -185,14 +164,29 @@
   margin-right: auto;
 }
 
-.card1 {
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25vh;
+  width: 25vw;
+  transition: 0.5s;
+  opacity: 0;
   z-index: 1;
-  background-color: #35858b;
-  grid-column-start: 1;
-  border: thin gray solid;
   border-radius: 1rem;
-  width: 30vw;
-  height: 30vh;
+}
+
+.overlay:hover {
+  transition: 0.5s;
+  opacity: 1;
+  opacity: 1;
+}
+
+.card1 {
+  grid-column-start: 1;
+  border-radius: 1rem;
+  width: 25vw;
+  height: 25vh;
   position: relative;
 }
 
@@ -202,26 +196,45 @@
   border-radius: 1rem;
 }
 
+.button {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  transition: 0.3s;
+  font-size: 1.25rem;
+  border: #fff solid 2px;
+  border-radius: 9999px;
+  padding: 0.6rem;
+  cursor: pointer;
+  margin-top: 1.25rem
+}
+
+.button:hover {
+  transition: 0.5s;
+  background-color: #fff;
+  color: #252730;
+  border-color: none;
+}
+
 .card2 {
-  z-index: 1;
-  background-color: #35858b;
+
   grid-column-start: 2;
-  border: thin gray solid;
   border-radius: 1rem;
-  width: 30vw;
-  height: 30vh;
+  width: 25vw;
+  height: 25vh;
   position: relative;
 }
 
 .card3 {
-  z-index: 1;
-  background-color: #35858b;
+ 
   grid-column-start: 3;
-  border: thin gray solid;
   border-radius: 1rem;
-  width: 30vw;
-  height: 30vh;
-  position: relative;
+  width: 25vw;
+  height: 25vh;
   position: relative;
 }
 
@@ -232,9 +245,9 @@
   /* 3 columns */
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 2vw 2vh;
-
-  width: auto;
+  width: fit-content;
   padding: 2vw;
+  margin: 2vh auto;
 }
 
 .box {
@@ -249,26 +262,113 @@
   margin-right: 10vw;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1280px) {
   .box {
     grid-template-columns: 1fr;
   }
 
+  .overlay {
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .caption {
+    margin-bottom: 1.8rem;
+    font-size: 2rem;
+  }
+
+  .button {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+
+  }
+
+  .card1 {
+
+    width: 37.5vw;
+    height: 37.5vh;
+    grid-column: auto;
+
+  }
+
+  .card2 {
+    width: 37.5vw;
+    height: 37.5vh;
+    grid-column: auto;
+  }
+
+  .card3 {
+    grid-column: auto;
+
+    width: 37.5vw;
+    height: 37.5vh;
+  }
+
+  .projectgrid {
+    grid-template-columns: repeat(2, 1fr);
+    margin: auto;
+  }
+
+  .section1 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+
+  .section2 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    border-top: 0.5px dashed #252730;
+    border-bottom: 0.5px dashed #252730;
+  }
+
+  .section3 {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+}
+
+
+@media (max-width: 770px) {
+  .box {
+    grid-template-columns: 1fr;
+  }
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .caption {
+    margin: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .button {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+
+  }
+
   .card1 {
     grid-column-start: 1;
-    width: 100%;
+    width: 75vw;
+    height: 37.5vh;
+
   }
 
   .card2 {
     grid-column-start: 1;
-    width: 100%;
+    width: 75vw;
+    height: 37.5vh;
   }
 
   .card3 {
     grid-column-start: 1;
-    width: 100%;
+    width: 75vw;
+    height: 37.5vh;
   }
-
 
   .projectgrid {
     grid-template-columns: 1fr;
@@ -294,9 +394,6 @@
   }
 }
 
-
-
-
 .background {
   background-color: #252730;
   margin: 0;
@@ -304,22 +401,9 @@
 }
 
 
-
-.mainbackground {
-  background-color: #252730;
-  padding: 0 0rem;
-  margin: 0 0rem;
-  width: 100%;
-  height: 100vh;
-  z-index: -1;
-  position: absolute;
-}
-
-
 @media screen and (max-width: 425px) {
+
   /*implementation for smartphones*/
-
-
   .SidebarBtn {
     position: fixed;
     color: #fff;
@@ -329,5 +413,18 @@
     cursor: pointer;
     margin-left: 3.25rem;
     margin-right: auto;
+  }
+
+  .IntroText {
+    font-size: 1.25rem;
+    margin: 0 auto;
+    line-height: 1.5rem;
+    
+  }
+
+  .IntroTitleText {
+    font-size: 1.5rem;
+    margin: 0.5rem auto;
+
   }
 }
