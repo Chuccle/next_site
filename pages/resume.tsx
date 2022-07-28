@@ -20,9 +20,7 @@ export default function Resume(): JSX.Element {
 
           <hr />
 
-          <p>I have a zeal for all aspects of IT; in my spare time I enjoy coding personal projects.
-            I am also a good communicator, I gave speeches as part of my role as Head Boy at secondary school.
-            My ability to explain procedures in a user friendly way means that I was the &apos;go to&apos; person at a children&apos;s coding club where I was a volunteer.
+          <p>IT is my passion; in my spare time I enjoy coding personal projects.
             Comfortable working as part of a team or independently I have a can do attitude and am a fast learner. A company that gave me the opportunity to develop my skills, would find me a loyal and dedicated worker.</p>
 
           <h2>Skills</h2>
