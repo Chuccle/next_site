@@ -2,7 +2,7 @@ import * as THREE from "three";
 import styles from "/styles/Home.module.css";
 import React, { useRef, Suspense } from "react";
 import { Canvas, RootState, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { Text,  PerspectiveCamera} from "@react-three/drei";
+import { Text, PerspectiveCamera } from "@react-three/drei";
 import Link from "next/link";
 import Image from "next/image";
 import { Html, useProgress } from '@react-three/drei'
@@ -12,11 +12,15 @@ import { Html, useProgress } from '@react-three/drei'
 
 function Loader() {
 
-  const { progress } = useProgress();
+    const { progress } = useProgress();
 
-  return <Html center className={styles.IntroTitleText}>{progress} % loaded</Html>
+    return (
+        <Html center className={styles.loader}>
+            <div className={styles.spinner}></div>
+            <div className={styles.text}>{progress} % loaded</div>
+        </Html>
+    );
 }
-
 
 function ResponsiveCamera(): JSX.Element {
 
