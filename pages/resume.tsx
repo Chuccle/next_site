@@ -38,7 +38,12 @@ export default function Resume(): JSX.Element {
                 SQL,
                 C++,
                 Rust,
-                Kotlin</td></tr>
+                Kotlin,
+                MFC,
+                WDM,
+                CMAKE,
+                NMAKE
+              </td></tr>
 
             <tr><td><strong>Software skills:</strong></td>
 
@@ -46,7 +51,11 @@ export default function Resume(): JSX.Element {
                 Microsoft office,
                 MS Teams,
                 Heroku,
-                Linux
+                Linux,
+                JIRA,
+                Visual Studio,
+                Jenkins,
+                BuildBot
               </td></tr>
 
           </tbody></table></figure>
@@ -58,7 +67,6 @@ export default function Resume(): JSX.Element {
 
           <ul>
             <li> 8 GCSE Grade 4 - 9 including English and Maths </li>
-            <li> Silver Duke of York award for Young Enterprise </li>
             <li> Distinction * Cambridge Nationals ICT </li>
             <li> Distinction * ECDL </li>
             <li> D*D*D* Level 3 BTEC BIT Extended Diploma </li>
@@ -68,22 +76,41 @@ export default function Resume(): JSX.Element {
 
           <hr />
 
-          <h3>Workshop Technician • ITChampion</h3>
+          <h3>Software Engineer • ESET Research UK</h3>
 
-          <p><em>March &#8208; August 2020</em> </p>
+          <p><em>August 2022 &#8208; Present</em> </p>
 
-          <p>At ITChampion my duties included diagnosis, repair, build, and configuration of client specific PCs and phones. Due to the Covid-19 pandemic, I was regularly in charge of the workshop; co-ordinating and distributing workload between my colleagues,
-            An example of a rather complex client specific setup I had to do was on a surface pro laptop. The client insisted on having a bitlocker pin and TPM verification in which I had to edit group policy settings and use cmdlets in PowerShell to allow a preboot on-screen keyboard.
-          </p>
+          <ul>
+            <li>
+              <p>Instrumental in migrating legacy NT drivers into Visual Studio build tools from NMAKE allowing automated building in CI/CD and saving plenty of time in manual builds.</p>
+            </li>
 
-          <p>
-            I would also liaise with our company&apos;s suppliers; handling warranties, repairs, and returns. I was also very proactive on service degradation on any of our client&apos;s platforms.
-            Occasionally. I would also handle support calls for password resets and PC problems via our RMM (ConnectWise).
-          </p>
+            <li>
+              <p>Developed CI/CD Jenkins pipelines for existing projects for rapid testing and release. </p>
+            </li>
 
-          <p>I was very vigilant about the level of authorisation a particular client from a company had and curated a VIP list consisting of those who had the most authorisation within their respective organisations and companies.</p>
-
-
+            <li>
+              <p>Created test applications to find faults with existing projects and software solutions allowing the team to quickly diagnose issues before QA testing.</p>
+            </li>
+           
+            <li>
+              <p>Upgraded older drivers to utilize newer and better technologies I.E: FAT32 to Exfat, formats became much faster and supported capacity became much higher.</p>
+            </li>
+            
+            <li>
+              <p>Collaborated to migrate legacy source control into modern source control and helped architect structure which allowed support for for CI/CD pipelines and far better collaborative
+                tools along with a more resilient structure.</p>
+            </li>
+            
+            <li>
+              <p>Updated historic APIs to utilize more efficient libraries like protocol buffers to reduce network traffic effectively recouping bandwidth to reallocate into other critical areas.</p>
+            </li>
+            
+            <li>
+              <p>Collaborated with the technical support team on JIRA to resolve various bugs and issues in an efficient and effective manner.</p>
+            </li>
+          </ul>
+         
           <h2>Projects</h2>
           <hr />
 
@@ -107,12 +134,6 @@ export default function Resume(): JSX.Element {
             <li><Link href="https://github.com/Chuccle/Microbit_HTTP_Proxy">Microbit HTTP Proxy</Link></li>
             <li><Link href="https://github.com/Chuccle/emailserver">Email Server</Link></li>
           </ul>
-
-          <h2>Referees</h2>
-
-          <hr />
-
-          <p><strong>Ruth Horne</strong> - Exe valley cars: exevalleycars@hotmail.co.uk</p>
 
         </article>
       </main>
