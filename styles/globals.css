@@ -8,7 +8,7 @@ body {
     padding: 0 0rem;
     margin: 0 0rem;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
     position: absolute;
 
 }
