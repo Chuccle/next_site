@@ -17,7 +17,7 @@ function Loader() {
     return (
         <Html center className={styles.loader}>
             <div className={styles.spinner}></div>
-            <div className={styles.text}>{progress} % loaded</div>
+            <div className={styles.text}>{Math.floor(progress)} % loaded</div>
         </Html>
     );
 }
