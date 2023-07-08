@@ -5,7 +5,7 @@ import { Canvas, RootState, useFrame, useLoader, useThree } from "@react-three/f
 import { Text, Loader, PerspectiveCamera } from "@react-three/drei";
 import Link from "next/link";
 import Image from "next/image";
-import Head from "next/head";
+
 
 
 
@@ -184,7 +184,7 @@ function Moon({
         incrementer = state.clock.getElapsedTime() / 5;
 
         if (mesh.current?.rotation && mesh.current?.position) {
-            
+
             mesh.current.rotation.y += 0.0015;
 
             mesh.current.position.set(
@@ -212,51 +212,66 @@ function Moon({
 export default function App(): JSX.Element {
     return (
         <div>
-            <Head>
-                <title>Home</title>
-                <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-            </Head>
 
-            <Canvas style={{ height: '100vh', zIndex: 0 }} shadows={true}>
-                <Suspense fallback={null}>
+            <div className={styles.background3D}>
+
+            <Suspense fallback={<Loader />}>
+                <Canvas shadows={true}>
+
                     <ResponsiveCamera />
 
-                    <Space url={"Model_Textures/galaxy_starfield.png"} />
+                    <Suspense fallback={<Space url="BufferTextures/galaxy_starfield_1024x512.png" />}>
+                        <Space url={"Model_Textures/galaxy_starfield.png"} />
+                    </Suspense>
 
                     <directionalLight position={[1, 1, -1]} intensity={1} />
 
-                    <Moon
-                        urlTexture={"Model_Textures/moon_4k_color_brim16.jpg"}
-                        urlNormalmap={"Model_Textures/moon_4k_normal.jpg"}
-                    />
+                    <Suspense fallback={
+                        <Moon
+                            urlTexture={"BufferTextures/moon1024x512.jpg"}
+                            urlNormalmap={"BufferTextures/moonNormal1024x512.jpg"}
+                        />}>
 
-                    <EarthClouds url={"Model_Textures/fair_clouds_4k.png"} />
+                        <Moon
+                            urlTexture={"Model_Textures/moon_4k_color_brim16.jpg"}
+                            urlNormalmap={"Model_Textures/moon_4k_normal.jpg"}
+                        />
+                    </Suspense>
 
-                    <Earth
-                        urlTexture={"Model_Textures/basicTexture.jpg"}
-                        urlBumpmap={"Model_Textures/bumpmap.jpg"}
-                    />
+                    <Suspense fallback={<EarthClouds url={"BufferTextures/fair_clouds_1024x512.png"} />}>
+                        <EarthClouds url={"Model_Textures/fair_clouds_4k.png"} />
+                    </Suspense>
+
+                    <Suspense fallback={
+                        <Earth
+                            urlTexture={"BufferTextures/basicTexture_1024x512.jpg"}
+                            urlBumpmap={"BufferTextures/bumpmap_1024x512.jpg"}
+                        />}>
+                        <Earth
+                            urlTexture={"Model_Textures/basicTexture.jpg"}
+                            urlBumpmap={"Model_Textures/bumpmap.jpg"}
+                        />
+                    </Suspense>
+                </Canvas>
                 </Suspense>
-            </Canvas>
-            <Loader />
-
+            </div>
             <section className={styles.accent}>
-                
+
                 <Image src="/Site_Assets/Spaceman.png" alt="Picture of the author" width={'250'} height={'250'} />
-                
+
                 <div className={styles.Introbox}>
-            
+
                     <h1 className={styles.IntroTitleText}>Hi, my name is Charlie</h1>
-            
+
                     <p className={styles.IntroText}>
                         I am a software developer that is always pushing the boundaries on
                         what is possible.
                         <br />
                         I love to learn new things and I am always looking for new ways to improve my skills.
                     </p>
-               
+
                 </div>
-            
+
             </section>
 
             <section className={styles.background}>
@@ -330,24 +345,24 @@ export default function App(): JSX.Element {
                     </div>
 
                     <div className={styles.section3}>
-                       
+
                         <img
                             className={styles.section1Icon}
                             src={"/Site_Assets/html3.svg"}
                         />
-                       
+
                         <h1 className={styles.boxTitleText}>Back-end Development</h1>
-                        
+
                         <p className={styles.boxText}>
                             Efficient and Normalised databases, performant and scalable APIs and microservices.
                         </p>
-                        
+
                         <h2 className={styles.subheading}>Languages </h2>
-                        
+
                         <p className={styles.boxText}>
                             Rust, Node.js, SQL, JSON, PHP
                         </p>
-                        
+
                         <h2 className={styles.subheading}>Frameworks and technologies</h2>
                         <ul className={styles.boxText} style={{ listStyle: 'none', marginLeft: '0' }}>
                             <li style={{ marginTop: '1rem' }}>Express.js</li>
