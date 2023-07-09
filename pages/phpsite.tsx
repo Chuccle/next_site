@@ -100,11 +100,6 @@ export default function PHPSite(): JSX.Element {
             
             </div>
 
-            <div className={styles.imagecontainer}>
-                <img className={styles.quizappimg} src={"/Site_Assets/pdf.png"} />
-                
-            </div>
-
             <div className={styles.textcontainer}>
                 <p className={styles.description}>
                     Full code available - <a href="https://github.com/Chuccle">
