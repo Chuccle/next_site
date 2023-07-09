@@ -28,6 +28,16 @@ function ResponsiveCamera(): JSX.Element {
 
     const fov: React.MutableRefObject<number> = useRef<number>(75);
 
+
+    const mesh: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+
+    const cameraStartPosZ: number = -1.8;
+
+    var cameraEndPosZ: number = cameraStartPosZ - 0.8;
+
+    var currentPosZ: number = cameraStartPosZ;
+
+    
     // will increase fov based on aspect ratio to prevent model clipping
     if (context.viewport.aspect < 0.8) {
 
@@ -39,12 +49,25 @@ function ResponsiveCamera(): JSX.Element {
 
     }
 
+    useFrame((state) => {
+
+        //every second we decrease the value by 0.001
+        if (currentPosZ >= cameraEndPosZ) {
+            currentPosZ -= 0.0015;
+        }
+
+        //we set the position of the camera to the currentPosZ
+        state.camera.position.set(0, 0, currentPosZ);
+    });
+
+
     return (
         <mesh>
             <PerspectiveCamera
                 rotation={[0, 3.15, 0]}
                 makeDefault={true}
                 name="camera"
+                ref={mesh}
                 position={[0, 0, -1.4]}
                 fov={fov.current}
             />
@@ -106,11 +129,6 @@ function Earth({
 
     const mesh: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-    const cameraStartPosZ: number = -1.8;
-
-    var cameraEndPosZ: number = cameraStartPosZ - 0.8;
-
-    var currentPosZ: number = cameraStartPosZ;
 
     const [texture, bumpmap]: THREE.Texture[] = useLoader(THREE.TextureLoader, [urlTexture, urlBumpmap]);
 
@@ -120,13 +138,6 @@ function Earth({
             mesh.current.rotation.y += 0.0003;
         }
 
-        //every second we decrease the value by 0.001
-        if (currentPosZ >= cameraEndPosZ) {
-            currentPosZ -= 0.0015;
-        }
-
-        //we set the position of the camera to the currentPosZ
-        state.camera.position.set(0, 0, currentPosZ);
     });
 
     return (
