@@ -227,7 +227,6 @@ export default function App(): JSX.Element {
 
             <div className={styles.background3D}>
 
-
                 <Canvas shadows={true}>
 
                     <Suspense fallback={<Loader />}>
