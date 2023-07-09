@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Html, useProgress } from '@react-three/drei'
 
 
-
+let cameraPos = -1.8; // Needs to be global so it persists between renders
 
 function Loader() {
 
@@ -31,13 +31,12 @@ function ResponsiveCamera(): JSX.Element {
 
     const mesh: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-    const cameraStartPosZ: number = -1.8;
+  
+    const camerainitialPosZ: number = -1.8; //start position of the camera
 
-    var cameraEndPosZ: number = cameraStartPosZ - 0.8;
+    const cameraEndPosZ: number = camerainitialPosZ - 0.8;
 
-    var currentPosZ: number = cameraStartPosZ;
 
-    
     // will increase fov based on aspect ratio to prevent model clipping
     if (context.viewport.aspect < 0.8) {
 
@@ -52,12 +51,12 @@ function ResponsiveCamera(): JSX.Element {
     useFrame((state) => {
 
         //every second we decrease the value by 0.001
-        if (currentPosZ >= cameraEndPosZ) {
-            currentPosZ -= 0.0015;
+        if (cameraPos >= cameraEndPosZ) {
+            cameraPos -= 0.0015;
         }
 
         //we set the position of the camera to the currentPosZ
-        state.camera.position.set(0, 0, currentPosZ);
+        state.camera.position.set(0, 0, cameraPos);
     });
 
 
