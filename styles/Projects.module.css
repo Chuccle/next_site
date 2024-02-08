@@ -1,6 +1,10 @@
 .subheading {
     font-size: 2rem;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica Neue,
+        Helvetica,
+        sans-serif;
     color: white;
     text-align: left;
     margin-top: 2rem;
@@ -23,15 +27,15 @@
     width: 100%;
 }
 
-
 .imagecontainer {
     display: flex;
     justify-content: center;
 }
 
-.quizappimg {
+.appimg {
     margin-top: 1rem;
     height: auto;
+    min-width: 40vw;
     max-width: 40vw;
     border: 2px solid #000;
 }
@@ -61,8 +65,7 @@
         max-width: 100%;
     }
 
-    .quizappimg {
-        max-width: 100%; ;
+    .appimg {
+        max-width: 100%;
     }
-
 }
