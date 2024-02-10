@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/CV.module.css'
-import Link from 'next/link'
+import Head from 'next/head';
+import styles from '../styles/CV.module.css';
+import Link from 'next/link';
 
 export default function Resume(): JSX.Element {
     return (
@@ -218,5 +218,5 @@ export default function Resume(): JSX.Element {
                 </article>
             </main>
         </div>
-    )
+    );
 }

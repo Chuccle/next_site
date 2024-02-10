@@ -1,5 +1,5 @@
-import styles from '/styles/Footer.module.css'
-import React from 'react'
+import styles from '/styles/Footer.module.css';
+import React from 'react';
 
 export default function Footer(): JSX.Element {
     return (
@@ -41,5 +41,5 @@ export default function Footer(): JSX.Element {
                 </div>
             </footer>
         </div>
-    )
+    );
 }
