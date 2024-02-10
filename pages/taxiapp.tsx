@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Projects.module.css'
-import { GithubGist } from 'react-gistlab'
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Projects.module.css';
+import { GithubGist } from 'react-gistlab';
 
 export default function TaxiApp(): JSX.Element {
     return (
@@ -140,5 +140,5 @@ export default function TaxiApp(): JSX.Element {
                 </p>
             </div>
         </div>
-    )
+    );
 }

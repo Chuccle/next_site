@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from '/styles/Home.module.css'
-import SolarSystemComposer from '../components/space'
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from '/styles/Home.module.css';
+import SolarSystemComposer from '../components/space';
 
 export default function App(): JSX.Element {
     return (
@@ -368,5 +368,5 @@ export default function App(): JSX.Element {
                 </div>
             </section>
         </div>
-    )
+    );
 }

@@ -1,9 +1,9 @@
-import styles from '/styles/Home.module.css'
-import React, { useState } from 'react'
-import Link from 'next/link'
+import styles from '/styles/Home.module.css';
+import React, { useState } from 'react';
+import Link from 'next/link';
 
 export default function Sidebar(): JSX.Element {
-    const [sidebarActive, SetSidebarActive] = useState(false)
+    const [sidebarActive, SetSidebarActive] = useState(false);
 
     return (
         <>
@@ -30,5 +30,5 @@ export default function Sidebar(): JSX.Element {
                 </div>
             </div>
         </>
-    )
+    );
 }

@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Projects.module.css'
-import { GithubGist } from 'react-gistlab'
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Projects.module.css';
+import { GithubGist } from 'react-gistlab';
 
 export default function AlarmSystem(): JSX.Element {
     return (
@@ -211,5 +211,5 @@ export default function AlarmSystem(): JSX.Element {
                 </p>
             </div>
         </div>
-    )
+    );
 }
