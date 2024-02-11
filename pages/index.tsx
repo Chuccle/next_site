@@ -6,7 +6,9 @@ import SolarSystemComposer from '../components/space';
 export default function App(): JSX.Element {
     return (
         <div>
+            <div className={styles.background3D}>
             <SolarSystemComposer styles={styles} />
+            </div>
             <section className={styles.accent}>
                 <Image
                     src="/Site_Assets/Spaceman.png"
