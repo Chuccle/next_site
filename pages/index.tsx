@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '/styles/Home.module.css';
-import SolarSystemComposer from '../components/space';
+import SolarSystemComposer from '../components/space/composer';
 
 export default function App(): JSX.Element {
     return (
