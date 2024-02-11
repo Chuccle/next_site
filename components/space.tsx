@@ -1,19 +1,17 @@
 import {
-    Center,
-    Float,
     Html,
-    OrbitControls,
     Stars,
     Text3D,
     Trail,
     useMatcapTexture,
     useProgress,
 } from '@react-three/drei';
-import { Canvas, useFrame, useLoader, /*useThree*/ } from '@react-three/fiber';
-import { Suspense, useRef } from 'react';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import { ReactNode, Suspense, useRef } from 'react';
 import * as THREE from 'three';
 import { SpinningSphere } from '../components/geometry_ifaces';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
+
 
 function useRotation(
     rotationSpeed: number,
@@ -32,6 +30,8 @@ function useOrbit(
     orbitDistance: number
 ): void {
     useFrame((state) => {
+
+        if (orbitSpeed == 0 || orbitDistance == 0) return;
         // this will always have a set value of 0 meaning initial start position will be math.cos(0) * 2  and math.sin(0) * 2 == x:2, y:0, z:0 initial orbit position
         const incrementer: number = state.clock.getElapsedTime() / orbitSpeed;
 
@@ -44,8 +44,6 @@ function useOrbit(
         }
     });
 }
-
-
 
 function Loader({
     styles
@@ -64,118 +62,96 @@ function Loader({
     );
 }
 
-function SpaceText({
-    fontPath,
-    MatcapTextureName
-}: {
-    fontPath: string
-    MatcapTextureName: string
+interface AttachedToOrbitParams {
+    attachedOrbitSpeed: number;
+    attachedOrbitDistance: number;
+}
+
+function SpaceText(props: {
+    font: string
+    matcapTextureName: string
+    textToDisplay: string
+    castshadow?: boolean | undefined
+    receiveShadow?: boolean | undefined
+    size?: number | undefined
+    scale?: THREE.Vector3Tuple | undefined
+    position?: THREE.Vector3Tuple | undefined
+    rotation?: THREE.Euler | undefined
+    curveSegments?: number | undefined
+    bevelsEnabled?: boolean | undefined
+    bevelSegments?: number | undefined
+    bevelSize?: number | undefined
+    bevelThickness?: number | undefined
+    height?: number | undefined
+    lineHeight?: number | undefined
+    letterSpacing?: number | undefined
+    attachedOrbitParams?: AttachedToOrbitParams | undefined
+    passedMeshRef: React.RefObject<THREE.Mesh> | undefined
+
 }): JSX.Element {
 
     const [matcapTexture]: [THREE.Texture, string, number] = useMatcapTexture(
-        MatcapTextureName
+        props.matcapTextureName
     );
+
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+
+    if (props.passedMeshRef)
+        meshRef = props.passedMeshRef;
 
     // const { width: w, height: h } = useThree((state) => state.viewport);
 
+    useOrbit(
+        props.attachedOrbitParams?.attachedOrbitSpeed ?? 0,
+        meshRef,
+        props.attachedOrbitParams?.attachedOrbitDistance ?? 0
+    );
+
+
+
     return (
-        <mesh>
-            <Center position={[0, 0, -40]}>
-                <Float speed={1}></Float>
-                <Text3D
-                    castShadow={true}
-                    receiveShadow={true}
-                    size={1}
-                    scale={[-1, 1, 0.8]}
-                    position={[2, 0, -20]}
-                    rotation={[0, 0, 0]}
-                    font={fontPath}
-                    curveSegments={24}
-                    bevelSegments={1}
-                    bevelEnabled
-                    bevelSize={0.08}
-                    bevelThickness={0.03}
-                    height={1}
-                    lineHeight={0.9}
-                    letterSpacing={0.3}
-                >
-                    {`Software`}
-                    <meshMatcapMaterial color="white" matcap={matcapTexture} />
-                </Text3D>
-                <Float speed={1}></Float>
-                <Text3D
-                    castShadow={true}
-                    receiveShadow={true}
-                    size={1}
-                    scale={[-1, 1, 0.8]}
-                    position={[2, 0, -40]}
-                    rotation={[0, 0, 0]}
-                    font={fontPath}
-                    curveSegments={24}
-                    bevelSegments={1}
-                    bevelEnabled
-                    bevelSize={0.08}
-                    bevelThickness={0.03}
-                    height={1}
-                    lineHeight={0.9}
-                    letterSpacing={0.3}
-                >
-                    {`that's simply`}
-                    <meshMatcapMaterial color="white" matcap={matcapTexture} />
-                </Text3D>
-                <Float speed={1}></Float>
-                <Text3D
-                    castShadow={true}
-                    receiveShadow={true}
-                    size={1}
-                    scale={[-1, 1, 0.8]}
-                    position={[2, 0, -60]}
-                    rotation={[0, 0, 0]}
-                    font={fontPath}
-                    curveSegments={24}
-                    bevelSegments={1}
-                    bevelEnabled
-                    bevelSize={0.08}
-                    bevelThickness={0.03}
-                    height={1}
-                    lineHeight={0.9}
-                    letterSpacing={0.3}
-                >
-                    {`out of this\n world`}
-                    <meshMatcapMaterial color="white" matcap={matcapTexture} />
-                </Text3D>
-            </Center>
+        <mesh ref={meshRef}>
+            <Text3D
+                font={props.font}
+                size={props.size}
+                scale={props.scale}
+                position={props.position}
+                curveSegments={props.curveSegments}
+                bevelEnabled={props.bevelsEnabled}
+                bevelSegments={props.bevelSegments}
+                lineHeight={props.lineHeight}
+                letterSpacing={props.letterSpacing}
+                height={props.height}
+                bevelSize={props.bevelSize}
+                bevelThickness={props.bevelThickness}
+            >
+                {props.textToDisplay}
+                <meshMatcapMaterial color="white" matcap={matcapTexture} />
+            </Text3D>
+
         </mesh>
     );
 }
 
-function Space({ starCount }: { starCount: number }): JSX.Element {
+function Space(props: { starCount: number, children?: ReactNode | undefined }): JSX.Element {
     // const { width: w, height: h } = useThree((state) => state.viewport);
 
     return (
         <mesh position={[0.0, 0.0, -100.0]}>
             <Stars
-                radius={220}
+                radius={300}
                 depth={10}
-                count={starCount}
+                count={props.starCount}
                 factor={2}
                 saturation={1}
                 speed={0.2}
             />
+            {props.children}
         </mesh>
     );
 }
 
-function Earth({
-    sphereArgs,
-    urlTexture,
-    urlBumpmap,
-    bumpScale,
-    urlSpecularmap,
-    reflectivity,
-    orbitSpeed,
-    orbitDistance
-}: {
+function Planet(props: {
     sphereArgs: SpinningSphere
     urlTexture: string
     urlBumpmap: string
@@ -184,107 +160,111 @@ function Earth({
     reflectivity: number
     orbitSpeed: number
     orbitDistance: number
+    passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
 }): JSX.Element {
-    const meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+
+    if (props.passedMeshRef)
+        meshRef = props.passedMeshRef;
 
     const [texture, bumpmap, specularmap] = useLoader(THREE.TextureLoader, [
-        urlTexture,
-        urlBumpmap,
-        urlSpecularmap,
+        props.urlTexture,
+        props.urlBumpmap,
+        props.urlSpecularmap,
     ]);
 
-    useRotation(sphereArgs.rotationSpeed, meshRef);
+    useRotation(props.sphereArgs.rotationSpeed, meshRef);
 
-    useOrbit(orbitSpeed, meshRef, orbitDistance);
+    useOrbit(props.orbitSpeed, meshRef, props.orbitDistance);
 
     return (
         <mesh
-            position={sphereArgs.position}
+            position={props.sphereArgs.position}
             ref={meshRef}
-            castShadow={sphereArgs.castshadow}
-            receiveShadow={sphereArgs.receiveshadow}
+            castShadow={props.sphereArgs.castshadow}
+            receiveShadow={props.sphereArgs.receiveshadow}
         >
             <meshPhongMaterial
                 map={texture}
                 bumpMap={bumpmap}
-                bumpScale={bumpScale}
+                bumpScale={props.bumpScale}
                 specularMap={specularmap}
-                reflectivity={reflectivity}
+                reflectivity={props.reflectivity}
             />
-            <sphereGeometry args={sphereArgs.meshargs} attach="geometry" />
+            <sphereGeometry args={props.sphereArgs.meshargs} attach="geometry" />
         </mesh>
     );
 }
 
-function EarthClouds({
-    sphereArgs,
-    urlTexture,
-    orbitSpeed,
-    orbitDistance
-
-}: {
+function PlanetClouds(props: {
     sphereArgs: SpinningSphere
     urlTexture: string
     orbitSpeed: number
     orbitDistance: number
+    passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
+
 }): JSX.Element {
-    const texture: THREE.Texture = useLoader(THREE.TextureLoader, urlTexture);
 
-    const meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    const texture: THREE.Texture = useLoader(THREE.TextureLoader, props.urlTexture);
 
-    useRotation(sphereArgs.rotationSpeed, meshRef);
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-    useOrbit(orbitSpeed, meshRef, orbitDistance);
+    if (props.passedMeshRef)
+        meshRef = props.passedMeshRef;
+
+    useRotation(props.sphereArgs.rotationSpeed, meshRef);
+
+    useOrbit(props.orbitSpeed, meshRef, props.orbitDistance);
 
     return (
         <mesh
-            position={sphereArgs.position}
+            position={props.sphereArgs.position}
             ref={meshRef}
-            castShadow={sphereArgs.castshadow}
-            receiveShadow={sphereArgs.receiveshadow}
+            castShadow={props.sphereArgs.castshadow}
+            receiveShadow={props.sphereArgs.receiveshadow}
         >
             <meshPhongMaterial map={texture} transparent={true} />
-            <sphereGeometry args={sphereArgs.meshargs} attach="geometry" />
+            <sphereGeometry args={props.sphereArgs.meshargs} attach="geometry" />
         </mesh>
     );
 }
 
-function Moon({
-    sphereArgs,
-    urlTexture,
-    orbitDistance,
-    orbitSpeed,
-    earthOrbitDistance,
-    earthOrbitSpeed
+function Moon(
+    props: {
+        sphereArgs: SpinningSphere
+        urlTexture: string
+        orbitDistance: number
+        orbitSpeed: number
+        planetOrbitDistance: number
+        planetOrbitSpeed: number
+        passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
+    }): JSX.Element {
 
-}: {
-    sphereArgs: SpinningSphere
-    urlTexture: string
-    orbitDistance: number
-    orbitSpeed: number
-    earthOrbitDistance: number
-    earthOrbitSpeed: number
-}): JSX.Element {
-    const meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-    const [texture] = useLoader(THREE.TextureLoader, [urlTexture]);
+    if (props.passedMeshRef)
+        meshRef = props.passedMeshRef;
+
+
+    const [texture] = useLoader(THREE.TextureLoader, [props.urlTexture]);
 
 
     useFrame((state) => {
-        const earthPosT = state.clock.getElapsedTime() / earthOrbitSpeed;
-        const moonPosT = earthPosT / (orbitSpeed / earthOrbitSpeed);
-        
+        const earthPosT = state.clock.getElapsedTime() / props.planetOrbitSpeed;
+        const moonPosT = earthPosT / (props.orbitSpeed / props.planetOrbitSpeed);
+
         const earthPosition = new THREE.Vector3(
-            Math.cos(earthPosT) * earthOrbitDistance,
+            Math.cos(earthPosT) * props.planetOrbitDistance,
             0,
-            Math.sin(earthPosT) * earthOrbitDistance
+            Math.sin(earthPosT) * props.planetOrbitDistance
         );
 
         if (meshRef.current?.position) {
             meshRef.current.position.set(
-                (Math.cos(moonPosT) * orbitDistance) + earthPosition.x,
-                0, 
-                (Math.sin(moonPosT) * orbitDistance) + earthPosition.z
+                (Math.cos(moonPosT) * props.orbitDistance) + earthPosition.x,
+                0,
+                (Math.sin(moonPosT) * props.orbitDistance) + earthPosition.z
             );
         }
 
@@ -292,35 +272,35 @@ function Moon({
     });
 
 
-    useRotation(sphereArgs.rotationSpeed, meshRef);
+    useRotation(props.sphereArgs.rotationSpeed, meshRef);
 
 
     return (
         <mesh
-            position={sphereArgs.position}
+            position={props.sphereArgs.position}
             ref={meshRef}
-            castShadow={sphereArgs.castshadow}
-            receiveShadow={sphereArgs.receiveshadow}
+            castShadow={props.sphereArgs.castshadow}
+            receiveShadow={props.sphereArgs.receiveshadow}
         >
             <meshStandardMaterial map={texture} />
-            <sphereGeometry args={sphereArgs.meshargs} attach="geometry" />
+            <sphereGeometry args={props.sphereArgs.meshargs} attach="geometry" />
         </mesh>
     );
 }
 
-function SolarFlare({ rotation, radius, speed, position }: { rotation: THREE.Vector3Tuple, radius: number, speed: number, position: THREE.Vector3Tuple }): JSX.Element {
+function SolarFlare(props: { rotation: THREE.Vector3Tuple, radius: number, speed: number, position: THREE.Vector3Tuple }): JSX.Element {
 
     const meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-    console.log(radius);
-    console.log(speed);
-    console.log(position[2]);
+    console.log(props.radius);
+    console.log(props.speed);
+    console.log(props.position[2]);
 
 
     useFrame((state) => {
-        const t = state.clock.getElapsedTime() * speed;
+        const t = state.clock.getElapsedTime() * props.speed;
         if (meshRef.current?.position) {
-            meshRef.current.position.set(Math.sin(t) * radius, (Math.cos(t) * radius * Math.atan(t)) / Math.PI / 1.25, 0);
+            meshRef.current.position.set(Math.sin(t) * props.radius, (Math.cos(t) * props.radius * Math.atan(t)) / Math.PI / 1.25, 0);
             // console.log("meshref x =", meshRef.current.position.x)
             // console.log("meshref y =", meshRef.current.position.y)
             // console.log("meshref z =", meshRef.current.position.z)
@@ -331,7 +311,7 @@ function SolarFlare({ rotation, radius, speed, position }: { rotation: THREE.Vec
         <group  >
             <EffectComposer>
                 <Trail local width={5} length={6} color={new THREE.Color(2, 1, 10)} attenuation={(t: number) => t * t}>
-                    <mesh rotation={rotation} position={position} ref={meshRef}>
+                    <mesh rotation={props.rotation} position={props.position} ref={meshRef}>
                         <sphereGeometry args={[1]} />
                         <meshBasicMaterial color={[4, 34, 4]} toneMapped={false} />
                     </mesh>
@@ -341,7 +321,7 @@ function SolarFlare({ rotation, radius, speed, position }: { rotation: THREE.Vec
     );
 }
 
-function Sun({
+function Star({
     sphereArgs,
     urlTexture,
 }: {
@@ -376,90 +356,154 @@ function Sun({
 }
 
 
-export default function SolarSystemComposer({
-    styles,
-}: {
+function SpaceScene(): JSX.Element {
+
+    const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    const SpaceTextRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    const { camera } = useThree();
+
+    const earthOrbitRadius: number = 150;
+    const earthOrbitSpeed: number = 35;
+
+    useFrame(state => {
+
+        // Ensure planetRef is defined
+        if (planetRef.current) {
+
+            // Calculate the current angle of the planet's orbit
+            const currentTime: number = state.clock.getElapsedTime() / earthOrbitSpeed;
+
+            const planetPosition = new THREE.Vector3();
+            planetRef.current.getWorldPosition(planetPosition); // Get world position of the planet
+
+            const distance = -15; // Distance from the planet to the camera
+            const angle = currentTime % (2 * Math.PI); // Ensure angle is within [0, 2*pi]
+
+            // Calculate camera position based on the planet's position, distance, and angle
+            const cameraX = planetPosition.x + distance * Math.cos(angle);
+            const cameraZ = planetPosition.z + distance * Math.sin(angle); // Adjust if needed
+
+            // Set camera position
+            camera.position.set(cameraX, planetPosition.y, cameraZ);
+
+            // Make the camera look at the planet
+            camera.lookAt(planetPosition);
+
+
+        }
+
+
+        if (SpaceTextRef.current) {
+
+            const textPosition = new THREE.Vector3();
+            SpaceTextRef.current.getWorldPosition(textPosition); // Get world position of the text
+
+            const lookAtVector = new THREE.Vector3();
+            lookAtVector.subVectors(camera.position, textPosition); // Vector pointing from text to camera
+            SpaceTextRef.current.lookAt(textPosition.x - lookAtVector.x, textPosition.y - lookAtVector.y, textPosition.z - lookAtVector.z);
+            // TODO: Find A way to allow SpaceText to orient itself towards the camera in front of Earth
+
+        }
+
+    });
+
+
+    return (
+        <>
+            <Space starCount={5000} >
+                <SpaceText
+                    font={'/fonts/gt.json'}
+                    matcapTextureName={'CB4E88_F99AD6_F384C3_ED75B9'}
+                    textToDisplay={"Software that's\n        simply\nout of this world"}
+                    size={1}
+                    height={1}
+                    scale={[-1, 1, 1]}
+                    position={[9, 2, -5.5]}
+                    curveSegments={24}
+                    bevelsEnabled
+                    bevelSegments={1}
+                    bevelSize={0.08}
+                    bevelThickness={0.03}
+                    lineHeight={2}
+                    letterSpacing={0.3}
+                    attachedOrbitParams={{ attachedOrbitDistance: earthOrbitRadius, attachedOrbitSpeed: earthOrbitSpeed }}
+                    passedMeshRef={SpaceTextRef}
+                />
+                <EffectComposer>
+                    <Bloom mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.9} />
+                    <Star
+                        sphereArgs={{
+                            rotationSpeed: 0.000035,
+                            receiveshadow: false,
+                            castshadow: false,
+                            meshargs: [60, 100, 100],
+                            position: [0.0, 0.0, 0.0],
+                        }}
+                        urlTexture={'Model_Textures/2k_sun.jpg'}
+                    />
+                    <Bloom />
+                </EffectComposer>
+                <Moon
+                    sphereArgs={{
+                        rotationSpeed: 0.015,
+                        receiveshadow: false,
+                        castshadow: false,
+                        meshargs: [0.6, 30, 30],
+                        position: [0.0, 0.0, 0.0],
+                    }}
+                    urlTexture={'Model_Textures/nasa_moon_4k.jpg'}
+                    orbitDistance={6}
+                    orbitSpeed={3}
+                    planetOrbitDistance={earthOrbitRadius}
+                    planetOrbitSpeed={earthOrbitSpeed}
+                />
+                <PlanetClouds
+                    sphereArgs={{
+                        rotationSpeed: 0.005,
+                        receiveshadow: true,
+                        castshadow: false,
+                        meshargs: [4.03, 30, 30],
+                        position: [0.0, 0.0, 0.0],
+                    }}
+                    urlTexture={'Model_Textures/fair_clouds_4k.png'}
+                    orbitDistance={earthOrbitRadius}
+                    orbitSpeed={earthOrbitSpeed}
+                />
+                <Planet
+                    sphereArgs={{
+                        rotationSpeed: 0.003,
+                        receiveshadow: true,
+                        castshadow: false,
+                        meshargs: [4, 60, 60],
+                        position: [0.0, 0.0, 0.0],
+                    }}
+                    urlTexture={'Model_Textures/basicTexture.jpg'}
+                    urlBumpmap={'Model_Textures/bumpmap.jpg'}
+                    bumpScale={15}
+                    urlSpecularmap={'Model_Textures/water_4k.png'}
+                    reflectivity={1}
+                    orbitDistance={earthOrbitRadius}
+                    orbitSpeed={earthOrbitSpeed}
+                    passedMeshRef={planetRef}
+                />
+            </Space>
+        </>
+    );
+}
+
+export default function SolarSystemComposer({ styles }: {
     styles: {
         readonly [key: string]: string
     }
-}): JSX.Element {
-
-    const earthOrbitRadius: number = 150;
-    const earthOrbitSpeed: number = 50;
+}
+): JSX.Element {
 
     return (
-        <div className={styles.background3D}>
-            <Canvas shadows={true} camera={{ position: [0, 0, -10], fov: 60 }}>
-                <color attach="background" args={['black']} />
-
-                <Suspense fallback={<Loader styles={styles} />}>
-
-                    <OrbitControls enableZoom={true} enablePan={true} maxZoom={-100} />
-
-                    {/*  <ResponsiveCamera /> */}
-                    <Space starCount={5000} />
-                    <SpaceText
-                        fontPath={'/fonts/gt.json'}
-                        MatcapTextureName={'CB4E88_F99AD6_F384C3_ED75B9'}
-                    />
-                    <EffectComposer>
-                        <Bloom mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.9} />
-                        <Sun
-                            sphereArgs={{
-                                rotationSpeed: 0.000035,
-                                receiveshadow: false,
-                                castshadow: false,
-                                meshargs: [60, 100, 100],
-                                position: [0.0, 0.0, 0.0],
-                            }}
-                            urlTexture={'Model_Textures/2k_sun.jpg'}
-                        />
-                        <Bloom />
-                    </EffectComposer>
-                    <Moon
-                        sphereArgs={{
-                            rotationSpeed: 0.015,
-                            receiveshadow: false,
-                            castshadow: false,
-                            meshargs: [0.6, 30, 30],
-                            position: [0.0, 0.0, 0.0],
-                        }}
-                        urlTexture={'Model_Textures/nasa_moon_4k.jpg'}
-                        orbitDistance={6}
-                        orbitSpeed={3}
-                        earthOrbitDistance={earthOrbitRadius}
-                        earthOrbitSpeed={earthOrbitSpeed}
-                    />
-                    <EarthClouds
-                        sphereArgs={{
-                            rotationSpeed: 0.005,
-                            receiveshadow: true,
-                            castshadow: false,
-                            meshargs: [4.03, 30, 30],
-                            position: [0.0, 0.0, 0.0],
-                        }}
-                        urlTexture={'Model_Textures/fair_clouds_4k.png'}
-                        orbitDistance={earthOrbitRadius}
-                        orbitSpeed={earthOrbitSpeed}
-                    />
-                    <Earth
-                        sphereArgs={{
-                            rotationSpeed: 0.003,
-                            receiveshadow: true,
-                            castshadow: false,
-                            meshargs: [4, 60, 60],
-                            position: [0.0, 0.0, 0.0],
-                        }}
-                        urlTexture={'Model_Textures/basicTexture.jpg'}
-                        urlBumpmap={'Model_Textures/bumpmap.jpg'}
-                        bumpScale={15}
-                        urlSpecularmap={'Model_Textures/water_4k.png'}
-                        reflectivity={1}
-                        orbitDistance={earthOrbitRadius}
-                        orbitSpeed={earthOrbitSpeed}
-                    />
-                </Suspense>
-            </Canvas>
-        </div>
+        <Canvas shadows={true} camera={{ fov: 60 }}>
+            <color attach="background" args={['black']} />
+            <Suspense fallback={<Loader styles={styles} />}>
+                <SpaceScene />
+            </Suspense>
+        </Canvas>
     );
 }
