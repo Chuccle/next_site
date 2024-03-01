@@ -1,12 +1,6 @@
 import { Text3D, useMatcapTexture } from "@react-three/drei";
 import { useRef } from "react";
-import { useOrbit } from "./util";
 
-
-interface AttachedToOrbitParams {
-    attachedOrbitSpeed: number;
-    attachedOrbitDistance: number;
-}
 
 export default function SpaceText(props: {
     font: string
@@ -14,10 +8,10 @@ export default function SpaceText(props: {
     textToDisplay: string
     castshadow?: boolean | undefined
     receiveShadow?: boolean | undefined
-    size?: number | undefined
+    size: number
     scale?: THREE.Vector3Tuple | undefined
     position?: THREE.Vector3Tuple | undefined
-    rotation?: THREE.Euler | undefined
+    rotation?: THREE.Vector3Tuple | undefined
     curveSegments?: number | undefined
     bevelsEnabled?: boolean | undefined
     bevelSegments?: number | undefined
@@ -26,8 +20,7 @@ export default function SpaceText(props: {
     height?: number | undefined
     lineHeight?: number | undefined
     letterSpacing?: number | undefined
-    attachedOrbitParams?: AttachedToOrbitParams | undefined
-    passedMeshRef: React.RefObject<THREE.Mesh> | undefined
+    passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
 
 }): JSX.Element {
 
@@ -40,21 +33,13 @@ export default function SpaceText(props: {
     if (props.passedMeshRef)
         meshRef = props.passedMeshRef;
 
-    // const { width: w, height: h } = useThree((state) => state.viewport);
-
-    useOrbit(
-        props.attachedOrbitParams?.attachedOrbitSpeed ?? 0,
-        meshRef,
-        props.attachedOrbitParams?.attachedOrbitDistance ?? 0
-    );
-
-
+    //const { width: w, height: h } = useThree((state) => state.viewport);
 
     return (
         <mesh ref={meshRef}>
             <Text3D
                 font={props.font}
-                size={props.size}
+                size={(props.size)}
                 scale={props.scale}
                 position={props.position}
                 curveSegments={props.curveSegments}
@@ -65,6 +50,7 @@ export default function SpaceText(props: {
                 height={props.height}
                 bevelSize={props.bevelSize}
                 bevelThickness={props.bevelThickness}
+                rotation={props.rotation}
             >
                 {props.textToDisplay}
                 <meshMatcapMaterial color="white" matcap={matcapTexture} />

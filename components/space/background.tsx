@@ -1,19 +1,14 @@
 import { Stars } from "@react-three/drei";
 import { ReactNode } from "react";
 
-
-
-
 export function Space(props: { starCount: number, children?: ReactNode | undefined }): JSX.Element {
-    // const { width: w, height: h } = useThree((state) => state.viewport);
-
     return (
-        <mesh position={[0.0, 0.0, -100.0]}>
+        <mesh position={[0.0, 0.0, -20.0]}>
             <Stars
-                radius={300}
+                radius={200}
                 depth={10}
                 count={props.starCount}
-                factor={2}
+                factor={0.2}
                 saturation={1}
                 speed={0.2}
             />
