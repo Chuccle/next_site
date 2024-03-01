@@ -102,7 +102,7 @@ function SpaceScene(): JSX.Element {
     return (
         <>
 
-            <Space starCount={5000} >
+            <Space starCount={500} >
                 {/* <OrbitControls/> */}
                 {/* <SpaceText
                     font={'/fonts/Helvetiker.json'}
@@ -128,7 +128,7 @@ function SpaceScene(): JSX.Element {
                             rotationSpeed: 0.00035,
                             receiveshadow: false,
                             castshadow: false,
-                            meshArgs: [10, 100, 100],
+                            meshArgs: [10, 30, 30],
                             position: [0.0, 0.0, 0.0],
                         }}
                         urlTexture="Model_Textures/2k_sun.jpg"
@@ -142,7 +142,7 @@ function SpaceScene(): JSX.Element {
                         rotationSpeed: 0.0045,
                         receiveshadow: true,
                         castshadow: false,
-                        meshArgs: [1.5, 60, 60],
+                        meshArgs: [1.5, 30, 30],
                         position: [0.0, 0.0, 0.0],
                         orbitDistance: orbitRadiusMercury,
                         orbitSpeed: orbitSpeedMercury
@@ -155,7 +155,7 @@ function SpaceScene(): JSX.Element {
                         rotationSpeed: 0.0030,
                         receiveshadow: true,
                         castshadow: false,
-                        meshArgs: [2.5, 60, 60],
+                        meshArgs: [2.5, 30, 30],
                         position: [0.0, 0.0, 0.0],
                         orbitDistance: orbitRadiusVenus,
                         orbitSpeed: orbitSpeedVenus
@@ -167,7 +167,7 @@ function SpaceScene(): JSX.Element {
                         rotationSpeed: 0.0030,
                         receiveshadow: true,
                         castshadow: false,
-                        meshArgs: [2.03, 60, 60],
+                        meshArgs: [2.03, 30, 30],
                         position: [0.0, 0.0, 0.0],
                         orbitDistance: orbitRadiusVenus,
                         orbitSpeed: orbitSpeedVenus
@@ -179,7 +179,7 @@ function SpaceScene(): JSX.Element {
                         rotationSpeed: 0.015,
                         receiveshadow: false,
                         castshadow: false,
-                        meshArgs: [0.5, 30, 30],
+                        meshArgs: [0.5, 15, 15],
                         position: [0.0, 0.0, 0.0],
                         orbitDistance: 5,
                         orbitSpeed: 3
@@ -206,7 +206,7 @@ function SpaceScene(): JSX.Element {
                         rotationSpeed: 0.0015,
                         receiveshadow: true,
                         castshadow: false,
-                        meshArgs: [3.5, 60, 60],
+                        meshArgs: [3.5, 30, 30],
                         position: [0.0, 0.0, 0.0],
                         orbitDistance: orbitRadiusEarth,
                         orbitSpeed: orbitSpeedEarth
