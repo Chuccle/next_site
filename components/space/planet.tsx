@@ -4,140 +4,121 @@ import * as THREE from "three";
 import { SpinningSphere, OrbitingSphere } from "./geometry_iface";
 import { useOrbit, useRotation } from "./util";
 
-interface PlanetBase {
+type BasePlanetParams = {
+    urlTexture: string;
+    passedMeshRef?: React.RefObject<THREE.Mesh> | undefined;
+} & (SpinningSphere & OrbitingSphere);
 
-    spinningOrbitingSphereParams: SpinningSphere & OrbitingSphere
-    urlTexture: string
-    passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
+type StandardPlanet = { type: 'standard' } & BasePlanetParams;
+type BumpyPlanet = { type: 'bumpy', urlBumpmap: string, bumpScale: number } & BasePlanetParams;
+type ReflectivePlanet = { type: 'reflective', urlSpecularmap: string, reflectivity: number } & BasePlanetParams;
+type BumpyAndReflectivePlanet = { type: 'bumpyAndReflective', urlBumpmap: string, bumpScale: number, urlSpecularmap: string, reflectivity: number } & BasePlanetParams;
 
-}
-
-interface PlanetWithSpecularMap {
-    baseParams: PlanetBase
-    urlSpecularmap: string
-    reflectivity: number
-
-}
+function PlanetBumpyAndReflective(planetparams: BumpyAndReflectivePlanet) {
 
 
-interface PlanetWithBumpMap {
-    baseParams: PlanetBase
-    urlBumpmap: string
-    bumpScale: number
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-}
+    if (planetparams.passedMeshRef)
+        meshRef = planetparams.passedMeshRef;
 
+    const [texture, bumpmap, specularmap] = useLoader(THREE.TextureLoader, [
+        planetparams.urlTexture,
+        planetparams.urlBumpmap,
+        planetparams.urlSpecularmap,
+    ]);
 
-function PlanetBumpyAndReflective(planetparams: PlanetWithSpecularMap & PlanetWithBumpMap) {
+    useRotation(planetparams.rotationSpeed, meshRef);
 
-    const { baseParams, urlSpecularmap, urlBumpmap, bumpScale, reflectivity } = planetparams as PlanetWithSpecularMap & PlanetWithBumpMap;
+    useOrbit(planetparams.orbitSpeed, meshRef, planetparams.orbitDistance);
 
-        let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
-
-        if (baseParams.passedMeshRef)
-            meshRef = baseParams.passedMeshRef;
-
-        const [texture, bumpmap, specularmap] = useLoader(THREE.TextureLoader, [
-            baseParams.urlTexture,
-            urlBumpmap,
-            urlSpecularmap,
-        ]);
-
-        useRotation(baseParams.spinningOrbitingSphereParams.rotationSpeed, meshRef);
-
-        useOrbit(baseParams.spinningOrbitingSphereParams.orbitSpeed, meshRef, baseParams.spinningOrbitingSphereParams.orbitDistance);
-
-        return (
-            <mesh
-                position={baseParams.spinningOrbitingSphereParams.position}
-                ref={meshRef}
-                castShadow={baseParams.spinningOrbitingSphereParams.castshadow}
-                receiveShadow={baseParams.spinningOrbitingSphereParams.receiveshadow}
-            >
-                <meshPhongMaterial
-                    map={texture}
-                    bumpMap={bumpmap}
-                    bumpScale={bumpScale}
-                    specularMap={specularmap}
-                    reflectivity={reflectivity}
-                />
-                <sphereGeometry args={baseParams.spinningOrbitingSphereParams.meshArgs} attach="geometry" />
-            </mesh>
-        );
+    return (
+        <mesh
+            position={planetparams.position}
+            ref={meshRef}
+            castShadow={planetparams.castshadow}
+            receiveShadow={planetparams.receiveshadow}
+        >
+            <meshPhongMaterial
+                map={texture}
+                bumpMap={bumpmap}
+                bumpScale={planetparams.bumpScale}
+                specularMap={specularmap}
+                reflectivity={planetparams.reflectivity}
+            />
+            <sphereGeometry args={planetparams.meshArgs} attach="geometry" />
+        </mesh>
+    );
 }
 
 
-function PlanetBumpy(planetparams: PlanetWithBumpMap) {
+function PlanetBumpy(planetparams: BumpyPlanet) {
 
-    const { baseParams, urlBumpmap, bumpScale } = planetparams as PlanetWithBumpMap;
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-        let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    if (planetparams.passedMeshRef)
+        meshRef = planetparams.passedMeshRef;
 
-        if (baseParams.passedMeshRef)
-            meshRef = baseParams.passedMeshRef;
+    const [texture, bumpmap] = useLoader(THREE.TextureLoader, [
+        planetparams.urlTexture,
+        planetparams.urlBumpmap,
+    ]);
 
-        const [texture, bumpmap] = useLoader(THREE.TextureLoader, [
-            baseParams.urlTexture,
-            urlBumpmap,
-        ]);
+    useRotation(planetparams.rotationSpeed, meshRef);
 
-        useRotation(baseParams.spinningOrbitingSphereParams.rotationSpeed, meshRef);
+    useOrbit(planetparams.orbitSpeed, meshRef, planetparams.orbitDistance);
 
-        useOrbit(baseParams.spinningOrbitingSphereParams.orbitSpeed, meshRef, baseParams.spinningOrbitingSphereParams.orbitDistance);
-
-        return (
-            <mesh
-                position={baseParams.spinningOrbitingSphereParams.position}
-                ref={meshRef}
-                castShadow={baseParams.spinningOrbitingSphereParams.castshadow}
-                receiveShadow={baseParams.spinningOrbitingSphereParams.receiveshadow}
-            >
-                <meshPhongMaterial
-                    map={texture}
-                    bumpMap={bumpmap}
-                    bumpScale={bumpScale}
-                />
-                <sphereGeometry args={baseParams.spinningOrbitingSphereParams.meshArgs} attach="geometry" />
-            </mesh>
-        );
+    return (
+        <mesh
+            position={planetparams.position}
+            ref={meshRef}
+            castShadow={planetparams.castshadow}
+            receiveShadow={planetparams.receiveshadow}
+        >
+            <meshPhongMaterial
+                map={texture}
+                bumpMap={bumpmap}
+                bumpScale={planetparams.bumpScale}
+            />
+            <sphereGeometry args={planetparams.meshArgs} attach="geometry" />
+        </mesh>
+    );
 }
 
-function PlanetReflective(planetparams: PlanetWithSpecularMap) {
+function PlanetReflective(planetparams: ReflectivePlanet) {
 
-    const { baseParams, urlSpecularmap, reflectivity } = planetparams as PlanetWithSpecularMap;
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
-        let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    if (planetparams.passedMeshRef)
+        meshRef = planetparams.passedMeshRef;
 
-        if (baseParams.passedMeshRef)
-            meshRef = baseParams.passedMeshRef;
+    const [texture, specularmap] = useLoader(THREE.TextureLoader, [
+        planetparams.urlTexture,
+        planetparams.urlSpecularmap,
+    ]);
 
-        const [texture, specularmap] = useLoader(THREE.TextureLoader, [
-            baseParams.urlTexture,
-            urlSpecularmap,
-        ]);
+    useRotation(planetparams.rotationSpeed, meshRef);
 
-        useRotation(baseParams.spinningOrbitingSphereParams.rotationSpeed, meshRef);
+    useOrbit(planetparams.orbitSpeed, meshRef, planetparams.orbitDistance);
 
-        useOrbit(baseParams.spinningOrbitingSphereParams.orbitSpeed, meshRef, baseParams.spinningOrbitingSphereParams.orbitDistance);
-
-        return (
-            <mesh
-                position={baseParams.spinningOrbitingSphereParams.position}
-                ref={meshRef}
-                castShadow={baseParams.spinningOrbitingSphereParams.castshadow}
-                receiveShadow={baseParams.spinningOrbitingSphereParams.receiveshadow}
-            >
-                <meshPhongMaterial
-                    map={texture}
-                    specularMap={specularmap}
-                    reflectivity={reflectivity}
-                />
-                <sphereGeometry args={baseParams.spinningOrbitingSphereParams.meshArgs} attach="geometry" />
-            </mesh>
-        );
+    return (
+        <mesh
+            position={planetparams.position}
+            ref={meshRef}
+            castShadow={planetparams.castshadow}
+            receiveShadow={planetparams.receiveshadow}
+        >
+            <meshPhongMaterial
+                map={texture}
+                specularMap={specularmap}
+                reflectivity={planetparams.reflectivity}
+            />
+            <sphereGeometry args={planetparams.meshArgs} attach="geometry" />
+        </mesh>
+    );
 }
 
-function PlanetStandard(planetparams: PlanetBase) {
+function PlanetStandard(planetparams: StandardPlanet) {
 
     let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
@@ -148,54 +129,47 @@ function PlanetStandard(planetparams: PlanetBase) {
         planetparams.urlTexture,
     ]);
 
-    useRotation(planetparams.spinningOrbitingSphereParams.rotationSpeed, meshRef);
+    useRotation(planetparams.rotationSpeed, meshRef);
 
-    useOrbit(planetparams.spinningOrbitingSphereParams.orbitSpeed, meshRef, planetparams.spinningOrbitingSphereParams.orbitDistance);
+    useOrbit(planetparams.orbitSpeed, meshRef, planetparams.orbitDistance);
 
     return (
         <mesh
-            position={planetparams.spinningOrbitingSphereParams.position}
+            position={planetparams.position}
             ref={meshRef}
-            castShadow={planetparams.spinningOrbitingSphereParams.castshadow}
-            receiveShadow={planetparams.spinningOrbitingSphereParams.receiveshadow}
+            castShadow={planetparams.castshadow}
+            receiveShadow={planetparams.receiveshadow}
         >
             <meshStandardMaterial
                 map={texture}
             />
-            <sphereGeometry args={planetparams.spinningOrbitingSphereParams.meshArgs} attach="geometry" />
+            <sphereGeometry args={planetparams.meshArgs} attach="geometry" />
         </mesh>
     );
 }
 
+type PlanetParams = StandardPlanet | BumpyPlanet | ReflectivePlanet | BumpyAndReflectivePlanet;
 
-
-export function Planet(planetparams: PlanetBase | (PlanetWithSpecularMap & PlanetWithBumpMap) | PlanetWithSpecularMap | PlanetWithBumpMap): JSX.Element {
-
-    if ('baseParams' in planetparams && 'urlSpecularmap' in planetparams && 'urlBumpmap' in planetparams) {
-
-        return <PlanetBumpyAndReflective {...planetparams}/>;
-
-    } else if ('baseParams' in planetparams && 'urlSpecularmap' in planetparams) {
-       
-        return <PlanetReflective {...planetparams}/>;
-
-    } else if ('baseParams' in planetparams && 'urlBumpmap' in planetparams) {
-        
-        return <PlanetBumpy {...planetparams}/>;
-
-    } else {
-
-        return <PlanetStandard {...planetparams}/>;
-
+export function Planet(planetparams: PlanetParams): JSX.Element {
+    switch (planetparams.type) {
+        case 'standard':
+            return <PlanetStandard {...planetparams} />;
+        case 'bumpy':
+            return <PlanetBumpy {...planetparams} />;
+        case 'reflective':
+            return <PlanetReflective {...planetparams} />;
+        case 'bumpyAndReflective':
+            return <PlanetBumpyAndReflective {...planetparams} />;
+        default:
+            throw new Error('Invalid planet type');
     }
 }
 
 export function PlanetClouds(props: {
-    spinningOrbitingSphereParams: SpinningSphere & OrbitingSphere
     urlTexture: string
     passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
 
-}): JSX.Element {
+} & (SpinningSphere & OrbitingSphere) ): JSX.Element {
 
     const texture: THREE.Texture = useLoader(THREE.TextureLoader, props.urlTexture);
 
@@ -204,19 +178,19 @@ export function PlanetClouds(props: {
     if (props.passedMeshRef)
         meshRef = props.passedMeshRef;
 
-    useRotation(props.spinningOrbitingSphereParams.rotationSpeed, meshRef);
+    useRotation(props.rotationSpeed, meshRef);
 
-    useOrbit(props.spinningOrbitingSphereParams.orbitSpeed, meshRef, props.spinningOrbitingSphereParams.orbitDistance);
+    useOrbit(props.orbitSpeed, meshRef, props.orbitDistance);
 
     return (
         <mesh
-            position={props.spinningOrbitingSphereParams.position}
+            position={props.position}
             ref={meshRef}
-            castShadow={props.spinningOrbitingSphereParams.castshadow}
-            receiveShadow={props.spinningOrbitingSphereParams.receiveshadow}
+            castShadow={props.castshadow}
+            receiveShadow={props.receiveshadow}
         >
-            <meshPhongMaterial map={texture} transparent={true} />
-            <sphereGeometry args={props.spinningOrbitingSphereParams.meshArgs} attach="geometry" />
+            <meshPhongMaterial map={texture} transparent={true} opacity={0.8} />
+            <sphereGeometry args={props.meshArgs} attach="geometry" />
         </mesh>
     );
 }
@@ -224,13 +198,12 @@ export function PlanetClouds(props: {
 
 // OrbitLine component to create orbit lines
 export function OrbitLine({ radius, enabled = true }: { radius: number, enabled?: boolean }): JSX.Element {
-    
-    if(!enabled) {
+
+    if (!enabled) {
 
         return <></>;
     }
-    
-    
+
     // Create a circle geometry with a radius and number of segments
     const curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, 2 * Math.PI, false, 0);
     const points = curve.getPoints(300); // Adjust the number of points for smoother rings
@@ -241,7 +214,7 @@ export function OrbitLine({ radius, enabled = true }: { radius: number, enabled?
         color: 0xffffff, // Color of the line
         dashSize: 3, // Length of each dash
         gapSize: 2.5, // Length of each gap
-        
+
     });
 
     // Create the line

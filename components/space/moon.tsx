@@ -6,25 +6,22 @@ import { useRotation } from "./util";
 
 
 export default function Moon(props: {
-    spinningOrbitingSphereParams: SpinningSphere & OrbitingSphere
     urlTexture: string
     planetOrbitDistance: number
     planetOrbitSpeed: number
     passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
-}): JSX.Element {
+} & (SpinningSphere & OrbitingSphere)): JSX.Element {
 
     let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
     if (props.passedMeshRef)
         meshRef = props.passedMeshRef;
 
-
     const texture = useLoader(THREE.TextureLoader, props.urlTexture);
-
 
     useFrame((state) => {
         const earthPosT = state.clock.getElapsedTime() / props.planetOrbitSpeed;
-        const moonPosT = earthPosT / (props.spinningOrbitingSphereParams.orbitSpeed / props.planetOrbitSpeed);
+        const moonPosT = earthPosT / (props.orbitSpeed / props.planetOrbitSpeed);
 
         const earthPosition = new THREE.Vector3(
             Math.cos(earthPosT) * props.planetOrbitDistance,
@@ -34,9 +31,9 @@ export default function Moon(props: {
 
         if (meshRef.current?.position) {
             meshRef.current.position.set(
-                (Math.cos(moonPosT) * props.spinningOrbitingSphereParams.orbitDistance) + earthPosition.x,
+                (Math.cos(moonPosT) * props.orbitDistance) + earthPosition.x,
                 0,
-                (Math.sin(moonPosT) * props.spinningOrbitingSphereParams.orbitDistance) + earthPosition.z
+                (Math.sin(moonPosT) * props.orbitDistance) + earthPosition.z
             );
         }
 
@@ -44,18 +41,18 @@ export default function Moon(props: {
     });
 
 
-    useRotation(props.spinningOrbitingSphereParams.rotationSpeed, meshRef);
+    useRotation(props.rotationSpeed, meshRef);
 
 
     return (
         <mesh
-            position={props.spinningOrbitingSphereParams.position}
+            position={props.position}
             ref={meshRef}
-            castShadow={props.spinningOrbitingSphereParams.castshadow}
-            receiveShadow={props.spinningOrbitingSphereParams.receiveshadow}
+            castShadow={props.castshadow}
+            receiveShadow={props.receiveshadow}
         >
             <meshStandardMaterial map={texture} />
-            <sphereGeometry args={props.spinningOrbitingSphereParams.meshArgs} attach="geometry" />
+            <sphereGeometry args={props.meshArgs} attach="geometry" />
         </mesh>
     );
 }
