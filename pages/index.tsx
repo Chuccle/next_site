@@ -2,8 +2,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from '/styles/Home.module.css';
 import SolarSystemComposer from '../components/space/composer';
+import { useEffect } from 'react';
 
 export default function App(): JSX.Element {
+
+    const isClient = () => typeof window !== 'undefined';
+
+    useEffect(()=> {
+        if(!isClient()) return;
+        window.scrollTo({top: 0, behavior:'smooth'});
+        }, []
+    );
+
     return (
         <div>
             <div className={styles.background3D}>

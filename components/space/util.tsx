@@ -1,5 +1,7 @@
 import { Html, useProgress } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import useScrollBlock from "../utils";
+import { useEffect } from "react";
 
 
 export function useRotation(
@@ -42,6 +44,10 @@ export function Loader({
     }
 }): JSX.Element {
     const { progress } = useProgress();
+    const [blockScroll] = useScrollBlock();
+
+    useEffect(() => blockScroll(), [blockScroll]);
+
 
     return (
         <Html center className={styles.loader}>
