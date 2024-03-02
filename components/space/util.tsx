@@ -44,9 +44,17 @@ export function Loader({
     }
 }): JSX.Element {
     const { progress } = useProgress();
-    const [blockScroll] = useScrollBlock();
+    const [blockScroll, allowScroll] = useScrollBlock();
 
-    useEffect(() => blockScroll(), [blockScroll]);
+    useEffect(() => {
+        
+        blockScroll();
+        
+        return () => {
+            allowScroll();
+        };
+    
+    }, [blockScroll, allowScroll]);
 
 
     return (
