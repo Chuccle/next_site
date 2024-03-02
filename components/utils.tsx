@@ -14,12 +14,6 @@ export default function useScrollBlock(): [() => void, () => void] {
   const blockScroll = () => {
     if (scrollBlocked.current) return;
 
-    const scrollBarWidth = window.innerWidth - (html.clientWidth);
-    const bodyPaddingRight =
-      parseInt(
-        window.getComputedStyle(body).getPropertyValue('padding-right'),
-      ) ?? 0;
-
     /**
      * 1. Fixes a bug in iOS and desktop Safari whereby setting
      *    `overflow: hidden` on the html/body does not prevent scrolling.
@@ -32,7 +26,7 @@ export default function useScrollBlock(): [() => void, () => void] {
 
     body.style.position = 'relative'; /* [1] */
     body.style.overflow = 'hidden'; /* [2] */
-    body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`;
+
 
     scrollBlocked.current = true;
   };
