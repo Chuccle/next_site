@@ -1,7 +1,14 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
-import { GithubGist } from 'react-gistlab';
+import dynamic from 'next/dynamic';
+
+const GithubGist = dynamic(
+    () => {
+        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
+    },
+    { ssr: false }
+);
 
 export default function NextSite(): JSX.Element {
     return (
