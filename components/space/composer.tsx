@@ -45,7 +45,20 @@ function SpaceScene(): JSX.Element {
         });
         blockScroll();
 
-    }, [blockScroll]);
+        return () => {
+            window.removeEventListener('wheel', function (evt) {
+                ScrollEventHandler(evt, zoomOutRef);
+            });
+            window.removeEventListener('keydown', function (evt) {
+                ScrollEventHandler(evt, zoomOutRef);
+            });
+            window.removeEventListener('touchmove', function (evt) {
+                ScrollEventHandler(evt, zoomOutRef);
+            });
+            allowScroll();
+        };
+
+    }, [blockScroll, allowScroll]);
 
     useFrame(state => {
 
