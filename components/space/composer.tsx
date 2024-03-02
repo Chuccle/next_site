@@ -1,7 +1,7 @@
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, Suspense, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { Space } from './background';
 import Moon from './moon';
@@ -16,7 +16,12 @@ function SpaceScene(): JSX.Element {
 
     const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
     const starRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+    const zoomOutRef: MutableRefObject<number>  = useRef<number>(0);
+    const orbitRingsRef: MutableRefObject<boolean> = useRef<boolean>(false);
+
     const { camera } = useThree();
+
+    const [blockScroll, allowScroll] = useScrollBlock();
 
     const orbitRadiusEarth: number = 40;
     const orbitSpeedEarth: number = 22.5;
@@ -27,23 +32,16 @@ function SpaceScene(): JSX.Element {
     const orbitRadiusVenus: number = 30;
     const orbitSpeedVenus: number = 15;
 
-
-    const [zoomOut, setZoomOut] = useState(0);
-
-    const [blockScroll, allowScroll] = useScrollBlock();
-
-    const [orbitRings, setOrbitRings] = useState(false);
-
     useEffect(() => {
 
         window.addEventListener('wheel', function (evt) {
-            ScrollEventHandler(evt, setZoomOut);
+            ScrollEventHandler(evt, zoomOutRef);
         });
         window.addEventListener('keydown', function (evt) {
-            ScrollEventHandler(evt, setZoomOut);
+            ScrollEventHandler(evt, zoomOutRef);
         });
         window.addEventListener('touchmove', function (evt) {
-            ScrollEventHandler(evt, setZoomOut);
+            ScrollEventHandler(evt, zoomOutRef);
         });
         blockScroll();
 
@@ -64,7 +62,7 @@ function SpaceScene(): JSX.Element {
             const starPosition = new THREE.Vector3();
             starRef.current.getWorldPosition(starPosition); // Get world position of the star
 
-            const distance = -12.5 - zoomOut * 100; // Distance from the planet to the camera
+            const distance = -12.5 - zoomOutRef.current * 100; // Distance from the planet to the camera
             const angle = currentTime % (2 * Math.PI); // Ensure angle is within [0, 2*pi]
 
             // if (zoomOut !== 0)
@@ -72,7 +70,7 @@ function SpaceScene(): JSX.Element {
 
             // Define target positions and look-at points for the two views
             let targetCameraPosition, targetLookAt;
-            if (zoomOut < 0.15) {
+            if (zoomOutRef.current < 0.15) {
                 targetCameraPosition = new THREE.Vector3(
                     planetPosition.x + distance * Math.cos(angle),
                     planetPosition.y,
@@ -82,10 +80,8 @@ function SpaceScene(): JSX.Element {
             } else {
                 targetCameraPosition = new THREE.Vector3(0, 80, 0);
                 targetLookAt = starPosition;
-                setOrbitRings(true);
+                orbitRingsRef.current = true;
                 allowScroll();
-
-
             }
 
             // Interpolate camera position and look-at point
@@ -132,7 +128,7 @@ function SpaceScene(): JSX.Element {
                     />
                     <Bloom />
                 </EffectComposer>
-                <OrbitLine radius={orbitRadiusMercury} enabled={orbitRings} />
+                <OrbitLine radius={orbitRadiusMercury} enabled={orbitRingsRef.current} />
                 <Planet
                     spinningOrbitingSphereParams={{
                         rotationSpeed: 0.0045,
@@ -145,7 +141,7 @@ function SpaceScene(): JSX.Element {
                     }}
                     urlTexture='Model_Textures/2k_mercury.jpg'
                 />
-                <OrbitLine radius={orbitRadiusVenus} enabled={orbitRings} />
+                <OrbitLine radius={orbitRadiusVenus} enabled={orbitRingsRef.current} />
                 <Planet
                     spinningOrbitingSphereParams={{
                         rotationSpeed: 0.0030,
@@ -196,7 +192,7 @@ function SpaceScene(): JSX.Element {
                     }}
                     urlTexture="Model_Textures/fair_clouds_4k.png"
                 />
-                <OrbitLine radius={orbitRadiusEarth} enabled={orbitRings} />
+                <OrbitLine radius={orbitRadiusEarth} enabled={orbitRingsRef.current} />
                 <Planet
                     spinningOrbitingSphereParams={{
                         rotationSpeed: 0.0015,
@@ -237,13 +233,13 @@ export default function SolarSystemComposer({ styles }: {
     );
 }
 
-function ScrollEventHandler(evt: Event, callback: CallableFunction) {
+function ScrollEventHandler(evt: Event, zoomOutRef: MutableRefObject<number>) {
     switch (evt.type) {
         case "wheel": {
             const wheelEvt = evt as WheelEvent;
             if (wheelEvt.deltaY > 0) {
                 // Scrolling down
-                callback((prevzoomOut: number) => prevzoomOut + 0.0025);
+                zoomOutRef.current += 0.0025;
             }
             break;
         }
@@ -251,13 +247,13 @@ function ScrollEventHandler(evt: Event, callback: CallableFunction) {
             const keyEvt = evt as KeyboardEvent;
             if (keyEvt.key === "ArrowDown") {
                 // Pressing the down arrow key
-                callback((prevzoomOut: number) => prevzoomOut + 0.0025);
+                zoomOutRef.current += 0.0025;
             }
             break;
         }
         case "touchmove": {
             // TODO: Look at making this only occur on drag up on touchscreen devices
-            callback((prevzoomOut: number) => prevzoomOut + 0.00025);
+            zoomOutRef.current += 0.0025;
             break;
         }
     }
