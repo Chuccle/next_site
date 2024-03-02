@@ -197,10 +197,17 @@ export function PlanetClouds(props: {
 }
 
 
-export function OrbitLine(props: { radius: number, visible?: boolean | undefined } ): JSX.Element {
+export function OrbitLine(props: { radius: number, passedMeshRef?: React.RefObject<THREE.Mesh> | undefined } ): JSX.Element {
     const curve = new THREE.EllipseCurve(0, 0, props.radius, props.radius, 0, 2 * Math.PI, false, 0);
     const points = curve.getPoints(300);
+
+    let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
+
+    if (props.passedMeshRef)
+        meshRef = props.passedMeshRef;
+
     return (
+    <mesh ref={meshRef} visible={false} >
       <Line
         points={points}
         color={0xffffff}
@@ -208,7 +215,7 @@ export function OrbitLine(props: { radius: number, visible?: boolean | undefined
         dashSize={3}
         gapSize={2.5}
         rotation={[-Math.PI / 2, 0, 0]}
-        visible={props.visible}
       />
+      </mesh>
     );
   }

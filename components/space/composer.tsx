@@ -18,9 +18,9 @@ function SpaceScene(): JSX.Element {
 
     const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
     const starRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
-    
-    const orbitRingVisible: React.MutableRefObject<boolean> = useRef<boolean>(false);
-    
+
+    const orbitRefGroup = [useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null)];
+
     const zoomOutRef: React.MutableRefObject<number> = useRef<number>(0);
 
     const { camera } = useThree();
@@ -72,6 +72,11 @@ function SpaceScene(): JSX.Element {
         // Ensure planetRef is defined
         if (planetRef.current && starRef.current) {
 
+            orbitRefGroup.forEach(value => {
+                if (value.current)
+                    value.current.visible = false;
+            });
+
             // Calculate the current angle of the planet's orbit
             const currentTime: number = state.clock.getElapsedTime() / orbitSpeedEarth;
 
@@ -83,10 +88,9 @@ function SpaceScene(): JSX.Element {
             const angle = currentTime % (2 * Math.PI); // Ensure angle is within [0, 2*pi]
 
             // Define target positions and look-at points for the two views
-            let targetLookAt: THREE.Vector3; 
+            let targetLookAt: THREE.Vector3;
             let targetCameraPosition: THREE.Vector3Tuple;
-            orbitRingVisible.current = false;
-            
+
             if (zoomOutRef.current < 0.15) {
                 targetCameraPosition = [
                     planetPosition.x + distance * Math.cos(angle),
@@ -96,7 +100,10 @@ function SpaceScene(): JSX.Element {
                 // share the pointer please
                 targetLookAt = planetPosition;
             } else {
-                orbitRingVisible.current = true;
+                orbitRefGroup.forEach(value => {
+                    if (value.current)
+                        value.current.visible = true;
+                });
                 targetCameraPosition = [0, 80, 0];
                 // share the pointer please
                 targetLookAt = starPosition;
@@ -105,7 +112,7 @@ function SpaceScene(): JSX.Element {
 
             // Interpolate camera position and look-at point
             const t = 0.03; // Adjust the speed of transition
-            camera.position.lerp({x: targetCameraPosition[0], y: targetCameraPosition[1], z: targetCameraPosition[2]}, t);
+            camera.position.lerp({ x: targetCameraPosition[0], y: targetCameraPosition[1], z: targetCameraPosition[2] }, t);
             camera.lookAt(targetLookAt);
         }
 
@@ -145,7 +152,7 @@ function SpaceScene(): JSX.Element {
                     />
                     <Bloom />
                 </EffectComposer>
-                <OrbitLine radius={orbitRadiusMercury} visible={orbitRingVisible.current} />
+                <OrbitLine radius={orbitRadiusMercury} passedMeshRef={orbitRefGroup[0]} />
                 <Planet
                     type='standard'
                     rotationSpeed={0.0045}
@@ -157,7 +164,7 @@ function SpaceScene(): JSX.Element {
                     orbitSpeed={orbitSpeedMercury}
                     urlTexture='Model_Textures/2k_mercury.jpg'
                 />
-                <OrbitLine radius={orbitRadiusVenus} visible={orbitRingVisible.current} />
+                <OrbitLine radius={orbitRadiusVenus} passedMeshRef={orbitRefGroup[1]} />
                 <Planet
                     type='standard'
                     rotationSpeed={0.0030}
@@ -191,7 +198,7 @@ function SpaceScene(): JSX.Element {
                     orbitSpeed={orbitSpeedEarth}
                     urlTexture="Model_Textures/fair_clouds_4k.png"
                 />
-                <OrbitLine radius={orbitRadiusEarth} visible={orbitRingVisible.current} />
+                <OrbitLine radius={orbitRadiusEarth} passedMeshRef={orbitRefGroup[2]} />
                 <Planet
                     type='bumpyAndReflective'
                     urlTexture='Model_Textures/basicTexture.jpg'
@@ -225,7 +232,7 @@ export default function SolarSystemComposer({ styles }: {
         <Canvas shadows={true} camera={{ fov: 60 }}>
             <Suspense fallback={<Loader styles={styles} />}>
                 <SpaceScene />
-                <Stats/>
+                <Stats />
             </Suspense>
         </Canvas>
     );
