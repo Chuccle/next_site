@@ -9,6 +9,7 @@ import { Planet, PlanetClouds, OrbitLine } from './planet';
 import { Star } from './star';
 import { Loader } from './util';
 import useScrollBlock from '../utils';
+import { Stats } from '@react-three/drei';
 
 //TODO: make spaceText underlined by orbit rings?
 // block scroll should maybe be longer?
@@ -60,6 +61,10 @@ function SpaceScene(): JSX.Element {
 
     }, [blockScroll, allowScroll]);
 
+    // So we don't constantly allocate per frame
+    const planetPosition: THREE.Vector3 = new THREE.Vector3();
+    const starPosition: THREE.Vector3 = new THREE.Vector3();
+
     useFrame(state => {
 
         // Ensure planetRef is defined
@@ -68,37 +73,36 @@ function SpaceScene(): JSX.Element {
             // Calculate the current angle of the planet's orbit
             const currentTime: number = state.clock.getElapsedTime() / orbitSpeedEarth;
 
-            const planetPosition = new THREE.Vector3();
             planetRef.current.getWorldPosition(planetPosition); // Get world position of the planet
 
-            const starPosition = new THREE.Vector3();
             starRef.current.getWorldPosition(starPosition); // Get world position of the star
 
             const distance = -12.5 - zoomOutRef.current * 100; // Distance from the planet to the camera
             const angle = currentTime % (2 * Math.PI); // Ensure angle is within [0, 2*pi]
 
-            // if (zoomOut !== 0)
-            //     setZoomOut(prevzoomOut => prevzoomOut + 0.000001);
-
             // Define target positions and look-at points for the two views
-            let targetCameraPosition, targetLookAt;
+            let targetLookAt: THREE.Vector3; 
+            let targetCameraPosition: THREE.Vector3Tuple;
+            
             if (zoomOutRef.current < 0.15) {
-                targetCameraPosition = new THREE.Vector3(
+                targetCameraPosition = [
                     planetPosition.x + distance * Math.cos(angle),
                     planetPosition.y,
                     planetPosition.z + distance * Math.sin(angle)
-                );
+                ];
+                // share the pointer please
                 targetLookAt = planetPosition;
             } else {
-                targetCameraPosition = new THREE.Vector3(0, 80, 0);
-                targetLookAt = starPosition;
                 orbitRingsRef.current = true;
+                targetCameraPosition = [0, 80, 0];
+                // share the pointer please
+                targetLookAt = starPosition;
                 allowScroll();
             }
 
             // Interpolate camera position and look-at point
             const t = 0.03; // Adjust the speed of transition
-            camera.position.lerp(targetCameraPosition, t);
+            camera.position.lerp({x: targetCameraPosition[0], y: targetCameraPosition[1], z: targetCameraPosition[2]}, t);
             camera.lookAt(targetLookAt);
         }
 
@@ -218,6 +222,7 @@ export default function SolarSystemComposer({ styles }: {
         <Canvas shadows={true} camera={{ fov: 60 }}>
             <Suspense fallback={<Loader styles={styles} />}>
                 <SpaceScene />
+                <Stats/>
             </Suspense>
         </Canvas>
     );

@@ -23,17 +23,17 @@ export default function Moon(props: {
         const earthPosT = state.clock.getElapsedTime() / props.planetOrbitSpeed;
         const moonPosT = earthPosT / (props.orbitSpeed / props.planetOrbitSpeed);
 
-        const earthPosition = new THREE.Vector3(
-            Math.cos(earthPosT) * props.planetOrbitDistance,
+        const earthPosition: THREE.Vector3Tuple = [
+           Math.cos(earthPosT) * props.planetOrbitDistance,
             0,
             Math.sin(earthPosT) * props.planetOrbitDistance
-        );
+        ];
 
         if (meshRef.current?.position) {
             meshRef.current.position.set(
-                (Math.cos(moonPosT) * props.orbitDistance) + earthPosition.x,
-                0,
-                (Math.sin(moonPosT) * props.orbitDistance) + earthPosition.z
+                (Math.cos(moonPosT) * props.orbitDistance) + earthPosition[0],
+                earthPosition[1],
+                (Math.sin(moonPosT) * props.orbitDistance) + earthPosition[2]
             );
         }
 
