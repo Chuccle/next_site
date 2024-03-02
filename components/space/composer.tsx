@@ -10,8 +10,7 @@ import { Star } from './star';
 import { Loader } from './util';
 import useScrollBlock from '../utils';
 
-//TODO: make spaceText rotate with the earth's orbit until zoom out has finished for smoother transition
-// investigate all ways of scrolling, i.e on phone by keypress and use the scroll callback for each event
+//TODO: make spaceText underlined by orbit rings?
 
 function SpaceScene(): JSX.Element {
 
@@ -36,19 +35,16 @@ function SpaceScene(): JSX.Element {
     const [orbitRings, setOrbitRings] = useState(false);
 
     useEffect(() => {
- 
+
         window.addEventListener('wheel', function (evt) {
-            scroll(evt, setZoomOut);
+            ScrollEventHandler(evt, setZoomOut);
         });
         window.addEventListener('keydown', function (evt) {
-            scroll(evt, setZoomOut);
+            ScrollEventHandler(evt, setZoomOut);
         });
         window.addEventListener('touchmove', function (evt) {
-            scroll(evt, setZoomOut);
+            ScrollEventHandler(evt, setZoomOut);
         });
-        
-        
-
         blockScroll();
 
     }, [blockScroll]);
@@ -88,7 +84,7 @@ function SpaceScene(): JSX.Element {
                 targetLookAt = starPosition;
                 setOrbitRings(true);
                 allowScroll();
-                
+
 
             }
 
@@ -136,7 +132,7 @@ function SpaceScene(): JSX.Element {
                     />
                     <Bloom />
                 </EffectComposer>
-                <OrbitLine radius={orbitRadiusMercury} enabled={orbitRings}/>
+                <OrbitLine radius={orbitRadiusMercury} enabled={orbitRings} />
                 <Planet
                     spinningOrbitingSphereParams={{
                         rotationSpeed: 0.0045,
@@ -149,7 +145,7 @@ function SpaceScene(): JSX.Element {
                     }}
                     urlTexture='Model_Textures/2k_mercury.jpg'
                 />
-                <OrbitLine radius={orbitRadiusVenus} enabled={orbitRings}/>
+                <OrbitLine radius={orbitRadiusVenus} enabled={orbitRings} />
                 <Planet
                     spinningOrbitingSphereParams={{
                         rotationSpeed: 0.0030,
@@ -200,7 +196,7 @@ function SpaceScene(): JSX.Element {
                     }}
                     urlTexture="Model_Textures/fair_clouds_4k.png"
                 />
-                <OrbitLine radius={orbitRadiusEarth} enabled={orbitRings}/>
+                <OrbitLine radius={orbitRadiusEarth} enabled={orbitRings} />
                 <Planet
                     spinningOrbitingSphereParams={{
                         rotationSpeed: 0.0015,
@@ -241,6 +237,29 @@ export default function SolarSystemComposer({ styles }: {
     );
 }
 
-function scroll(_: Event, callback: CallableFunction) {
-    callback((prevzoomOut: number) => prevzoomOut + 0.0025);
+function ScrollEventHandler(evt: Event, callback: CallableFunction) {
+    switch (evt.type) {
+        case "wheel": {
+            const wheelEvt = evt as WheelEvent;
+            if (wheelEvt.deltaY > 0) {
+                // Scrolling down
+                callback((prevzoomOut: number) => prevzoomOut + 0.0025);
+            }
+            break;
+        }
+        case "keydown": {
+            const keyEvt = evt as KeyboardEvent;
+            if (keyEvt.key === "ArrowDown") {
+                // Pressing the down arrow key
+                callback((prevzoomOut: number) => prevzoomOut + 0.0025);
+            }
+            break;
+        }
+        case "touchmove": {
+            // TODO: Look at making this only occur on drag up on touchscreen devices
+            callback((prevzoomOut: number) => prevzoomOut + 0.00025);
+            break;
+        }
+    }
 }
+
