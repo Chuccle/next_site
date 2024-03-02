@@ -11,7 +11,7 @@ export default function Footer(): JSX.Element {
             <div className={styles.contentWrap}></div>
             <footer className={styles.footer}>
                 <div className={styles.footerContent}>
-                    <p>Copyright &copy; 2022 Charlie Cohen</p>
+                    <p>Copyright &copy; 2024 Charlie Cohen</p>
                     <ul className={styles.ul}>
                         <li>
                             <a href="mailto:charlie11cohen@gmail.com">
