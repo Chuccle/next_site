@@ -16,7 +16,7 @@ function SpaceScene(): JSX.Element {
 
     const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
     const starRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
-    const zoomOutRef: MutableRefObject<number>  = useRef<number>(0);
+    const zoomOutRef: MutableRefObject<number> = useRef<number>(0);
     const orbitRingsRef: MutableRefObject<boolean> = useRef<boolean>(false);
 
     const { camera } = useThree();
@@ -116,13 +116,11 @@ function SpaceScene(): JSX.Element {
                 <EffectComposer>
                     <Bloom mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.9} />
                     <Star
-                        spinningSphereArgs={{
-                            rotationSpeed: 0.00035,
-                            receiveshadow: false,
-                            castshadow: false,
-                            meshArgs: [10, 30, 30],
-                            position: [0.0, 0.0, 0.0],
-                        }}
+                        rotationSpeed={0.00035}
+                        receiveshadow={false}
+                        castshadow={false}
+                        meshArgs={[10, 30, 30]}
+                        position={[0.0, 0.0, 0.0]}
                         urlTexture="Model_Textures/2k_sun.jpg"
                         passedMeshRef={starRef}
                     />
@@ -130,85 +128,66 @@ function SpaceScene(): JSX.Element {
                 </EffectComposer>
                 <OrbitLine radius={orbitRadiusMercury} enabled={orbitRingsRef.current} />
                 <Planet
-                    spinningOrbitingSphereParams={{
-                        rotationSpeed: 0.0045,
-                        receiveshadow: true,
-                        castshadow: false,
-                        meshArgs: [1.5, 30, 30],
-                        position: [0.0, 0.0, 0.0],
-                        orbitDistance: orbitRadiusMercury,
-                        orbitSpeed: orbitSpeedMercury
-                    }}
+                    type='standard'
+                    rotationSpeed={0.0045}
+                    receiveshadow={true}
+                    castshadow={false}
+                    meshArgs={[1.5, 30, 30]}
+                    position={[0.0, 0.0, 0.0]}
+                    orbitDistance={orbitRadiusMercury}
+                    orbitSpeed={orbitSpeedMercury}
                     urlTexture='Model_Textures/2k_mercury.jpg'
                 />
                 <OrbitLine radius={orbitRadiusVenus} enabled={orbitRingsRef.current} />
                 <Planet
-                    spinningOrbitingSphereParams={{
-                        rotationSpeed: 0.0030,
-                        receiveshadow: true,
-                        castshadow: false,
-                        meshArgs: [2.5, 30, 30],
-                        position: [0.0, 0.0, 0.0],
-                        orbitDistance: orbitRadiusVenus,
-                        orbitSpeed: orbitSpeedVenus
-                    }}
-                    urlTexture='Model_Textures/2k_venus_surface.jpg'
-                />
-                <PlanetClouds
-                    spinningOrbitingSphereParams={{
-                        rotationSpeed: 0.0030,
-                        receiveshadow: true,
-                        castshadow: false,
-                        meshArgs: [2.03, 30, 30],
-                        position: [0.0, 0.0, 0.0],
-                        orbitDistance: orbitRadiusVenus,
-                        orbitSpeed: orbitSpeedVenus
-                    }}
+                    type='standard'
+                    rotationSpeed={0.0030}
+                    receiveshadow={true}
+                    castshadow={false}
+                    meshArgs={[2.5, 30, 30]}
+                    position={[0.0, 0.0, 0.0]}
+                    orbitDistance={orbitRadiusVenus}
+                    orbitSpeed={orbitSpeedVenus}
                     urlTexture='Model_Textures/2k_venus_atmosphere.jpg'
                 />
                 <Moon
-                    spinningOrbitingSphereParams={{
-                        rotationSpeed: 0.015,
-                        receiveshadow: false,
-                        castshadow: false,
-                        meshArgs: [0.5, 15, 15],
-                        position: [0.0, 0.0, 0.0],
-                        orbitDistance: 5,
-                        orbitSpeed: 3
-                    }}
+                    rotationSpeed={0.015}
+                    receiveshadow={false}
+                    castshadow={false}
+                    meshArgs={[0.5, 15, 15]}
+                    position={[0.0, 0.0, 0.0]}
+                    orbitDistance={5}
+                    orbitSpeed={3}
                     urlTexture="Model_Textures/nasa_moon_4k.jpg"
                     planetOrbitDistance={orbitRadiusEarth}
                     planetOrbitSpeed={orbitSpeedEarth}
                 />
                 <PlanetClouds
-                    spinningOrbitingSphereParams={{
-                        rotationSpeed: 0.0025,
-                        receiveshadow: true,
-                        castshadow: false,
-                        meshArgs: [3.55, 30, 30],
-                        position: [0.0, 0.0, 0.0],
-                        orbitDistance: orbitRadiusEarth,
-                        orbitSpeed: orbitSpeedEarth,
-                    }}
+                    rotationSpeed={0.0025}
+                    receiveshadow={true}
+                    castshadow={false}
+                    meshArgs={[3.55, 30, 30]}
+                    position={[0.0, 0.0, 0.0]}
+                    orbitDistance={orbitRadiusEarth}
+                    orbitSpeed={orbitSpeedEarth}
                     urlTexture="Model_Textures/fair_clouds_4k.png"
                 />
                 <OrbitLine radius={orbitRadiusEarth} enabled={orbitRingsRef.current} />
                 <Planet
-                    spinningOrbitingSphereParams={{
-                        rotationSpeed: 0.0015,
-                        receiveshadow: true,
-                        castshadow: false,
-                        meshArgs: [3.5, 30, 30],
-                        position: [0.0, 0.0, 0.0],
-                        orbitDistance: orbitRadiusEarth,
-                        orbitSpeed: orbitSpeedEarth
-                    }}
+                    type='bumpyAndReflective'
                     urlTexture='Model_Textures/basicTexture.jpg'
+                    rotationSpeed={0.0015}
+                    receiveshadow={true}
+                    castshadow={false}
+                    meshArgs={[3.5, 30, 30]}
+                    position={[0.0, 0.0, 0.0]}
+                    orbitDistance={orbitRadiusEarth}
+                    orbitSpeed={orbitSpeedEarth}
+                    passedMeshRef={planetRef}
                     urlBumpmap='Model_Textures/bumpmap.jpg'
                     bumpScale={15}
                     urlSpecularmap="Model_Textures/water_4k.png"
                     reflectivity={1}
-                    passedMeshRef={planetRef}
                 />
             </Space>
             {/* <ambientLight></ambientLight> */}

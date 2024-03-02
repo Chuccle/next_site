@@ -6,10 +6,9 @@ import { useRotation } from "./util";
 
 
 export function Star(props: {
-    spinningSphereArgs: SpinningSphere
     urlTexture: string,
     passedMeshRef?: React.RefObject<THREE.Mesh> | undefined
-}): JSX.Element {
+} & SpinningSphere): JSX.Element {
 
     let meshRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
 
@@ -18,19 +17,19 @@ export function Star(props: {
 
     const texture = useLoader(THREE.TextureLoader, props.urlTexture);
 
-    useRotation(props.spinningSphereArgs.rotationSpeed, meshRef);
+    useRotation(props.rotationSpeed, meshRef);
 
     return (
         <group>
-            <pointLight intensity={1} position={props.spinningSphereArgs.position} decay={0} castShadow={true} />
+            <pointLight intensity={1} position={props.position} decay={0} castShadow={true} />
             <mesh
-                position={props.spinningSphereArgs.position}
+                position={props.position}
                 ref={meshRef}
-                castShadow={props.spinningSphereArgs.castshadow}
-                receiveShadow={props.spinningSphereArgs.receiveshadow}
+                castShadow={props.castshadow}
+                receiveShadow={props.receiveshadow}
             >
                 <meshBasicMaterial map={texture} toneMapped={false} />
-                <sphereGeometry args={props.spinningSphereArgs.meshArgs} />
+                <sphereGeometry args={props.meshArgs} />
             </mesh >
 
             {/* <SolarFlare rotation={[0, 0, 0]} radius={5} speed={0.1} position={props.spinningSphereArgs.position} /> */}
