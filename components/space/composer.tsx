@@ -11,6 +11,7 @@ import { Loader } from './util';
 import useScrollBlock from '../utils';
 
 //TODO: make spaceText underlined by orbit rings?
+// block scroll should maybe be longer?
 
 function SpaceScene(): JSX.Element {
 
@@ -33,7 +34,6 @@ function SpaceScene(): JSX.Element {
     const orbitSpeedVenus: number = 15;
 
     useEffect(() => {
-
         window.addEventListener('wheel', function (evt) {
             ScrollEventHandler(evt, zoomOutRef);
         });
@@ -46,7 +46,6 @@ function SpaceScene(): JSX.Element {
         blockScroll();
 
     }, [blockScroll]);
-
 
     useFrame(state => {
 
@@ -93,7 +92,7 @@ function SpaceScene(): JSX.Element {
     });
     return (
         <>
-
+            <color attach="background" args={['black']} />
             <Space starCount={500} >
                 {/* <OrbitControls/> */}
                 {/* <SpaceText
@@ -204,7 +203,6 @@ export default function SolarSystemComposer({ styles }: {
 
     return (
         <Canvas shadows={true} camera={{ fov: 60 }}>
-            <color attach="background" args={['black']} />
             <Suspense fallback={<Loader styles={styles} />}>
                 <SpaceScene />
             </Suspense>
@@ -218,7 +216,7 @@ function ScrollEventHandler(evt: Event, zoomOutRef: MutableRefObject<number>) {
             const wheelEvt = evt as WheelEvent;
             if (wheelEvt.deltaY > 0) {
                 // Scrolling down
-                zoomOutRef.current += 0.0025;
+                zoomOutRef.current += 0.005;
             }
             break;
         }
@@ -226,7 +224,7 @@ function ScrollEventHandler(evt: Event, zoomOutRef: MutableRefObject<number>) {
             const keyEvt = evt as KeyboardEvent;
             if (keyEvt.key === "ArrowDown") {
                 // Pressing the down arrow key
-                zoomOutRef.current += 0.0025;
+                zoomOutRef.current += 0.005;
             }
             break;
         }
