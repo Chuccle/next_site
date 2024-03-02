@@ -3,6 +3,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { SpinningSphere, OrbitingSphere } from "./geometry_iface";
 import { useOrbit, useRotation } from "./util";
+import { Line } from "@react-three/drei";
 
 type BasePlanetParams = {
     urlTexture: string;
@@ -196,35 +197,18 @@ export function PlanetClouds(props: {
 }
 
 
-// OrbitLine component to create orbit lines
-export function OrbitLine({ radius, enabled = true }: { radius: number, enabled?: boolean }): JSX.Element {
-
-    if (!enabled) {
-
-        return <></>;
-    }
-
-    // Create a circle geometry with a radius and number of segments
-    const curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, 2 * Math.PI, false, 0);
-    const points = curve.getPoints(300); // Adjust the number of points for smoother rings
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-    // Create a material for the line
-    const material = new THREE.LineDashedMaterial({
-        color: 0xffffff, // Color of the line
-        dashSize: 3, // Length of each dash
-        gapSize: 2.5, // Length of each gap
-
-    });
-
-    // Create the line
-    const orbitLine = new THREE.Line(geometry, material);
-
-    // Rotate the line to align with the plane
-    orbitLine.rotation.x = -Math.PI / 2;
-
-    // Enable the dashed line
-    orbitLine.computeLineDistances();
-
-    return <primitive object={orbitLine} />;
-}
+export function OrbitLine(props: { radius: number, visible?: boolean | undefined } ): JSX.Element {
+    const curve = new THREE.EllipseCurve(0, 0, props.radius, props.radius, 0, 2 * Math.PI, false, 0);
+    const points = curve.getPoints(300);
+    return (
+      <Line
+        points={points}
+        color={0xffffff}
+        dashed={true}
+        dashSize={3}
+        gapSize={2.5}
+        rotation={[-Math.PI / 2, 0, 0]}
+        visible={props.visible}
+      />
+    );
+  }

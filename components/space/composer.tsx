@@ -1,7 +1,7 @@
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { MutableRefObject, Suspense, useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { Space } from './background';
 import Moon from './moon';
@@ -18,8 +18,10 @@ function SpaceScene(): JSX.Element {
 
     const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
     const starRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
-    const zoomOutRef: MutableRefObject<number> = useRef<number>(0);
-    const orbitRingsRef: MutableRefObject<boolean> = useRef<boolean>(false);
+    
+    const orbitRingVisible: React.MutableRefObject<boolean> = useRef<boolean>(false);
+    
+    const zoomOutRef: React.MutableRefObject<number> = useRef<number>(0);
 
     const { camera } = useThree();
 
@@ -83,6 +85,7 @@ function SpaceScene(): JSX.Element {
             // Define target positions and look-at points for the two views
             let targetLookAt: THREE.Vector3; 
             let targetCameraPosition: THREE.Vector3Tuple;
+            orbitRingVisible.current = false;
             
             if (zoomOutRef.current < 0.15) {
                 targetCameraPosition = [
@@ -93,7 +96,7 @@ function SpaceScene(): JSX.Element {
                 // share the pointer please
                 targetLookAt = planetPosition;
             } else {
-                orbitRingsRef.current = true;
+                orbitRingVisible.current = true;
                 targetCameraPosition = [0, 80, 0];
                 // share the pointer please
                 targetLookAt = starPosition;
@@ -142,7 +145,7 @@ function SpaceScene(): JSX.Element {
                     />
                     <Bloom />
                 </EffectComposer>
-                <OrbitLine radius={orbitRadiusMercury} enabled={orbitRingsRef.current} />
+                <OrbitLine radius={orbitRadiusMercury} visible={orbitRingVisible.current} />
                 <Planet
                     type='standard'
                     rotationSpeed={0.0045}
@@ -154,7 +157,7 @@ function SpaceScene(): JSX.Element {
                     orbitSpeed={orbitSpeedMercury}
                     urlTexture='Model_Textures/2k_mercury.jpg'
                 />
-                <OrbitLine radius={orbitRadiusVenus} enabled={orbitRingsRef.current} />
+                <OrbitLine radius={orbitRadiusVenus} visible={orbitRingVisible.current} />
                 <Planet
                     type='standard'
                     rotationSpeed={0.0030}
@@ -188,7 +191,7 @@ function SpaceScene(): JSX.Element {
                     orbitSpeed={orbitSpeedEarth}
                     urlTexture="Model_Textures/fair_clouds_4k.png"
                 />
-                <OrbitLine radius={orbitRadiusEarth} enabled={orbitRingsRef.current} />
+                <OrbitLine radius={orbitRadiusEarth} visible={orbitRingVisible.current} />
                 <Planet
                     type='bumpyAndReflective'
                     urlTexture='Model_Textures/basicTexture.jpg'
@@ -228,7 +231,7 @@ export default function SolarSystemComposer({ styles }: {
     );
 }
 
-function ScrollEventHandler(evt: Event, zoomOutRef: MutableRefObject<number>) {
+function ScrollEventHandler(evt: Event, zoomOutRef: React.MutableRefObject<number>) {
     switch (evt.type) {
         case "wheel": {
             const wheelEvt = evt as WheelEvent;
