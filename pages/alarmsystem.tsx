@@ -23,9 +23,8 @@ export default function AlarmSystem(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="alarm system project logic diagram"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/AlarmSystem.png'}
                 />
@@ -76,9 +75,8 @@ export default function AlarmSystem(): JSX.Element {
                 <div className={styles.imagecontainer}>
                     <Image
                         alt="BBC Microbit diagram"
-                        sizes="100%"
-                        width={0}
-                        height={0}
+                        width={2560}
+                        height={1340}
                         className={styles.appimg}
                         src={'/Site_Assets/microbit.png'}
                     />

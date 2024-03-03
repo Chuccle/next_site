@@ -23,9 +23,8 @@ export default function CarRentalApp(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="car rental app dialog"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/rental.png'}
                 />
@@ -159,9 +158,8 @@ export default function CarRentalApp(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="Car rental app code"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/rentalapp.png'}
                 />
