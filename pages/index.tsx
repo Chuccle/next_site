@@ -3,14 +3,26 @@ import Link from 'next/link';
 import styles from '/styles/Home.module.css';
 import SolarSystemComposer from '../components/space/composer';
 import { useEffect } from 'react';
+import smoothscroll from 'smoothscroll-polyfill';
+import { isMobile } from '../components/utils';
 
 export default function App(): JSX.Element {
 
     const isClient = () => typeof window !== 'undefined';
 
+
     useEffect(()=> {
         if(!isClient()) return;
-        window.scrollTo({top: 0, behavior:'smooth'});
+
+        
+        if(isMobile.iOS()) {
+            smoothscroll.polyfill();
+            setTimeout(function() {window.scrollTo({ top: 0, behavior: 'smooth' });}, 1000);
+        
+        }
+        else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         }, []
     );
 
