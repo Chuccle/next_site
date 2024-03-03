@@ -35,8 +35,8 @@ export default function App(): JSX.Element {
                 <Image
                     src="/Site_Assets/Spaceman.png"
                     alt="Picture of the author"
-                    width={'250'}
-                    height={'250'}
+                    width={'225'}
+                    height={'225'}
                 />
 
                 <div className={styles.Introbox}>

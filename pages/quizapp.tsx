@@ -23,9 +23,8 @@ export default function Quizapp(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="quizapp dashboard"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/quizapp_dashboard.png'}
                 />
@@ -89,9 +88,8 @@ export default function Quizapp(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="quizapp login logic workflow diagram"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/login workflow.png'}
                 />
@@ -132,9 +130,8 @@ export default function Quizapp(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="quizapp seamless session logic workflow diagram"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/seamless session quizapp.png'}
                 />

@@ -23,9 +23,8 @@ export default function PHPSite(): JSX.Element {
             <div className={styles.imagecontainer}>
                 <Image
                     alt="phpsite code"
-                    sizes="100%"
-                    width={0}
-                    height={0}
+                    width={2560}
+                    height={1340}
                     className={styles.appimg}
                     src={'/Site_Assets/phpsite.png'}
                 />
