@@ -21,7 +21,6 @@ export function Star(props: {
 
     return (
         <group>
-            <pointLight intensity={1} position={props.position} decay={0} castShadow={true} />
             <mesh
                 position={props.position}
                 ref={meshRef}

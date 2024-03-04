@@ -1,10 +1,15 @@
+import { Suspense, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import styles from '/styles/Home.module.css';
-import SolarSystemComposer from '../components/space/composer';
-import { useEffect } from 'react';
-import smoothscroll from 'smoothscroll-polyfill';
+import { Loader } from '../components/space/util';
 import { isMobile } from '../components/utils';
+
+
+const SpaceScene = dynamic(() => import('../components/space/composer'), { ssr: false });
+const View = dynamic(() => import('../components/View').then((mod) => mod.View), { ssr: false });
+// const Common = dynamic(() => import('../components/View').then((mod) => mod.Common), { ssr: false });
 
 export default function App(): JSX.Element {
 
@@ -14,9 +19,10 @@ export default function App(): JSX.Element {
     useEffect(()=> {
         if(!isClient()) return;
 
-        
+        if('scrollRestoration' in history) 
+            history.scrollRestoration = 'manual';
+
         if(isMobile.iOS()) {
-            smoothscroll.polyfill();
             setTimeout(function() {window.scrollTo({ top: 0, behavior: 'smooth' });}, 1000);
         
         }
@@ -28,9 +34,16 @@ export default function App(): JSX.Element {
 
     return (
         <div>
-            <div className={styles.background3D}>
-            <SolarSystemComposer styles={styles} />
-            </div>
+
+            <View className={styles.background3D}>
+      
+                <Suspense fallback={<Loader styles={styles} />}>
+                    <SpaceScene  />
+                    {/* <Common color={"black"} /> */}
+                </Suspense >
+            
+            </View>
+       
             <section className={styles.accent}>
                 <Image
                     src="/Site_Assets/Spaceman.png"
@@ -227,7 +240,7 @@ export default function App(): JSX.Element {
                                     A fully-featured web application for
                                     creating and playing quizzes.
                                 </p>
-                                <Link href="/quizapp" passHref>
+                                <Link href="/quizapp">
                                     <p className={styles.button}>See more</p>
                                 </Link>
                             </div>
@@ -256,7 +269,7 @@ export default function App(): JSX.Element {
                                     A program to make smart alarms which send
                                     emails as alerts.
                                 </p>
-                                <Link href="/alarmsystem" passHref>
+                                <Link href="/alarmsystem">
                                     <p className={styles.button}>See more</p>
                                 </Link>
                             </div>
@@ -288,7 +301,7 @@ export default function App(): JSX.Element {
                                     An Android app which works organises taxi
                                     appointments.
                                 </p>
-                                <Link href="/taxiapp" passHref>
+                                <Link href="/taxiapp">
                                     <p
                                         className={styles.button}
                                         style={{
@@ -325,7 +338,7 @@ export default function App(): JSX.Element {
                                     A desktop app which calculates the cost of a
                                     car and exports it
                                 </p>
-                                <Link href="/carrentalapp" passHref>
+                                <Link href="/carrentalapp">
                                     <p className={styles.button}>See more</p>
                                 </Link>
                             </div>
@@ -354,7 +367,7 @@ export default function App(): JSX.Element {
                                     A website which allows users to upload their
                                     CVs to a database
                                 </p>
-                                <Link href="/phpsite" passHref>
+                                <Link href="/phpsite">
                                     <p className={styles.button}>See more</p>
                                 </Link>
                             </div>
@@ -383,7 +396,7 @@ export default function App(): JSX.Element {
                                     A website which shows WebGL graphics and
                                     animation{' '}
                                 </p>
-                                <Link href="/nextsite" passHref>
+                                <Link href="/nextsite">
                                     <p className={styles.button}>See more</p>
                                 </Link>
                             </div>
