@@ -20,9 +20,11 @@
         "react-dom": "^18.2.0",
         "react-gistlab": "^1.0.8",
         "smoothscroll-polyfill": "^0.4.4",
-        "three": "^0.161.0"
+        "three": "^0.161.0",
+        "tunnel-rat": "^0.1.2"
     },
     "devDependencies": {
+        "@next/bundle-analyzer": "^14.1.1",
         "@next/eslint-plugin-next": "^14.1.0",
         "@types/react": "^18.2.55",
         "@types/smoothscroll-polyfill": "^0.3.4",

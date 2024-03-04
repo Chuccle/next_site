@@ -5,6 +5,7 @@ import Sidebar from '../components/sidebar';
 import Footer from '../components/footer';
 import { AppProps } from 'next/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Layout } from '../components/layout';
 
 interface MyAppProps {
     Component: React.ComponentType<AppProps>;
@@ -15,13 +16,15 @@ function MyApp({ Component, pageProps }: MyAppProps): ReactElement {
     return (
         <>
             <React.StrictMode>
-            <SpeedInsights />
+                <SpeedInsights />
                 <Head>
                     <title>Home</title>
                     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
                 </Head>
                 <Sidebar />
-                <Component {...pageProps} />
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
                 <Footer />
             </React.StrictMode>
         </>

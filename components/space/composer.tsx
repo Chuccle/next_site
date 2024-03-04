@@ -1,20 +1,19 @@
 
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import { Suspense, useEffect, useRef } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { Space } from './background';
 import Moon from './moon';
 import { Planet, PlanetClouds, OrbitLine } from './planet';
 import { Star } from './star';
-import { Loader } from './util';
 import useScrollBlock from '../utils';
 import { Stats } from '@react-three/drei';
+import SpaceText from './text';
 
 //TODO: make spaceText underlined by orbit rings?
 // block scroll should maybe be longer?
 
-function SpaceScene(): JSX.Element {
+export default function SpaceScene(): JSX.Element {
 
     const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
     const starRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
@@ -119,11 +118,14 @@ function SpaceScene(): JSX.Element {
     });
     return (
         <>
-            <color attach="background" args={['black']} />
+            <color attach='background' args={["black"]} />
+            <Stats />
+
             <Space starCount={500} >
+                <pointLight decay={0} castShadow={true} />
                 {/* <OrbitControls/> */}
-                {/* <SpaceText
-                    font={'/fonts/Helvetiker.json'}
+                <SpaceText
+                    font={'/fonts/helvetiker_bold.json'}
                     matcapTextureName={'CB4E88_F99AD6_F384C3_ED75B9'}
                     textToDisplay={" Software\n    out of\n this world"}
                     size={9}
@@ -138,20 +140,16 @@ function SpaceScene(): JSX.Element {
                     bevelThickness={0.03}
                     lineHeight={1}
                     letterSpacing={0.2}
-                /> */}
-                <EffectComposer>
-                    <Bloom mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.9} />
-                    <Star
-                        rotationSpeed={0.00035}
-                        receiveshadow={false}
-                        castshadow={false}
-                        meshArgs={[10, 30, 30]}
-                        position={[0.0, 0.0, 0.0]}
-                        urlTexture="Model_Textures/2k_sun.jpg"
-                        passedMeshRef={starRef}
-                    />
-                    <Bloom />
-                </EffectComposer>
+                />
+                <Star
+                    rotationSpeed={0.00035}
+                    receiveshadow={false}
+                    castshadow={false}
+                    meshArgs={[10, 30, 30]}
+                    position={[0.0, 0.0, 0.0]}
+                    urlTexture="Model_Textures/2k_sun.jpg"
+                    passedMeshRef={starRef}
+                />
                 <OrbitLine radius={orbitRadiusMercury} passedMeshRef={orbitRefGroup[0]} />
                 <Planet
                     type='standard'
@@ -218,23 +216,6 @@ function SpaceScene(): JSX.Element {
             </Space>
             {/* <ambientLight></ambientLight> */}
         </>
-    );
-}
-
-export default function SolarSystemComposer({ styles }: {
-    styles: {
-        readonly [key: string]: string
-    }
-}
-): JSX.Element {
-
-    return (
-        <Canvas shadows={true} camera={{ fov: 60 }}>
-            <Suspense fallback={<Loader styles={styles} />}>
-                <SpaceScene />
-                <Stats />
-            </Suspense>
-        </Canvas>
     );
 }
 
