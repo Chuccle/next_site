@@ -13,6 +13,7 @@
         "@react-three/drei": "^9.97.3",
         "@react-three/fiber": "^8.15.16",
         "@react-three/postprocessing": "^2.15.13",
+        "@studio-freight/react-lenis": "^0.0.45",
         "@use-gesture/react": "^10.2.11",
         "@vercel/speed-insights": "^1.0.9",
         "next": "^14.1.0",
@@ -21,6 +22,7 @@
         "react-gistlab": "^1.0.8",
         "smoothscroll-polyfill": "^0.4.4",
         "three": "^0.161.0",
+        "three-stdlib": "^2.29.5",
         "tunnel-rat": "^0.1.2"
     },
     "devDependencies": {
