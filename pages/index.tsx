@@ -1,11 +1,9 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import styles from '/styles/Home.module.css';
 import { Loader } from '../components/space/util';
-import { isMobile } from '../components/utils';
-
 
 const SpaceScene = dynamic(() => import('../components/space/composer'), { ssr: false });
 const View = dynamic(() => import('../components/View').then((mod) => mod.View), { ssr: false });
@@ -13,37 +11,40 @@ const View = dynamic(() => import('../components/View').then((mod) => mod.View),
 
 export default function App(): JSX.Element {
 
-    const isClient = () => typeof window !== 'undefined';
+    // const isClient = () => typeof window !== 'undefined';
+
+    // const Lenis = useLenis((lenis) => {
+
+    //     lenis.scrollTo(0, {  })
+
+    // })
+
+  
+
+    // useEffect(() => {
+    //     if (!isClient()) return;
 
 
-    useEffect(()=> {
-        if(!isClient()) return;
+    //     if ('scrollRestoration' in history)
+    //         history.scrollRestoration = 'manual';
 
-        if('scrollRestoration' in history) 
-            history.scrollRestoration = 'manual';
-
-        if(isMobile.iOS()) {
-            setTimeout(function() {window.scrollTo({ top: 0, behavior: 'smooth' });}, 1000);
-        
-        }
-        else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        }, []
-    );
+    // }, []
+    // );
 
     return (
         <div>
 
             <View className={styles.background3D}>
-      
+
                 <Suspense fallback={<Loader styles={styles} />}>
-                    <SpaceScene  />
+
+                    <SpaceScene />
+
                     {/* <Common color={"black"} /> */}
                 </Suspense >
-            
+
             </View>
-       
+
             <section className={styles.accent}>
                 <Image
                     src="/Site_Assets/Spaceman.png"
