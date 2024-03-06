@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: MyAppProps): ReactElement {
                 </Head>
                 <Sidebar />
                 <Layout>
-                    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+                    <ReactLenis root options={{ smoothWheel: true, syncTouch: true }}>
                         <Component {...pageProps} />
                     </ReactLenis>
                 </Layout>
