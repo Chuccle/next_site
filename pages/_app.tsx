@@ -6,7 +6,7 @@ import Footer from '../components/footer';
 import { AppProps } from 'next/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Layout } from '../components/layout';
-import ReactLenis from '@studio-freight/react-lenis';
+
 
 interface MyAppProps {
     Component: React.ComponentType<AppProps>;
@@ -24,9 +24,7 @@ function MyApp({ Component, pageProps }: MyAppProps): ReactElement {
                 </Head>
                 <Sidebar />
                 <Layout>
-                    <ReactLenis root options={{ smoothWheel: true, syncTouch: true }}>
-                        <Component {...pageProps} />
-                    </ReactLenis>
+                    <Component {...pageProps} />
                 </Layout>
                 <Footer />
             </React.StrictMode>

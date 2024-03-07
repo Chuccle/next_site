@@ -2,14 +2,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
 import dynamic from 'next/dynamic';
-
-const GithubGist = dynamic(
+const ReactEmbedGist = dynamic(
     () => {
-        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
-    },
+        return import('react-embed-gist');},
     { ssr: false }
 );
-
 export default function Quizapp(): JSX.Element {
     return (
         <div>
@@ -103,10 +100,9 @@ export default function Quizapp(): JSX.Element {
                 </p>
             </div>
             <div className={styles.code}>
-                <GithubGist
-                    url="https://gist.github.com/Chuccle/e67dbb626792f667f5e6101f77f67772"
-                    Loading={() => <p>Loading...</p>}
-                ></GithubGist>
+                <ReactEmbedGist
+                    gist="Chuccle/e67dbb626792f667f5e6101f77f67772"
+                ></ReactEmbedGist>
             </div>
             <div className={styles.textcontainer}>
                 <p className={styles.description}>
@@ -145,9 +141,9 @@ export default function Quizapp(): JSX.Element {
                 </p>
             </div>
             <div className={styles.code}>
-                <GithubGist
-                    url="https://gist.github.com/Chuccle/07cb855aae7c1a41025d9b0039b5de47"
-                    Loading={() => <p>Loading...</p>}
+                <ReactEmbedGist
+                   gist="Chuccle/07cb855aae7c1a41025d9b0039b5de47"
+
                 />
             </div>
             <div className={styles.textcontainer}>

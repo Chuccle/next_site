@@ -2,14 +2,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
 import dynamic from 'next/dynamic';
-
-const GithubGist = dynamic(
+const ReactEmbedGist = dynamic(
     () => {
-        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
-    },
+        return import('react-embed-gist');},
     { ssr: false }
 );
-
 export default function NextSite(): JSX.Element {
     return (
         <div>
@@ -62,10 +59,9 @@ export default function NextSite(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/1a4596b7cd114b4eda458ba4153abdf8"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                <ReactEmbedGist
+                        gist="Chuccle/1a4596b7cd114b4eda458ba4153abdf8"
+                    ></ReactEmbedGist>
                 </div>
             </div>
 
@@ -79,10 +75,9 @@ export default function NextSite(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/48f44ec845d6909210a5e5bf674f0600"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/48f44ec845d6909210a5e5bf674f0600"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>

@@ -2,11 +2,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
 import dynamic from 'next/dynamic';
-
-const GithubGist = dynamic(
+const ReactEmbedGist = dynamic(
     () => {
-        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
-    },
+        return import('react-embed-gist');},
     { ssr: false }
 );
 
@@ -68,10 +66,9 @@ export default function PHPSite(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/c94a0a9b047ee583f09994b778e1d6a3"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/c94a0a9b047ee583f09994b778e1d6a3"
+                    ></ReactEmbedGist>
                 </div>
                 <p className={styles.description}>
                     Parameterising as usual is extremely important and at first
@@ -102,10 +99,9 @@ export default function PHPSite(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/2c33bf6a19f94a57435bb7eb34c06b64"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/2c33bf6a19f94a57435bb7eb34c06b64"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>
@@ -115,10 +111,10 @@ export default function PHPSite(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/bcea2fcbd971ef8dac213f22f77be3e4"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/bcea2fcbd971ef8dac213f22f77be3e4"
+    
+                    ></ReactEmbedGist>
                 </div>
             </div>
 

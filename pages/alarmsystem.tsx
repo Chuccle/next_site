@@ -3,13 +3,11 @@ import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
 import dynamic from 'next/dynamic';
 
-const GithubGist = dynamic(
+const ReactEmbedGist = dynamic(
     () => {
-        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
-    },
+        return import('react-embed-gist');},
     { ssr: false }
 );
-
 export default function AlarmSystem(): JSX.Element {
     return (
         <div>
@@ -61,10 +59,9 @@ export default function AlarmSystem(): JSX.Element {
                     inspected the Microbit&apos;s IO.
                 </p>
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/412dab90c67d549c5756c16983360107"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/412dab90c67d549c5756c16983360107"
+                    ></ReactEmbedGist>
                 </div>
                 <p className={styles.description}>
                     The Microbit has Bluetooth, RF and USB interfaces. I decided
@@ -126,10 +123,9 @@ export default function AlarmSystem(): JSX.Element {
                 </ul>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/0251af110841e768c1a11cabc8b17639"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/0251af110841e768c1a11cabc8b17639"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>
@@ -138,10 +134,9 @@ export default function AlarmSystem(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/313a7e0e0ace77938d010fd42a09465a"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/313a7e0e0ace77938d010fd42a09465a"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>
@@ -188,10 +183,9 @@ export default function AlarmSystem(): JSX.Element {
                     Migrations and Diesel setup process.
                 </p>
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/b69cdc72e2739d10db095fe795a49a47"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/b69cdc72e2739d10db095fe795a49a47"
+                    ></ReactEmbedGist>
                 </div>
             </div>
             <div className={styles.textcontainer}>
