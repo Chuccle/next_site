@@ -2,11 +2,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
 import dynamic from 'next/dynamic';
-
-const GithubGist = dynamic(
+const ReactEmbedGist = dynamic(
     () => {
-        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
-    },
+        return import('react-embed-gist');},
     { ssr: false }
 );
 
@@ -67,10 +65,10 @@ export default function TaxiApp(): JSX.Element {
                     £1.61 per mile. (1mi = 1.61km)
                 </p>
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/9e2a1c15840dfc7a35436ca48e30b3ba"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/9e2a1c15840dfc7a35436ca48e30b3ba"
+
+                    ></ReactEmbedGist>
                 </div>
                 <p className={styles.description}>
                     The value of the textbox and the active unit type is then

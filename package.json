@@ -9,18 +9,16 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@react-spring/three": "^9.7.3",
         "@react-three/drei": "^9.97.3",
-        "@react-three/fiber": "^8.15.16",
+        "@react-three/fiber": "^8.15.19",
         "@react-three/postprocessing": "^2.15.13",
-        "@studio-freight/react-lenis": "^0.0.45",
+        "@studio-freight/lenis": "^1.0.39",
         "@use-gesture/react": "^10.2.11",
         "@vercel/speed-insights": "^1.0.9",
         "next": "^14.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-gistlab": "^1.0.8",
-        "smoothscroll-polyfill": "^0.4.4",
+        "react-embed-gist": "^1.0.20",
         "three": "^0.161.0",
         "three-stdlib": "^2.29.5",
         "tunnel-rat": "^0.1.2"
@@ -28,8 +26,9 @@
     "devDependencies": {
         "@next/bundle-analyzer": "^14.1.1",
         "@next/eslint-plugin-next": "^14.1.0",
+        "@types/node": "20.11.25",
         "@types/react": "^18.2.55",
-        "@types/smoothscroll-polyfill": "^0.3.4",
+        "@types/react-embed-gist": "^1.0.4",
         "@types/three": "^0.161.2",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",

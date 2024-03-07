@@ -1,20 +1,17 @@
 
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { Space } from './background';
 import Moon from './moon';
 import { Planet, PlanetClouds, OrbitLine } from './planet';
 import { Star } from './star';
-import { Stats } from '@react-three/drei';
 import SpaceText from './text';
-import { useLenis } from '@studio-freight/react-lenis';
-import { usePostProcess } from '../EffectComposer';
+import { EffectComposer, Select, Selection, SelectiveBloom } from '@react-three/postprocessing';
+import { PerspectiveCamera } from '@react-three/drei';
 
-//TODO: make spaceText underlined by orbit rings?
-// block scroll should maybe be longer?
 
-export default function SpaceScene(): JSX.Element {
+export default function SpaceScene({sceneFOV} : {sceneFOV: number}): JSX.Element {
 
     const planetRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
     const starRef: React.RefObject<THREE.Mesh> = useRef<THREE.Mesh>(null);
@@ -23,7 +20,13 @@ export default function SpaceScene(): JSX.Element {
 
     const zoomOutRef: React.MutableRefObject<number> = useRef<number>(0);
 
-    const { camera } = useThree();
+    const pointLight = useMemo(() => {
+        return new THREE.PointLight(0xffffffff, 1, 0, 0);
+    }, []);
+
+    const { camera, scene } = useThree();
+
+    useEffect(() => { scene.add(pointLight);  }, [pointLight, scene]);
 
     const orbitRadiusEarth: number = 40;
     const orbitSpeedEarth: number = 22.5;
@@ -34,14 +37,6 @@ export default function SpaceScene(): JSX.Element {
     const orbitRadiusVenus: number = 30;
     const orbitSpeedVenus: number = 15;
 
-    useLenis(() => {
-        // called every scroll
-        zoomOutRef.current += 0.0005;
- 
-    });
-
-    usePostProcess();
-  
     // So we don't constantly allocate per frame
     const planetPosition: THREE.Vector3 = new THREE.Vector3();
     const starPosition: THREE.Vector3 = new THREE.Vector3();
@@ -66,11 +61,13 @@ export default function SpaceScene(): JSX.Element {
             const distance = -12.5 - zoomOutRef.current * 100; // Distance from the planet to the camera
             const angle = currentTime % (2 * Math.PI); // Ensure angle is within [0, 2*pi]
 
+            zoomOutRef.current += 0.0005;
+
             // Define target positions and look-at points for the two views
             let targetLookAt: THREE.Vector3;
             let targetCameraPosition: THREE.Vector3Tuple;
 
-            if (zoomOutRef.current < 0.15) {
+            if (zoomOutRef.current < 0.25) {
                 targetCameraPosition = [
                     planetPosition.x + distance * Math.cos(angle),
                     planetPosition.y,
@@ -97,43 +94,50 @@ export default function SpaceScene(): JSX.Element {
     });
     return (
         <>
-                <color attach='background' args={["black"]} />
-                <Stats />
+        <PerspectiveCamera fov={sceneFOV} makeDefault={true} />
+            <Selection>
+                <color attach="background" args={['black']} />
 
                 <Space starCount={500} >
-                    <pointLight decay={0} castShadow={true} />
+                    <EffectComposer>
+                        <SelectiveBloom lights={[pointLight]} mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.9} radius={1.05} />
+                    </EffectComposer>
                     {/* <OrbitControls/> */}
+
                     <SpaceText
                         font={'/fonts/helvetiker_bold.json'}
-                        matcapTextureName={'CB4E88_F99AD6_F384C3_ED75B9'}
+                        matcapTextureName={'EAEAEA_B6B6B6_CCCCCC_C4C4C4'}
                         textToDisplay={" Software\n    out of\n this world"}
-                        size={9}
+                        size={5}
                         height={1}
                         scale={[1, 1, 1]}
-                        position={[-31, 50, 0]}
+                        position={[-18.75, 50, 5]}
                         rotation={[-1.5, 0, 0]}
                         curveSegments={24}
-                        bevelsEnabled
+                        bevelEnabled
                         bevelSegments={1}
                         bevelSize={0.008}
                         bevelThickness={0.03}
                         lineHeight={1}
                         letterSpacing={0.2}
                     />
-                    <Star
-                        rotationSpeed={0.00035}
-                        receiveshadow={false}
-                        castshadow={false}
-                        meshArgs={[10, 30, 30]}
-                        position={[0.0, 0.0, 0.0]}
-                        urlTexture="Model_Textures/2k_sun.jpg"
-                        passedMeshRef={starRef}
-                    />
+                    <Select enabled>
+                        <Star
+                            rotationSpeed={0.00035}
+                            receiveshadow={false}
+                            castshadow={false}
+                            meshArgs={[10, 30, 30]}
+                            position={[0.0, 0.0, 0.0]}
+                            urlTexture="Model_Textures/2k_sun.jpg"
+                            passedMeshRef={starRef}
+
+                        />
+                    </Select>
                     <OrbitLine radius={orbitRadiusMercury} passedMeshRef={orbitRefGroup[0]} />
                     <Planet
                         type='standard'
                         rotationSpeed={0.0045}
-                        receiveshadow={false}
+                        receiveshadow={true}
                         castshadow={false}
                         meshArgs={[1.5, 30, 30]}
                         position={[0.0, 0.0, 0.0]}
@@ -145,7 +149,7 @@ export default function SpaceScene(): JSX.Element {
                     <Planet
                         type='standard'
                         rotationSpeed={0.0030}
-                        receiveshadow={false}
+                        receiveshadow={true}
                         castshadow={false}
                         meshArgs={[2.5, 30, 30]}
                         position={[0.0, 0.0, 0.0]}
@@ -167,7 +171,7 @@ export default function SpaceScene(): JSX.Element {
                     />
                     <PlanetClouds
                         rotationSpeed={0.0025}
-                        receiveshadow={false}
+                        receiveshadow={true}
                         castshadow={false}
                         meshArgs={[3.55, 30, 30]}
                         position={[0.0, 0.0, 0.0]}
@@ -180,7 +184,7 @@ export default function SpaceScene(): JSX.Element {
                         type='bumpyAndReflective'
                         urlTexture='Model_Textures/basicTexture.jpg'
                         rotationSpeed={0.0015}
-                        receiveshadow={false}
+                        receiveshadow={true}
                         castshadow={false}
                         meshArgs={[3.5, 30, 30]}
                         position={[0.0, 0.0, 0.0]}
@@ -192,35 +196,11 @@ export default function SpaceScene(): JSX.Element {
                         urlSpecularmap="Model_Textures/water_4k.png"
                         reflectivity={1}
                     />
+
                 </Space>
-                {/* <ambientLight></ambientLight> */}
+            </Selection>
+            {/* <ambientLight></ambientLight> */}
         </>
     );
 }
-
-// function ScrollEventHandler(evt: Event, zoomOutRef: React.MutableRefObject<number>) {
-//     switch (evt.type) {
-//         case "wheel": {
-//             const wheelEvt = evt as WheelEvent;
-//             if (wheelEvt.deltaY > 0) {
-//                 // Scrolling down
-//                 zoomOutRef.current += 0.005;
-//             }
-//             break;
-//         }
-//         case "keydown": {
-//             const keyEvt = evt as KeyboardEvent;
-//             if (keyEvt.key === "ArrowDown") {
-//                 // Pressing the down arrow key
-//                 zoomOutRef.current += 0.005;
-//             }
-//             break;
-//         }
-//         case "touchmove": {
-//             // TODO: Look at making this only occur on drag up on touchscreen devices
-//             zoomOutRef.current += 0.0025;
-//             break;
-//         }
-//     }
-// }
 

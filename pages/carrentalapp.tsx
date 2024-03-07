@@ -3,10 +3,9 @@ import Image from 'next/image';
 import styles from '../styles/Projects.module.css';
 import dynamic from 'next/dynamic';
 
-const GithubGist = dynamic(
+const ReactEmbedGist = dynamic(
     () => {
-        return import('react-gistlab').then((module) => ({ default: module.GithubGist }));
-    },
+        return import('react-embed-gist');},
     { ssr: false }
 );
 
@@ -73,10 +72,10 @@ export default function CarRentalApp(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/bda155d8f6002e8ab0bfa37f7bddfd2f"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/bda155d8f6002e8ab0bfa37f7bddfd2f"
+
+                    ></ReactEmbedGist>
                 </div>
                 <p className={styles.description}>
                     I decided that the first matter was to modularise the
@@ -86,10 +85,9 @@ export default function CarRentalApp(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/59b77bbe677fe4e54d2650c76a9ed941"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/59b77bbe677fe4e54d2650c76a9ed941"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>
@@ -99,10 +97,9 @@ export default function CarRentalApp(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/529f4f168376debd1bbe841080db21d3"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/529f4f168376debd1bbe841080db21d3"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>
@@ -118,10 +115,10 @@ export default function CarRentalApp(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/e3cc0abad50d98540cb5b5e0d06c5b9b"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/e3cc0abad50d98540cb5b5e0d06c5b9b"
+
+                    ></ReactEmbedGist>
                 </div>
             </div>
 
@@ -142,10 +139,9 @@ export default function CarRentalApp(): JSX.Element {
                 </p>
 
                 <div className={styles.code}>
-                    <GithubGist
-                        url="https://gist.github.com/Chuccle/010e1e5d326f78bed4a9e0b4eb1a1e1e"
-                        Loading={() => <p>Loading...</p>}
-                    ></GithubGist>
+                    <ReactEmbedGist
+                        gist="Chuccle/010e1e5d326f78bed4a9e0b4eb1a1e1e"
+                    ></ReactEmbedGist>
                 </div>
 
                 <p className={styles.description}>
