@@ -3,12 +3,31 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
         "next"
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": { "project": ["./tsconfig.json"] },
-    "plugins": ["@typescript-eslint"],
+    "parserOptions": {
+        "project": [
+            "./tsconfig.json"
+        ],
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module",
+        "ecmaVersion": "latest"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "@stylistic/js",
+        "simple-import-sort"
+    ],
     "rules": {
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error",
         "@typescript-eslint/strict-boolean-expressions": [
             2,
             {
@@ -16,7 +35,31 @@
                 "allowNumber": false
             }
         ],
-        "semi": [2, "always"]
+        "semi": [
+            2,
+            "always"
+        ],
+        "consistent-return": 2,
+        "space-unary-ops": 2,
+        "no-else-return": 1,
+        "@stylistic/js/indent": [
+            "error",
+            2
+        ],
+        "react/jsx-newline": [
+            2,
+            {
+                "prevent": true,
+                "allowMultilines": false
+            }
+        ],
+        "quotes": [
+            2,
+            "double"
+        ]
     },
-    "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
+    "ignorePatterns": [
+        "src/**/*.test.ts",
+        "src/frontend/generated/*"
+    ]
 }
