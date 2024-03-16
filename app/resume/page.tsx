@@ -2,16 +2,17 @@ import Link from "next/link";
 
 import styles from "@/CV.module.css";
 
-export default function Page (): React.ReactNode {
+export default function Page(): React.ReactNode {
   return (
     <div className={styles.wrapper}>
       <main className={styles.main}>
-        <article>
+        <article >
           <header>
             <h1>
               CV
             </h1>
           </header>
+          <hr />
           <h2>
             Introduction
           </h2>
@@ -25,7 +26,7 @@ export default function Page (): React.ReactNode {
             worker.
           </p>
           <h2>
-            Skills
+            Key skills
           </h2>
           <hr />
           <figure>
@@ -87,69 +88,86 @@ export default function Page (): React.ReactNode {
             Experience
           </h2>
           <hr />
-          <h3>
-            Software Engineer • ESET Research UK
-          </h3>
-          <p>
-            <em>
-              August 2022 &#8208; Present
-            </em>
-            {" "}
-          </p>
-          <ul>
-            <li>
+          <ul >
+            <li >
+              <h3>
+                Software Engineer • ESET Research UK
+              </h3>
               <p>
-                Instrumental in migrating legacy NT drivers into
-                Visual Studio build tools from NMAKE allowing
-                automated building in CI/CD and saving plenty of
-                time in manual builds.
+                <em>
+                  December 2023 &#8208; Present
+                </em>
+                {" "}
               </p>
+              <ul >
+                <li>
+                  <p>
+                    Collaborated to migrate legacy source control
+                    into modern source control and helped architect
+                    structure which allowed support for for CI/CD
+                    pipelines and far better collaborative tools
+                    along with a more resilient structure.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Collaborated with the technical support team on
+                    JIRA to resolve various bugs and issues in an
+                    efficient and effective manner.
+                  </p>
+                </li>
+              </ul>
             </li>
-            <li>
+            <li  >
+              <h3>
+                Junior Software Engineer • ESET Research UK
+              </h3>
               <p>
-                Developed CI/CD Jenkins pipelines for existing
-                projects for rapid testing and release.{" "}
+                <em>
+                  August 2022 &#8208; Dec 2023
+                </em>
+                {" "}
               </p>
-            </li>
-            <li>
-              <p>
-                Created test applications to find faults with
-                existing projects and software solutions
-                allowing the team to quickly diagnose issues
-                before QA testing.
-              </p>
-            </li>
-            <li>
-              <p>
-                Upgraded older drivers to utilize newer and
-                better technologies I.E: FAT32 to Exfat, formats
-                became much faster and supported capacity became
-                much higher.
-              </p>
-            </li>
-            <li>
-              <p>
-                Collaborated to migrate legacy source control
-                into modern source control and helped architect
-                structure which allowed support for for CI/CD
-                pipelines and far better collaborative tools
-                along with a more resilient structure.
-              </p>
-            </li>
-            <li>
-              <p>
-                Updated historic APIs to utilize more efficient
-                libraries like protocol buffers to reduce
-                network traffic effectively recouping bandwidth
-                to reallocate into other critical areas.
-              </p>
-            </li>
-            <li>
-              <p>
-                Collaborated with the technical support team on
-                JIRA to resolve various bugs and issues in an
-                efficient and effective manner.
-              </p>
+              <ul>
+                <li>
+                  <p>
+                    Instrumental in migrating legacy NT drivers into
+                    Visual Studio build tools from NMAKE allowing
+                    automated building in CI/CD and saving plenty of
+                    time in manual builds.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Developed CI/CD Jenkins pipelines for existing
+                    projects for rapid testing and release.{" "}
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Created test applications to find faults with
+                    existing projects and software solutions
+                    allowing the team to quickly diagnose issues
+                    before QA testing.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Upgraded older drivers to utilize newer and
+                    better technologies I.E: FAT32 to Exfat, formats
+                    became much faster and supported capacity became
+                    much higher.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Updated historic APIs to utilize more efficient
+                    libraries like protocol buffers to reduce
+                    network traffic effectively recouping bandwidth
+                    to reallocate into other critical areas.
+                  </p>
+                </li>
+              </ul>
             </li>
           </ul>
           <h2>
@@ -159,35 +177,45 @@ export default function Page (): React.ReactNode {
           <h3>
             Commercial/freelance:
           </h3>
-          <p>
-            <strong>
-              Exe valley cars
-            </strong>
-            {" "}
-            - I created an android
-            application that schedules appointments and their times
-            based on the user&apos;s location.
-          </p>
+          <ul>
+            <li>
+              <p>
+                <strong>
+                  Exe valley cars
+                </strong>
+                {" "}
+                - I created an android
+                application that schedules appointments and their times
+                based on the user&apos;s location.
+              </p>
+            </li>
+          </ul>
           <h3>
             Personal:
           </h3>
-          <p>
-            <strong>
-              Quizapp
-            </strong>
-            - A fully functioning MERN web
-            application which features a stateless authentication
-            system
-          </p>
-          <p>
-            <strong>
-              Alarm system
-            </strong>
-            - A high performance
-            application involving a BBC microbit with a PIR sensor
-            connected via USB to a raspberry PI and connected to an
-            actix rust web server.{" "}
-          </p>
+          <ul>
+            <li>
+              <p>
+                <strong>
+                  Quizapp
+                </strong>
+                - A fully functioning MERN web
+                application which features a stateless authentication
+                system
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>
+                  Alarm system
+                </strong>
+                - A high performance
+                application involving a BBC microbit with a PIR sensor
+                connected via USB to a raspberry PI and connected to an
+                actix rust web server.{" "}
+              </p>
+            </li>
+          </ul>
           <h3>
             Links:
           </h3>
