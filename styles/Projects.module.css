@@ -43,6 +43,7 @@
 .code {
     max-width: 40vw;
     margin: auto;
+  color: transparent;
 }
 
 .description {
